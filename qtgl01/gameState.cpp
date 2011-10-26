@@ -6,3 +6,8 @@ GameState::GameState()
 
 
 }
+
+void GameState::update(){
+
+
+}

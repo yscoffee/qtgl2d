@@ -16,7 +16,8 @@ SOURCES += main.cpp \
     mythreads.cpp \
     gameState.cpp \
     gameUpdateAction.cpp \
-    movingobject.cpp
+    players.cpp \
+    movingobjects.cpp
 
 HEADERS  += \
     gameControlWidget.h \
@@ -24,11 +25,18 @@ HEADERS  += \
     mythreads.h \
     gameUpdateAction.h \
     gameState.h \
-    movingobject.h
+    players.h \
+    movingobjects.h
 
 FORMS    += \
     gameControlWidget.ui \
     mainwindow.ui
+
+
+
+
+
+
 
 
 
