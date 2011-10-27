@@ -31,14 +31,11 @@ public:
     void timerEvent(QTimerEvent *);
     void drawAxs();
 private:
+
     Ui::GameControlWidget *ui;
 
-    void draw();
-    void draw3DSquare();
     bool deBugON;
-
     int redrawTimerID;
-
     GLdouble trafX;
     GLdouble trafY;
     GLdouble trafZ;
@@ -47,12 +44,18 @@ private:
 
     GameState gameState;
 
+    void draw();
+    void draw3DSquare();
+    void initialGameState();
 
-    //trackball vars
+
+    //----------------------------------------
+    //trackball vars & funcs
     double angle;
     double axis[3];
     double lastPos[3];
     bool trackingMouse;
+
     void startMotion(const int,const int);
     void stopMotion(const int,const int);
     void trackball_ptov(int x, int y, int width, int height, double v[3]);

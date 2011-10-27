@@ -6,9 +6,12 @@ class MovingObjects
 
 protected:
 
+    //central point
     int x;
     int y;
     int z;
+
+    //velocity
     int vx;
     int vy;
     int vz;
@@ -19,27 +22,27 @@ protected:
 public:
     MovingObjects();
 
-    virtual inline int getX();
-    virtual inline int getY();
-    virtual inline int getZ();
-    virtual inline void setX(const int);
-    virtual inline void setY(const int);
-    virtual inline void setZ(const int);
+    virtual int getX();
+    virtual int getY();
+    virtual int getZ();
+    virtual void setX(const int);
+    virtual void setY(const int);
+    virtual void setZ(const int);
 
 
-    virtual inline int getVX();
-    virtual inline int getVY();
-    virtual inline int getVZ();
-    virtual inline void setVX(const int);
-    virtual inline void setVY(const int);
-    virtual inline void setVZ(const int);
+    virtual int getVX();
+    virtual int getVY();
+    virtual int getVZ();
+    virtual void setVX(const int);
+    virtual void setVY(const int);
+    virtual void setVZ(const int);
 
-    virtual inline int getAccX();
-    virtual inline int getAccY();
-    virtual inline int getAccZ();
-    virtual inline void setAccX(const int);
-    virtual inline void setAccY(const int);
-    virtual inline void setAccZ(const int);
+    virtual int getAccX();
+    virtual int getAccY();
+    virtual int getAccZ();
+    virtual void setAccX(const int);
+    virtual void setAccY(const int);
+    virtual void setAccZ(const int);
 
     virtual void rendering()=0;
 

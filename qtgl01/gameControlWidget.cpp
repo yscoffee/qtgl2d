@@ -15,8 +15,9 @@ GameControlWidget::GameControlWidget(QWidget *parent) :
 {
 
     ui->setupUi(this);
-
     this->setMouseTracking(true);
+
+    initialGameState();
 }
 
 GameControlWidget::~GameControlWidget()
@@ -28,8 +29,14 @@ void GameControlWidget::initializeGL(){
 
     qglClearColor(Qt::black);
     glShadeModel(GL_FLAT);
+
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
+
+
     setAutoBufferSwap(true);
     glMatrixMode(GL_MODELVIEW);
     glTranslatef(0,0,-30);
@@ -69,7 +76,6 @@ void GameControlWidget::draw(){
     glMatrixMode(GL_MODELVIEW);
     //glLoadIdentity();
 
-
     //Moving Frame(World Coordinate)
 
     //trackball
@@ -78,20 +84,19 @@ void GameControlWidget::draw(){
         glColor3f(0.5,0.3,1);
         drawAxs();
     }
+    //testing inf
     glColor3f(1,1,1);
     drawAxs();
     glTranslatef(trafX,trafY,trafZ);
-
-    glColor3f(0.5,0.3,0.7);
-
-    int s=50;
-    //gluLookAt(0,0,s,0,0,0,0,0,-1);
-    //gameUpdateAction::renderingMaps(gameState);
-    //gameUpdateAction::renderingPlayers(gameState);
-    //gameUpdateAction::renderingEnemies(gameState);
-
     draw3DSquare();
+    //gluLookAt(0,0,s,0,0,0,0,0,-1);
+    //---
 
+    //**********************
+
+    gameState.renderLiveObjs();
+
+    //***********************
     glFlush();
 
 }
@@ -111,7 +116,7 @@ void GameControlWidget::draw3DSquare(){
 
     glColor3f(0.5f,0.5f,1.0f);							// Set The Color To Blue One Time Only
     glBegin(GL_QUADS);									// Draw A Quad
-        glColor3f(0.0f,1.0f,0.0f);			// Set The Color To Blue
+        glColor3f(1.0f,0.0f,0.0f);			// Set The Color To Blue
         glVertex3f( 1.0f, 1.0f,-1.0f);			// Top Right Of The Quad (Top)
         glVertex3f(-1.0f, 1.0f,-1.0f);			// Top Left Of The Quad (Top)
         glVertex3f(-1.0f, 1.0f, 1.0f);			// Bottom Left Of The Quad (Top)
@@ -121,7 +126,7 @@ void GameControlWidget::draw3DSquare(){
         glVertex3f(-1.0f,-1.0f, 1.0f);			// Top Left Of The Quad (Bottom)
         glVertex3f(-1.0f,-1.0f,-1.0f);			// Bottom Left Of The Quad (Bottom)
         glVertex3f( 1.0f,-1.0f,-1.0f);			// Bottom Right Of The Quad (Bottom)
-        glColor3f(1.0f,0.0f,0.0f);			// Set The Color To Red
+        glColor3f(0.7f,0.7f,0.7f);			// Set The Color To Red
         glVertex3f( 1.0f, 1.0f, 1.0f);			// Top Right Of The Quad (Front)
         glVertex3f(-1.0f, 1.0f, 1.0f);			// Top Left Of The Quad (Front)
         glVertex3f(-1.0f,-1.0f, 1.0f);			// Bottom Left Of The Quad (Front)
@@ -176,11 +181,11 @@ void GameControlWidget::mouseReleaseEvent(QMouseEvent *event){
 
 
 void GameControlWidget::mouseMoveEvent(QMouseEvent *event){
-    std::cout<<"\t\tX="<<event->x()
+    /*std::cout<<"\t\tX="<<event->x()
             <<"Y="<<event->y()<<"  angle="<<angle
            <<"  ax:"<<axis[0]<<' '<<axis[1]<<' '<<axis[2]
             <<std::endl;
-
+    */
     if(trackingMouse)
     {
        double curPos[3], dx, dy, dz;
@@ -221,7 +226,9 @@ void GameControlWidget::keyReleaseEvent(QKeyEvent *event){
 
     const int K = event->key();
 
-    if( K == Qt::Key_Up ){
+    gameState.keyboardMovingAction(event);
+
+ /*   if( K == Qt::Key_Up ){
         trafY +=1;
     }else if( K == Qt::Key_Down ){
         trafY -=1;
@@ -233,7 +240,7 @@ void GameControlWidget::keyReleaseEvent(QKeyEvent *event){
         trafZ -=5;
     }else if( K == Qt::Key_A ){
         trafZ +=5;
-    }else if( K == Qt::Key_Escape || K == Qt::Key_Q ){
+    }else */ if( K == Qt::Key_Escape || K == Qt::Key_Q ){
         this->close();
     }
 
@@ -278,5 +285,10 @@ void GameControlWidget::trackball_ptov(int x, int y, int width, int height, doub
     v[2] *= a;
 
     return;
+
+}
+
+void GameControlWidget::initialGameState()
+{
 
 }
