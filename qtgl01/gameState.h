@@ -11,17 +11,20 @@ class GameState
 {
 public:
 
-    GameState();
+    GameState(const unsigned int WIDTH, const unsigned int HEIGHT);
     void updateLocation();
     void renderLiveObjs();
     void addLiveObj(MovingObjects *);
     void keyboardMovingAction(const QKeyEvent *);
-
+    void setGameWidgetHeight(const unsigned int );
+    void setGameWidgetWidth(const unsigned int );
 private:
 
     Players& play1;
     std::vector<MovingObjects *> liveObjs;
 
+    unsigned int gameWidgetHeight;
+    unsigned int gameWidgetWidth;
 };
 
 #endif // GAMESTATE_H

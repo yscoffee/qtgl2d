@@ -11,7 +11,8 @@ GameControlWidget::GameControlWidget(QWidget *parent) :
     deBugON(true),
     redrawTimerID(-1),
     trafX(0),trafY(0),trafZ(0),
-    trackingMouse(false)
+    trackingMouse(false),
+    gameState(this->width(),this->height())
 {
 
     ui->setupUi(this);

@@ -5,7 +5,9 @@
 #include <iostream>
 #include <QtEvents>
 
-GameState::GameState():play1( *(new Players()) )
+GameState::GameState(const unsigned int WIDTH, const unsigned int HEIGHT)
+    :play1( *(new Players()) ), gameWidgetHeight(HEIGHT)
+    ,gameWidgetWidth(WIDTH)
 {
     //Players* p1 = new Players();
 
@@ -17,9 +19,11 @@ GameState::GameState():play1( *(new Players()) )
 }
 
 void GameState::renderLiveObjs(){
+
     for(unsigned int ix=0; ix< liveObjs.size() ;ix++){
         liveObjs[ix]->rendering();
     }
+
     Players::renderPlayerInfos(play1);
 
 }
