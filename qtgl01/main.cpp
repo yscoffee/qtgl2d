@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
     cout<<"start"<<endl;
 
     QApplication a(argc, argv);
+
     GameControlWidget w;
     w.show();
 

@@ -242,6 +242,7 @@ void GameControlWidget::keyReleaseEvent(QKeyEvent *event){
     }else if( K == Qt::Key_A ){
         trafZ +=5;
     }else */
+
     if( K == Qt::Key_Escape || K == Qt::Key_Q ){
         this->close();
     }
