@@ -3,7 +3,7 @@
 
 #include <QGLWidget>
 
-Players::players():
+Players::Players():
     hp(0),mp(0),sp(0),exp(0),level(0)
 {
 
@@ -13,7 +13,7 @@ Players::players():
 
 void Players::rendering(){
 
-    glBegin();
+    glBegin(GL_POLYGON);
 
     glEnd();
 

@@ -40,6 +40,7 @@ public:
     virtual inline void setAccX(const int);
     virtual inline void setAccY(const int);
     virtual inline void setAccZ(const int);
+
     virtual void rendering()=0;
 
 };

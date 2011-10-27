@@ -30,6 +30,6 @@ void MovingObjects::setZ(const int Z){ z=Z;}
 int MovingObjects::getVX(){return vx;}
 int MovingObjects::getVY(){return vy;}
 int MovingObjects::getVZ(){return vz;}
-void MovingObjects::setVX(const int VX){ vx=vX;}
-void MovingObjects::setVY(const int VY){ vy=vY;}
-void MovingObjects::setVZ(const int VZ){ vz=vZ;}
+void MovingObjects::setVX(const int VX){ vx=VX;}
+void MovingObjects::setVY(const int VY){ vy=VY;}
+void MovingObjects::setVZ(const int VZ){ vz=VZ;}

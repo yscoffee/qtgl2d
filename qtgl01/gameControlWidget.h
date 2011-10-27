@@ -27,6 +27,7 @@ public:
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseDoubleClickEvent(QMouseEvent *event);
+
     void timerEvent(QTimerEvent *);
     void drawAxs();
 private:
@@ -45,6 +46,16 @@ private:
     GLdouble rotaTheta[3];
 
     GameState gameState;
+
+
+    //trackball vars
+    double angle;
+    double axis[3];
+    double lastPos[3];
+    bool trackingMouse;
+    void startMotion(const int,const int);
+    void stopMotion(const int,const int);
+    void trackball_ptov(int x, int y, int width, int height, double v[3]);
 
 private slots:
     void startIdleFunc();

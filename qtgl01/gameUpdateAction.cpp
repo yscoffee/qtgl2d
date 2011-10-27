@@ -1,7 +1,7 @@
 #include "gameupdateaction.h"
 #include<QGLWidget>
 
-
+/*
 void gameUpdateAction::renderingMaps(GameState& gstate){
 
     glBegin(GL_LINES);                      // es
@@ -30,3 +30,4 @@ void gameUpdateAction::renderingEnemies(GameState& gstate){
         glVertex3f( 1.0f, 0.0f,1.0f);
     glEnd();
 }
+*/

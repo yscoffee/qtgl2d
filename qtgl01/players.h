@@ -1,7 +1,7 @@
 #ifndef PLAYERS_H
 #define PLAYERS_H
-
-class Players:public MovingObjects
+#include "movingobjects.h"
+class Players: public MovingObjects
 {
 private:
 
@@ -13,6 +13,8 @@ private:
 
 public:
     Players();
+
+    void rendering();
 };
 
 #endif // PLAYERS_H

@@ -13,8 +13,6 @@ public:
 private:
 
     Players play1;
-
-
 };
 
 #endif // GAMESTATE_H
