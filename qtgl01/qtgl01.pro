@@ -13,7 +13,6 @@ CONFIG  +=console
 SOURCES += main.cpp \
     gameControlWidget.cpp \
     mainwindow.cpp \
-    mythreads.cpp \
     gameState.cpp \
     gameUpdateAction.cpp \
     players.cpp \
@@ -22,7 +21,6 @@ SOURCES += main.cpp \
 HEADERS  += \
     gameControlWidget.h \
     mainwindow.h \
-    mythreads.h \
     gameUpdateAction.h \
     gameState.h \
     players.h \
@@ -31,6 +29,8 @@ HEADERS  += \
 FORMS    += \
     gameControlWidget.ui \
     mainwindow.ui
+
+
 
 
 

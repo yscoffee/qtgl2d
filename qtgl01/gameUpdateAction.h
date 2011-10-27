@@ -1,3 +1,10 @@
+/*
+* This class is currently deprecated.
+*
+*/
+
+
+
 #ifndef GAMEUPDATEACTION_H
 #define GAMEUPDATEACTION_H
 
