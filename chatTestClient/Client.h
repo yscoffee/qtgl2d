@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <sstream>
-
+/*
 class Client{
 
 public:
@@ -77,6 +77,6 @@ void Client::sendObject(SOCKET sock,const T& object)
 
 	}
 }
-
+*/
 
 #endif

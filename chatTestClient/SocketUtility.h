@@ -63,6 +63,8 @@ public:
 		MH_Ini,
 		MH_EXIT
 	};
+	
+	
 	 static MesgHeader create_NewMesg_Header(){
 		return MH_NewMesg;
 	}

@@ -1,10 +1,10 @@
 
 #include "SocketUtility.h"
-#include "Client.h"
 #include "SystemUtility.h"
 #include "process.h"
 #include <iostream>
 #include <string>
+
 using namespace std;
 int main(int argc , char** argv ){
 	
@@ -24,16 +24,16 @@ int main(int argc , char** argv ){
 	SOCKET serverSocket =SocketFactory::creatTCPSocket( argv[1], argv[2]);
 	cout<<"start chat testing client. \n press Ctrl+c  to exit program\n";
 
-	Client cliTool;
+ 
 	
 	while(1){
 		string inputMesg = GetUserInput<string>()("Pls type mesg:");
 	
 		try{
 			//send header
-			cliTool.sendObject(serverSocket, MesgHeaderFactory::create_NewMesg_Header() );			
+			sendData(serverSocket, MesgHeaderFactory::create_NewMesg_Header() );			
 			//send mesg
-			cliTool.sendObject(serverSocket, inputMesg);
+			sendData(serverSocket, inputMesg);
 			
 			cout<<"a mesg sent."<<endl;
 		}catch(std::exception exp ){

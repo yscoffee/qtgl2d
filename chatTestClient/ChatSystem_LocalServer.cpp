@@ -1,36 +1,24 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <map>
 #include <algorithm>
 #include <stdexcept>
 #include "process.h"
 
-#include "Client.h"
+#include "SocketUtility.h" 
 #include "SystemUtility.h"
 
 using namespace std;
 #define STKSIZE 16536
-//reply a self-defined ACK string( const char *)
-//it's used to let application check the content of pkt
-//it's NOT the ack pkt of tcp/ip layer, it is a self-defined string( const char* ).
-void replayACK( SOCKET cliSocket ) 
-{
-	//reply ACK
-	try{
-		sendData(cliSocket,"data received :ACK");
-	}catch(std::exception exp ){
-		std::cout<<exp.what()<<endl;
-	}		
-}
 
-//auto call replyAck function after successful received pkt.
+
 // Note that receiveData may throw exceptions When it encounters errors.
 template<typename T>
-void RecvDataAndReACK( SOCKET cliSocket, T & stroge ) 
+void RecvData( SOCKET cliSocket, T & stroge ) 
 {
 	receiveData(cliSocket,stroge);
-	replayACK(cliSocket);
 }
 
 //just recv and print new mesg to the console.
@@ -38,7 +26,7 @@ void getAndPrintNewMesg( SOCKET cliSocket ){
 
 	string  newMesg;
 	
-	RecvDataAndReACK(cliSocket,newMesg);
+	RecvData(cliSocket,newMesg);
 
 	static int mesgCount=0;
 	mesgCount++;
@@ -56,7 +44,7 @@ void newConnectHandle( SOCKET cliSocket )
 			MesgHeaderFactory::MesgHeader newInputHeader=MesgHeaderFactory::MH_Ini;
 
 			//auto reply ack
-			RecvDataAndReACK(cliSocket, newInputHeader);
+			RecvData(cliSocket, newInputHeader);
 
 			switch(newInputHeader){
 
