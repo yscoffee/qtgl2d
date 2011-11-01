@@ -2,6 +2,7 @@
 #define PLAYERS_H
 
 #include "movingobjects.h"
+
 #include <QGLWidget>
 
 class Players: public MovingObjects
@@ -22,6 +23,7 @@ public:
     Players();
 
     virtual void rendering();
+    virtual void update(const long MS);
     static void renderPlayerInfos(const Players&);
 
 

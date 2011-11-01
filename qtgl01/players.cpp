@@ -33,5 +33,11 @@ void Players::renderPlayerInfos(const Players&)
 
 }
 
+void Players::update(const long MS)
+{
+    MovingObjects::update(MS);
+
+}
+
 
 

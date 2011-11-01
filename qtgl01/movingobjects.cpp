@@ -1,9 +1,11 @@
 #include "movingobjects.h"
 
+
 MovingObjects::MovingObjects():
     x(0),y(0),z(0),
     vx(0),vy(0),vz(0),
-    ax(0),ay(0),az(0)
+    ax(0),ay(0),az(0),m(1),fT(0),fx(0),fy(0),fz(0),
+    state(MovingObjects::S_NORMAL)
 {
 
 
@@ -31,11 +33,11 @@ int MovingObjects::getY(){return y;}
 inline
 int MovingObjects::getZ(){return z;}
 inline
-void MovingObjects::setX(const int X){ x=X;}
+void MovingObjects::setX(const int X){ x=X; }
 inline
-void MovingObjects::setY(const int Y){ y=Y;}
+void MovingObjects::setY(const int Y){ y=Y; }
 inline
-void MovingObjects::setZ(const int Z){ z=Z;}
+void MovingObjects::setZ(const int Z){ z=Z; }
 
 
 inline
@@ -50,3 +52,39 @@ inline
 void MovingObjects::setVY(const int VY){ vy=VY;}
 inline
 void MovingObjects::setVZ(const int VZ){ vz=VZ;}
+
+//Call by Timer. Be used to update state of game object
+//Unit of time is micro second
+void MovingObjects::update(const long ELAPSED_MS ){
+
+        x += vx;
+        y += vy;
+        z += vz;
+
+        vx += ax;
+        vy += ay;
+        vz += az;
+
+
+  /*
+    ax += fx/m;
+    ay += fy/m;
+    az += fz/m;
+    fT=fT-ELAPSED_MS>0?fT-ELAPSED_MS:0;
+  */
+
+}
+
+inline
+MovingObjects::States MovingObjects::getState()
+{
+    return state;
+}
+
+void MovingObjects::setState(MovingObjects::States S)
+{
+    state = S;
+}
+
+
+

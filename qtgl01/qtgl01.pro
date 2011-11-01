@@ -16,7 +16,12 @@ SOURCES += main.cpp \
     gameState.cpp \
     gameUpdateAction.cpp \
     players.cpp \
-    movingobjects.cpp
+    movingobjects.cpp \
+    objects.cpp \
+    staticobjects.cpp \
+    floors.cpp \
+    debugtools.cpp \
+    maploader.cpp
 
 HEADERS  += \
     gameControlWidget.h \
@@ -24,11 +29,30 @@ HEADERS  += \
     gameUpdateAction.h \
     gameState.h \
     players.h \
-    movingobjects.h
+    movingobjects.h \
+    objects.h \
+    staticobjects.h \
+    floors.h \
+    debugtools.h \
+    maploader.h
 
 FORMS    += \
     gameControlWidget.ui \
     mainwindow.ui
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

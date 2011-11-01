@@ -8,8 +8,8 @@
 GameControlWidget::GameControlWidget(QWidget *parent) :
     QGLWidget(QGLFormat(QGL::DoubleBuffer),parent),
     ui(new Ui::GameControlWidget),
-    deBugON(true),
     redrawTimerID(-1),
+    updateTimerID(-1),
     trafX(0),trafY(0),trafZ(0),
     trackingMouse(false),
     gameState(this->width(),this->height())
@@ -41,14 +41,20 @@ void GameControlWidget::initializeGL(){
     setAutoBufferSwap(true);
     glMatrixMode(GL_MODELVIEW);
     glTranslatef(0,0,-30);
-    //start idle func
-   // QTimer::singleShot(600, this, SLOT(startIdleFunc()));
+
+    //start idle func after 600ms
+    QTimer::singleShot(600, this, SLOT(startIdleFunc()));
+
+    updateTimerID=startTimer(static_cast<int>(10));
 
 }
+
 void GameControlWidget::startIdleFunc(){
     //supoose 60fps , redrawing action can be done in the interval.
     redrawTimerID=startTimer(static_cast<int>(0));
+
 }
+
 void GameControlWidget::resizeGL(int width, int height){
 
     glViewport(0, 0, width, height);
@@ -59,6 +65,8 @@ void GameControlWidget::resizeGL(int width, int height){
     glFrustum(-d, d, -d ,d, 2.0, 100.0);
     //glOrtho(-100.0, 100.0, -100.0, 100.0, -100.0,1000);
     //gluPerspective(3.14*d/360.0,width/height,5,1000);
+
+
 }
 
 
@@ -180,7 +188,45 @@ void GameControlWidget::mouseReleaseEvent(QMouseEvent *event){
     }
 }
 
+void GameControlWidget::initialGameState()
+{
 
+}
+
+void GameControlWidget::timerEvent(QTimerEvent *event){
+
+    if( false == gameState.isPasted() ){
+
+        if(event->timerId() == redrawTimerID){
+
+
+        }
+
+        updateGL();
+    }
+
+}
+void GameControlWidget::keyReleaseEvent(QKeyEvent *event){
+
+    const int K = event->key();
+
+    gameState.keyboardEvent(event);
+
+    if( K == Qt::Key_Escape ){
+        this->close();
+    }
+
+
+    glFlush();
+    updateGL();
+}
+
+/*
+ * ------------------------------------------------------
+ * Track ball functions
+ *
+ *
+*/
 void GameControlWidget::mouseMoveEvent(QMouseEvent *event){
     /*std::cout<<"\t\tX="<<event->x()
             <<"Y="<<event->y()<<"  angle="<<angle
@@ -213,46 +259,6 @@ void GameControlWidget::mouseMoveEvent(QMouseEvent *event){
         updateGL();
     }
 }
-
-void GameControlWidget::timerEvent(QTimerEvent *event){
-
-    if(event->timerId() == redrawTimerID){
-
-
-    }
-
-    updateGL();
-}
-void GameControlWidget::keyReleaseEvent(QKeyEvent *event){
-
-    const int K = event->key();
-
-    gameState.keyboardMovingAction(event);
-
- /*   if( K == Qt::Key_Up ){
-        trafY +=1;
-    }else if( K == Qt::Key_Down ){
-        trafY -=1;
-    }else if( K == Qt::Key_Left ){
-        trafX +=1;
-    }else if( K == Qt::Key_Right ){
-        trafX -=1;
-    }else if( K == Qt::Key_Z ){
-        trafZ -=5;
-    }else if( K == Qt::Key_A ){
-        trafZ +=5;
-    }else */
-
-    if( K == Qt::Key_Escape || K == Qt::Key_Q ){
-        this->close();
-    }
-
-    if( deBugON )
-        std::cout<<trafX<<' '<<trafY<<' '<<trafZ<<std::endl;
-    glFlush();
-    updateGL();
-}
-
 void GameControlWidget::startMotion(const int X, const int Y){
     //START TRACK
     trackingMouse = true;
@@ -262,7 +268,6 @@ void GameControlWidget::startMotion(const int X, const int Y){
     //redrawContinue = false;
 
     trackball_ptov(X, Y, this->width(),this->height(), lastPos);
-
 }
 void GameControlWidget::stopMotion(const int X, const int Y){
     trackingMouse = false;
@@ -291,7 +296,4 @@ void GameControlWidget::trackball_ptov(int x, int y, int width, int height, doub
 
 }
 
-void GameControlWidget::initialGameState()
-{
-
-}
+//-----------------------------------------------------------

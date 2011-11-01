@@ -34,8 +34,10 @@ private:
 
     Ui::GameControlWidget *ui;
 
-    bool deBugON;
+
     int redrawTimerID;
+    int updateTimerID;
+
     GLdouble trafX;
     GLdouble trafY;
     GLdouble trafZ;
