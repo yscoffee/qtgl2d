@@ -7,11 +7,11 @@
          IIIII        IIIIIIIIIIIIIIIIIIII
 
 
-
+         O
         III     IIIIIIIIII          IIIII
 
-    III        C                R       C
+    III        C    C            R       C
               IIIIIIIIIIII   IIIIIIII  IIIIIIIII  III
 
-
+   A  A  A
 FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
