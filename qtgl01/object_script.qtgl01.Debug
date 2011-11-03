@@ -1,0 +1,17 @@
+INPUT(
+./debug/main.o
+./debug/gameControlWidget.o
+./debug/mainwindow.o
+./debug/gameUpdateAction.o
+./debug/players.o
+./debug/movingobjects.o
+./debug/objects.o
+./debug/staticobjects.o
+./debug/floors.o
+./debug/debugtools.o
+./debug/maploader.o
+./debug/testMap.o
+./debug/gameStateMaintainer.h.o
+./debug/moc_gameControlWidget.o
+./debug/moc_mainwindow.o
+);
