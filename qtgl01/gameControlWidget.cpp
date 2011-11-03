@@ -99,7 +99,7 @@ void GameControlWidget::draw(){
     drawAxs();
     glTranslatef(trafX,trafY,trafZ);
     draw3DSquare();
-//    draw3DSquare(1,1,1,1);
+    // draw3DSquare(1,1,1,1);
     //gluLookAt(0,0,s,0,0,0,0,0,-1);
     //---
 
