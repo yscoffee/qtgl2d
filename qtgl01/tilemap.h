@@ -1,16 +1,16 @@
-#ifndef MAPLOADER_H
-#define MAPLOADER_H
+#ifndef TILEMAP
+#define TILEMAP
 
 #include<vector>
 
-class MapLoader
+class TileMap
 {
 private:
     std::vector< std::vector<char> > map;
     unsigned int width;
     unsigned int height;
 public:
-    MapLoader();
+    TileMap();
     inline
     unsigned int getMapWidth(){return width;}
     inline

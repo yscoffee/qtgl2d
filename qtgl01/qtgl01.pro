@@ -9,7 +9,6 @@ QT      += opengl
 TARGET = qtgl01
 TEMPLATE = app
 CONFIG  +=console
-
 SOURCES += main.cpp \
     gameControlWidget.cpp \
     mainwindow.cpp \
@@ -20,9 +19,9 @@ SOURCES += main.cpp \
     staticobjects.cpp \
     floors.cpp \
     debugtools.cpp \
-    maploader.cpp \
     testMap.cpp \
-    gameStateMaintainer.h.cpp
+    gameStateMaintainer.h.cpp \
+    tilemap.cpp
 
 HEADERS  += \
     gameControlWidget.h \
@@ -34,8 +33,8 @@ HEADERS  += \
     staticobjects.h \
     floors.h \
     debugtools.h \
-    maploader.h \
-    gameStateMaintainer.h
+    gameStateMaintainer.h \
+    tilemap.h
 
 FORMS    += \
     gameControlWidget.ui \
@@ -43,6 +42,10 @@ FORMS    += \
 
 OTHER_FILES += \
     testmap.txt
+
+
+
+
 
 
 

@@ -12,13 +12,12 @@ GameControlWidget::GameControlWidget(QWidget *parent) :
     redrawTimerID(-1),
     updateTimerID(-1),
     trafX(0),trafY(0),trafZ(0),
-    trackingMouse(false),
-    gameState(this->width(),this->height())
+    gameState(this->width(),this->height()),
+    trackingMouse(false)
 {
 
     ui->setupUi(this);
     this->setMouseTracking(true);
-
     initialGameState();
 }
 
@@ -29,6 +28,7 @@ GameControlWidget::~GameControlWidget()
 
 void GameControlWidget::initializeGL(){
 
+    std::cout<<"gl version:"<<glGetString(GL_VERSION)<<std::endl;
     qglClearColor(Qt::black);
     glShadeModel(GL_FLAT);
 
@@ -37,8 +37,6 @@ void GameControlWidget::initializeGL(){
 
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
-
-
     setAutoBufferSwap(true);
     glMatrixMode(GL_MODELVIEW);
     glTranslatef(0,0,-30);
@@ -70,9 +68,6 @@ void GameControlWidget::resizeGL(int width, int height){
 
 }
 
-
-
-
 //Display function
 void GameControlWidget::paintGL(){
     draw();
@@ -87,8 +82,8 @@ void GameControlWidget::draw(){
     //glLoadIdentity();
 
     //Moving Frame(World Coordinate)
-
-    //trackball
+    drawAxs();
+    //trackball function
     if (trackingMouse) {
         glRotatef(angle, axis[0], axis[1], axis[2]);
         glColor3f(0.5,0.3,1);
@@ -98,10 +93,10 @@ void GameControlWidget::draw(){
     glColor3f(1,1,1);
     drawAxs();
     glTranslatef(trafX,trafY,trafZ);
-    draw3DSquare();
-    // draw3DSquare(1,1,1,1);
-    //gluLookAt(0,0,s,0,0,0,0,0,-1);
-    //---
+    draw3DSquare(5,1,1,1);
+    draw3DSquare(1,-1,1,2);
+    draw3DSquare(-2,-1,1,3);
+    draw3DSquare(-1,3,1,1);
 
     //**********************
 
@@ -163,11 +158,12 @@ void GameControlWidget::draw3DSquare(){
 //HL=half-length of the edges of the square.
 void GameControlWidget::draw3DSquare(const int X ,const int Y,const int Z, const int HL=1){
 
-    glColor3f(0.7f,0.2f,0.8f);							// Set The Color To Blue One Time Only
+    // Set The Color To Blue One Time Only
+    glColor3f(0.7f,0.2f,0.8f);
 
     //X,Y,Z is central point of a 3D box.
-    //CCW
-    // cube ///////////////////////////////////////////////////////////////////////
+    // CCW -defualt mode
+    /////////////////////////////////////////////////////////////////////////
     //    v6----- v5
     //   /|      /|
     //  v1------v0|
@@ -175,7 +171,7 @@ void GameControlWidget::draw3DSquare(const int X ,const int Y,const int Z, const
     //  | |v7---|-|v4
     //  |/      |/
     //  v2------v3
-    /*GLfloat vertices[]={
+    GLfloat vertices[]={
         X+HL,Y+HL,Z+HL,//v0
         X-HL,Y+HL,Z+HL,//v1
         X-HL,Y-HL,Z+HL,//v2
@@ -183,44 +179,38 @@ void GameControlWidget::draw3DSquare(const int X ,const int Y,const int Z, const
         X+HL,Y-HL,Z-HL,//v4
         X+HL,Y+HL,Z-HL,//v5
         X-HL,Y+HL,Z-HL,//v6
-        X-HL,Y-HL,Z-HL//v7
-    };*/
+        X-HL,Y-HL,Z-HL,//v7
+    };
+    // color array
+    GLfloat colors[] = {1,1,1,  1,1,0,  1,0,0,  1,0,1,              // v0-v1-v2-v3
+                        1,1,1,  1,0,1,  0,0,1,  0,1,1,              // v0-v3-v4-v5
+                        1,1,1,  0,1,1,  0,1,0,  1,1,0,              // v0-v5-v6-v1
+                        1,1,0,  0,1,0,  0,0,0,  1,0,0,              // v1-v6-v7-v2
+                        0,0,0,  0,0,1,  1,0,1,  1,0,0,              // v7-v4-v3-v2
+                        0,0,1,  0,0,0,  0,1,0,  0,1,1};             // v4-v7-v6-v5
 
-    GLubyte indices[] = {0,1,2,3,
-                         4,5,6,7,
-                         8,9,10,11,
-                         12,13,14,15,
-                         16,17,18,19,
-                         20,21,22,23};
+    // index array of vertex array for glDrawElements()
+    // Notice the indices are listed straight from beginning to end as exactly
+    // same order of vertex array without hopping, because of different normals at
+    // a shared vertex. For this case, glDrawArrays() and glDrawElements() have no
+    // difference.
+    GLubyte indices[] ={ 0,1,2,3,
+                         0,3,4,5,
+                         0,5,6,1,
+                         1,6,7,2,
+                         7,4,3,2,
+                         4,7,6,5 };
 
-    GLfloat vertices[] = {1,1,1,  -1,1,1,  -1,-1,1,  1,-1,1,        // v0-v1-v2-v3
-                          1,1,1,  1,-1,1,  1,-1,-1,  1,1,-1,        // v0-v3-v4-v5
-                          1,1,1,  1,1,-1,  -1,1,-1,  -1,1,1,        // v0-v5-v6-v1
-                          -1,1,1,  -1,1,-1,  -1,-1,-1,  -1,-1,1,    // v1-v6-v7-v2
-                          -1,-1,-1,  1,-1,-1,  1,-1,1,  -1,-1,1,    // v7-v4-v3-v2
-                          1,-1,-1,  -1,-1,-1,  -1,1,-1,  1,1,-1};   // v4-v7-v6-v5
+       //glEnableClientState(GL_NORMAL_ARRAY); //Note  flag of lighting sys is turn-off.
+       glEnableClientState(GL_COLOR_ARRAY);
+       glEnableClientState(GL_VERTEX_ARRAY);
 
-    GLfloat normals[] = {0,0,1,  0,0,1,  0,0,1,  0,0,1,             // v0-v1-v2-v3
-                         1,0,0,  1,0,0,  1,0,0, 1,0,0,              // v0-v3-v4-v5
-                         0,1,0,  0,1,0,  0,1,0, 0,1,0,              // v0-v5-v6-v1
-                         -1,0,0,  -1,0,0, -1,0,0,  -1,0,0,          // v1-v6-v7-v2
-                         0,-1,0,  0,-1,0,  0,-1,0,  0,-1,0,         // v7-v4-v3-v2
-                         0,0,-1,  0,0,-1,  0,0,-1,  0,0,-1};        // v4-v7-v6-v5
+       glColorPointer(3, GL_FLOAT, 0, colors);
+       glVertexPointer(3, GL_FLOAT, 0, vertices );
+       glDrawElements(GL_QUADS,24,GL_UNSIGNED_BYTE, indices);
 
-    glEnableClientState(GL_NORMAL_ARRAY);
-
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glNormalPointer(GL_FLOAT, 0, normals);
-    glVertexPointer(3, GL_FLOAT, 0, vertices);
-
-
-    glDrawElements(GL_QUADS, 24, GL_UNSIGNED_BYTE, indices);
-
-
-
-    glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
-
-    glDisableClientState(GL_NORMAL_ARRAY);
+       glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+       glDisableClientState(GL_COLOR_ARRAY);
 }
 
 void GameControlWidget::mouseDoubleClickEvent(QMouseEvent *event){
@@ -257,12 +247,10 @@ void GameControlWidget::mouseReleaseEvent(QMouseEvent *event){
         updateGL();
     }
 }
-
 void GameControlWidget::initialGameState()
 {
 
 }
-
 void GameControlWidget::timerEvent(QTimerEvent *event){
 
     if( false == gameState.isPasted() ){

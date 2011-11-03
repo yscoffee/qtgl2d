@@ -1,23 +1,24 @@
-#include "maploader.h"
+#include "tilemap.h"
 #include<fstream>
 #include<string>
 #include<vector>
 #include<iostream>
 
-MapLoader::MapLoader( )
+TileMap::TileMap( )
 {
 
 
 }
 
 //@throw: const string , represent invalid map script;
-void MapLoader::loadMap(const char *path)
+void TileMap::loadMap(const char *path)
 {
     std::cout<<path<<std::endl;
     std::fstream fin(path);
-    if(fin.fail())
+    if(fin.fail()){
+        std::cerr<<"open failed";
          throw('open failed.');
-
+    }
     std::string line;
 
 
@@ -57,7 +58,7 @@ void MapLoader::loadMap(const char *path)
 
 }
 
-void MapLoader::printMap()
+void TileMap::printMap()
 {
     for(int ix=0; ix<map.size();ix++){
         for(int iy=0; iy<map[ix].size();iy++){

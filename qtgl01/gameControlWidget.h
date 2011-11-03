@@ -2,6 +2,7 @@
 #define gameControlWidget_H
 
 #include <QGLWidget>
+#include <qgl.h>
 #include "gameStateMaintainer.h"
 #include "gameupdateaction.h"
 
@@ -43,14 +44,12 @@ private:
     GLdouble trafZ;
     //theta is the angle of axis rotation
     GLdouble rotaTheta[3];
-
     GameStateMaintainer gameState;
 
     void draw();
     void draw3DSquare();
     void draw3DSquare(const int,const int,const int, const int );
     void initialGameState();
-
 
     //----------------------------------------
     //trackball vars & funcs

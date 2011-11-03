@@ -1,9 +1,9 @@
-#include "maploader.h"
+#include "tilemap.h"
 
 int testMap(void){
 
 
-    MapLoader m;
+    TileMap m;
     m.loadMap("D:\\gitresp\\qtgl\\qtgl01\\testmap.txt");
     m.printMap();
 
