@@ -13,7 +13,6 @@ CONFIG  +=console
 SOURCES += main.cpp \
     gameControlWidget.cpp \
     mainwindow.cpp \
-    gameState.cpp \
     gameUpdateAction.cpp \
     players.cpp \
     movingobjects.cpp \
@@ -21,24 +20,35 @@ SOURCES += main.cpp \
     staticobjects.cpp \
     floors.cpp \
     debugtools.cpp \
-    maploader.cpp
+    maploader.cpp \
+    testMap.cpp \
+    gameStateMaintainer.h.cpp
 
 HEADERS  += \
     gameControlWidget.h \
     mainwindow.h \
     gameUpdateAction.h \
-    gameState.h \
     players.h \
     movingobjects.h \
     objects.h \
     staticobjects.h \
     floors.h \
     debugtools.h \
-    maploader.h
+    maploader.h \
+    gameStateMaintainer.h
 
 FORMS    += \
     gameControlWidget.ui \
     mainwindow.ui
+
+OTHER_FILES += \
+    testmap.txt
+
+
+
+
+
+
 
 
 

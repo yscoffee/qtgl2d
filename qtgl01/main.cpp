@@ -5,8 +5,11 @@
 
 using namespace std;
 
+int testMap();
+
 int main(int argc, char *argv[])
 {
+    testMap();
     cout<<"start"<<endl;
 
     QApplication a(argc, argv);

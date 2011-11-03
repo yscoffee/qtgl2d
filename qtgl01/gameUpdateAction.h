@@ -8,7 +8,6 @@
 #ifndef GAMEUPDATEACTION_H
 #define GAMEUPDATEACTION_H
 
-#include"gamestate.h"
 
 
 class gameUpdateAction

@@ -2,7 +2,7 @@
 #define gameControlWidget_H
 
 #include <QGLWidget>
-#include "gamestate.h"
+#include "gameStateMaintainer.h"
 #include "gameupdateaction.h"
 
 namespace Ui {
@@ -44,10 +44,11 @@ private:
     //theta is the angle of axis rotation
     GLdouble rotaTheta[3];
 
-    GameState gameState;
+    GameStateMaintainer gameState;
 
     void draw();
     void draw3DSquare();
+    void draw3DSquare(const int,const int,const int, const int );
     void initialGameState();
 
 

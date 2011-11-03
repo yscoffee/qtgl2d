@@ -1,5 +1,6 @@
 #include "gameControlWidget.h"
 #include "ui_gameControlWidget.h"
+#include "debugtools.h"
 
 #include <QtOpenGL>
 #include <iostream>
@@ -98,6 +99,7 @@ void GameControlWidget::draw(){
     drawAxs();
     glTranslatef(trafX,trafY,trafZ);
     draw3DSquare();
+//    draw3DSquare(1,1,1,1);
     //gluLookAt(0,0,s,0,0,0,0,0,-1);
     //---
 
@@ -158,22 +160,90 @@ void GameControlWidget::draw3DSquare(){
     glEnd();						// Done Drawing The Quad
 }
 
+//HL=half-length of the edges of the square.
+void GameControlWidget::draw3DSquare(const int X ,const int Y,const int Z, const int HL=1){
+
+    glColor3f(0.7f,0.2f,0.8f);							// Set The Color To Blue One Time Only
+
+    //X,Y,Z is central point of a 3D box.
+    //CCW
+    // cube ///////////////////////////////////////////////////////////////////////
+    //    v6----- v5
+    //   /|      /|
+    //  v1------v0|
+    //  | |     | |
+    //  | |v7---|-|v4
+    //  |/      |/
+    //  v2------v3
+    /*GLfloat vertices[]={
+        X+HL,Y+HL,Z+HL,//v0
+        X-HL,Y+HL,Z+HL,//v1
+        X-HL,Y-HL,Z+HL,//v2
+        X+HL,Y-HL,Z+HL,//v3
+        X+HL,Y-HL,Z-HL,//v4
+        X+HL,Y+HL,Z-HL,//v5
+        X-HL,Y+HL,Z-HL,//v6
+        X-HL,Y-HL,Z-HL//v7
+    };*/
+
+    GLubyte indices[] = {0,1,2,3,
+                         4,5,6,7,
+                         8,9,10,11,
+                         12,13,14,15,
+                         16,17,18,19,
+                         20,21,22,23};
+
+    GLfloat vertices[] = {1,1,1,  -1,1,1,  -1,-1,1,  1,-1,1,        // v0-v1-v2-v3
+                          1,1,1,  1,-1,1,  1,-1,-1,  1,1,-1,        // v0-v3-v4-v5
+                          1,1,1,  1,1,-1,  -1,1,-1,  -1,1,1,        // v0-v5-v6-v1
+                          -1,1,1,  -1,1,-1,  -1,-1,-1,  -1,-1,1,    // v1-v6-v7-v2
+                          -1,-1,-1,  1,-1,-1,  1,-1,1,  -1,-1,1,    // v7-v4-v3-v2
+                          1,-1,-1,  -1,-1,-1,  -1,1,-1,  1,1,-1};   // v4-v7-v6-v5
+
+    GLfloat normals[] = {0,0,1,  0,0,1,  0,0,1,  0,0,1,             // v0-v1-v2-v3
+                         1,0,0,  1,0,0,  1,0,0, 1,0,0,              // v0-v3-v4-v5
+                         0,1,0,  0,1,0,  0,1,0, 0,1,0,              // v0-v5-v6-v1
+                         -1,0,0,  -1,0,0, -1,0,0,  -1,0,0,          // v1-v6-v7-v2
+                         0,-1,0,  0,-1,0,  0,-1,0,  0,-1,0,         // v7-v4-v3-v2
+                         0,0,-1,  0,0,-1,  0,0,-1,  0,0,-1};        // v4-v7-v6-v5
+
+    glEnableClientState(GL_NORMAL_ARRAY);
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glNormalPointer(GL_FLOAT, 0, normals);
+    glVertexPointer(3, GL_FLOAT, 0, vertices);
+
+
+    glDrawElements(GL_QUADS, 24, GL_UNSIGNED_BYTE, indices);
+
+
+
+    glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+
+    glDisableClientState(GL_NORMAL_ARRAY);
+}
+
 void GameControlWidget::mouseDoubleClickEvent(QMouseEvent *event){
 
 
 }
 
 void GameControlWidget::mousePressEvent(QMouseEvent *event){
+
+#ifdef __MY_DEBUGS
     std::cout<<"++X="<<event->x()
             <<"Y="<<event->y()<<std::endl;
+#endif
 
     if(event->button() == Qt::LeftButton ){
         startMotion(event->x(),this->height()-event->y());
     }
 }
 void GameControlWidget::mouseReleaseEvent(QMouseEvent *event){
+#ifdef __MY_DEBUGS
     std::cout<<"__X="<<event->x()
             <<"Y="<<event->y()<<std::endl;
+#endif
 
     if(event->button() == Qt::LeftButton ){
         stopMotion(event->x(),this->height()-event->y());
@@ -228,11 +298,6 @@ void GameControlWidget::keyReleaseEvent(QKeyEvent *event){
  *
 */
 void GameControlWidget::mouseMoveEvent(QMouseEvent *event){
-    /*std::cout<<"\t\tX="<<event->x()
-            <<"Y="<<event->y()<<"  angle="<<angle
-           <<"  ax:"<<axis[0]<<' '<<axis[1]<<' '<<axis[2]
-            <<std::endl;
-    */
     if(trackingMouse)
     {
        double curPos[3], dx, dy, dz;
