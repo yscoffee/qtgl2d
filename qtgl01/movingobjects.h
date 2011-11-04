@@ -16,11 +16,6 @@ protected:
     enum States{ S_NORMAL, S_JUMPING };
     States state;
 
-    //central point
-    int x;
-    int y;
-    int z;
-
     //velocity
     int vx;
     int vy;
@@ -50,13 +45,6 @@ public:
     static States getNormalState(){return S_NORMAL;}
     inline
     static States getJumpingState(){return S_JUMPING;}
-
-    virtual int getX();
-    virtual int getY();
-    virtual int getZ();
-    virtual void setX(const int);
-    virtual void setY(const int);
-    virtual void setZ(const int);
 
     virtual int getVX();
     virtual int getVY();

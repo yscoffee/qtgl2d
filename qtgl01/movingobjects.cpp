@@ -2,7 +2,6 @@
 
 
 MovingObjects::MovingObjects():
-    x(0),y(0),z(0),
     vx(0),vy(0),vz(0),
     ax(0),ay(0),az(0),m(1),fT(0),fx(0),fy(0),fz(0),
     state(MovingObjects::S_NORMAL)
@@ -26,18 +25,6 @@ inline
 void MovingObjects::setAccZ(const int AZ){ az=AZ;}
 
 
-inline
-int MovingObjects::getX(){return x;}
-inline
-int MovingObjects::getY(){return y;}
-inline
-int MovingObjects::getZ(){return z;}
-inline
-void MovingObjects::setX(const int X){ x=X; }
-inline
-void MovingObjects::setY(const int Y){ y=Y; }
-inline
-void MovingObjects::setZ(const int Z){ z=Z; }
 
 
 inline

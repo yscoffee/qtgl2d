@@ -1,7 +1,7 @@
 #include "gameControlWidget.h"
 #include "ui_gameControlWidget.h"
 #include "debugtools.h"
-
+#include "drawutilities.h"
 #include <QtOpenGL>
 #include <iostream>
 #include <QThread>
@@ -39,18 +39,19 @@ void GameControlWidget::initializeGL(){
     glEnableClientState(GL_COLOR_ARRAY);
     setAutoBufferSwap(true);
     glMatrixMode(GL_MODELVIEW);
-    glTranslatef(0,0,-30);
+
+    glTranslatef(-70,-70,-30);
 
     //start idle func after 600ms
-    QTimer::singleShot(600, this, SLOT(startIdleFunc()));
+    //QTimer::singleShot(600, this, SLOT(startIdleFunc()));
 
-    updateTimerID=startTimer(static_cast<int>(10));
+    //updateTimerID=startTimer(static_cast<int>(10));
 
 }
 
 void GameControlWidget::startIdleFunc(){
     //supoose 60fps , redrawing action can be done in the interval.
-    redrawTimerID=startTimer(static_cast<int>(0));
+    redrawTimerID=startTimer(static_cast<int>(10));
 
 }
 
@@ -61,8 +62,8 @@ void GameControlWidget::resizeGL(int width, int height){
     glLoadIdentity();
     GLfloat x = GLfloat(width) / height;
     float d = 2;
-    glFrustum(-d, d, -d ,d, 2.0, 100.0);
-    //glOrtho(-100.0, 100.0, -100.0, 100.0, -100.0,1000);
+    //glFrustum(-d, d, -d ,d, 2.0, 100.0);
+    glOrtho(-120.0, 120.0, -100.0, 100.0, -100.0,1000);
     //gluPerspective(3.14*d/360.0,width/height,5,1000);
 
 
@@ -82,7 +83,10 @@ void GameControlWidget::draw(){
     //glLoadIdentity();
 
     //Moving Frame(World Coordinate)
-    drawAxs();
+   // glTranslatef(-70,-70,-30);
+
+
+
     //trackball function
     if (trackingMouse) {
         glRotatef(angle, axis[0], axis[1], axis[2]);
@@ -92,15 +96,19 @@ void GameControlWidget::draw(){
     //testing inf
     glColor3f(1,1,1);
     drawAxs();
-    glTranslatef(trafX,trafY,trafZ);
-    draw3DSquare(5,1,1,1);
-    draw3DSquare(1,-1,1,2);
-    draw3DSquare(-2,-1,1,3);
-    draw3DSquare(-1,3,1,1);
 
+    //glTranslatef(trafX,trafY,trafZ);
+
+    glBegin(GL_POINTS);
+        glColor3f(1,1,1);
+        glVertex3d(1,1,1);
+        glVertex3d(2,2,1);
+        glVertex3d(2,0,1);
+        glVertex3d(3,1,1);
+    glEnd();
     //**********************
 
-    gameState.renderLiveObjs();
+    gameState.rendering();
 
     //***********************
     glFlush();
@@ -156,7 +164,8 @@ void GameControlWidget::draw3DSquare(){
 }
 
 //HL=half-length of the edges of the square.
-void GameControlWidget::draw3DSquare(const int X ,const int Y,const int Z, const int HL=1){
+void GameControlWidget::draw3DSquare(const int X ,const int Y,const int Z, const int HL=1)
+{
 
     // Set The Color To Blue One Time Only
     glColor3f(0.7f,0.2f,0.8f);
@@ -215,7 +224,6 @@ void GameControlWidget::draw3DSquare(const int X ,const int Y,const int Z, const
 
 void GameControlWidget::mouseDoubleClickEvent(QMouseEvent *event){
 
-
 }
 
 void GameControlWidget::mousePressEvent(QMouseEvent *event){
@@ -227,15 +235,20 @@ void GameControlWidget::mousePressEvent(QMouseEvent *event){
 
     if(event->button() == Qt::LeftButton ){
         startMotion(event->x(),this->height()-event->y());
+        lastY=this->height()-event->y();
+        lastX=event->x();
     }
 }
+
 void GameControlWidget::mouseReleaseEvent(QMouseEvent *event){
+
 #ifdef __MY_DEBUGS
     std::cout<<"__X="<<event->x()
             <<"Y="<<event->y()<<std::endl;
 #endif
 
     if(event->button() == Qt::LeftButton ){
+        if(lastX!=event->x()||lastY!=event->y())
         stopMotion(event->x(),this->height()-event->y());
 
     }else if( event->button() == Qt::RightButton){
@@ -254,12 +267,10 @@ void GameControlWidget::initialGameState()
 void GameControlWidget::timerEvent(QTimerEvent *event){
 
     if( false == gameState.isPasted() ){
-
         if(event->timerId() == redrawTimerID){
 
 
         }
-
         updateGL();
     }
 
@@ -273,7 +284,6 @@ void GameControlWidget::keyReleaseEvent(QKeyEvent *event){
     if( K == Qt::Key_Escape ){
         this->close();
     }
-
 
     glFlush();
     updateGL();
@@ -317,7 +327,6 @@ void GameControlWidget::startMotion(const int X, const int Y){
     trackingMouse = true;
     //CLOSE REDRAW
     //cube will follow mourse
-
     //redrawContinue = false;
 
     trackball_ptov(X, Y, this->width(),this->height(), lastPos);
@@ -331,7 +340,7 @@ void GameControlWidget::trackball_ptov(int x, int y, int width, int height, doub
 
     /* project x,y onto a hemi-sphere centered within width, height */
 
-        //normalize
+    //normalize
     v[0] = (2.0F*x - width) / width;
     v[1] = ( 2.0F*y- height) / height;
     d = (float) sqrt(v[0]*v[0] + v[1]*v[1]);
@@ -339,7 +348,10 @@ void GameControlWidget::trackball_ptov(int x, int y, int width, int height, doub
     v[2] = (float) cos((M_PI/2.0F) * ((d < 1.0F) ? d : 1.0F));
 
     //angle = 1/sqrt(v)
-    a = 1.0F / (float) sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
+    if(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]==0)
+        a=0;
+    else
+        a = 1.0F / (float) sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
 
     v[0] *= a;
     v[1] *= a;

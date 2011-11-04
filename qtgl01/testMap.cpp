@@ -4,8 +4,8 @@ int testMap(void){
 
 
     TileMap m;
-    m.loadMap("D:\\gitresp\\qtgl\\qtgl01\\testmap.txt");
-    m.printMap();
+    m.parseMap("..\\map\\testmap.txt");
+    m.printTileMap();
 
 return 0;
 }

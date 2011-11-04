@@ -1,6 +1,7 @@
 #include "gameStateMaintainer.h"
 #include "movingobjects.h"
 #include "players.h"
+#include "drawutilities.h"
 #include "debugtools.h"
 
 #include <vector>
@@ -10,9 +11,10 @@
 GameStateMaintainer::GameStateMaintainer(const unsigned int WIDTH, const unsigned int HEIGHT)
     :play1( *(new Players()) ), gameWidgetHeight(HEIGHT),
      gameWidgetWidth(WIDTH),
-      currStage( getGSTitle() )
+     currStage( getGSTitle() )
 {
     //Players* p1 = new Players();
+    tileMap.parseMap("..\\map\\testmap.txt");
 
     play1.setX(-10);
     play1.setY(-10);
@@ -45,7 +47,6 @@ void GameStateMaintainer::renderLiveObjs(){
 void GameStateMaintainer::addMovingObj( MovingObjects * newObj ){
     movingObjsList.push_back(newObj);
 }
-
 
 void GameStateMaintainer::keyboardEvent(const QKeyEvent *event)
 {
@@ -83,16 +84,23 @@ void GameStateMaintainer::keyboardEvent(const QKeyEvent *event)
 
 void GameStateMaintainer::updateObjs(const long MS)
 {
+    /*
     if( floor.encounterFloor(play1) ){
         //play1.setY();
         play1.setVY(0);
         play1.setAccY(0);
         play1.setState( Players::getNormalState() );
-    }
+    }*/
 
     for(unsigned int ix=0; ix< movingObjsList.size() ;ix++){
         movingObjsList[ix]->update(MS);
     }
     //update panel
+}
+
+void GameStateMaintainer::rendering()
+{
+    renderLiveObjs();
+    tileMap.rendering();
 }
 

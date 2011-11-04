@@ -34,8 +34,6 @@ public:
 private:
 
     Ui::GameControlWidget *ui;
-
-
     int redrawTimerID;
     int updateTimerID;
 
@@ -57,6 +55,8 @@ private:
     double axis[3];
     double lastPos[3];
     bool trackingMouse;
+    int lastX;
+    int lastY;
 
     void startMotion(const int,const int);
     void stopMotion(const int,const int);

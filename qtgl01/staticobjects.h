@@ -5,6 +5,8 @@
 
 class StaticObjects : public Objects
 {
+protected:
+
 public:
 
     StaticObjects();

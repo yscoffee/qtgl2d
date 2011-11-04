@@ -20,8 +20,9 @@ SOURCES += main.cpp \
     floors.cpp \
     debugtools.cpp \
     testMap.cpp \
-    gameStateMaintainer.h.cpp \
-    tilemap.cpp
+    tilemap.cpp \
+    drawutilities.cpp \
+    gameStateMaintainer.cpp
 
 HEADERS  += \
     gameControlWidget.h \
@@ -34,14 +35,23 @@ HEADERS  += \
     floors.h \
     debugtools.h \
     gameStateMaintainer.h \
-    tilemap.h
+    tilemap.h \
+    drawutilities.h
 
 FORMS    += \
     gameControlWidget.ui \
     mainwindow.ui
 
-OTHER_FILES += \
-    testmap.txt
+OTHER_FILES +=
+
+
+
+
+
+
+
+
+
 
 
 
