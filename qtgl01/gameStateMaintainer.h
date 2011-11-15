@@ -1,28 +1,34 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include <vector>
-
 #include "players.h"
 #include "floors.h"
 #include "movingobjects.h"
 #include "staticobjects.h"
+#include "tilemap.h"
+//#include "debugtools.h"
 #include <QtEvents>
+#include <vector>
 
 class GameStateMaintainer
 {
+
 private:
     enum GameStages{ GS_Title , GS_Gaming, GS_Pasted, GS_ScoreBoard ,GS_GameEnd };
 
 public:
-
     GameStateMaintainer(const unsigned int WIDTH, const unsigned int HEIGHT);
 
     void renderLiveObjs();
+    void renderFloors();
+
+    void rendering();
+
     void updateObjs(const long MS);
 
     void addMovingObj(MovingObjects *);
-    void keyboardEvent(const QKeyEvent *);
+    void keyboardPressEvent(const QKeyEvent *);
+    void keyboardReleaseEvent(const QKeyEvent *);
     void setGameWidgetHeight(const unsigned int );
     void setGameWidgetWidth(const unsigned int );
     inline
@@ -33,9 +39,50 @@ public:
     inline
     GameStages getGSPasted(){return GS_Pasted;}
     inline
-    GameStages getGSTitle(){return GS_Title; }
+    GameStages getGSTitle(){return GS_Title;}
+    inline
+    int getMapWidth(){return tileMap.getMapWidth();}
+    inline
+    int getMapHeight(){return tileMap.getMapHeight();}
 
+    void addFloor(Floors * );
+
+    int getScrXOffset(const unsigned int S_WID){
+        static int c=0;c++;
+        if( play1.getX()+S_WID/2 > tileMap.getMapWidth() ){
+#ifdef __MY_DEBUGS
+                std::cout<<"TX"<<c<<' '<<-1*(tileMap.getMapWidth() - S_WID )<<std::endl;
+#endif
+            return -1*(tileMap.getMapWidth() - S_WID );
+
+        }else if( (play1.getX()- S_WID/2.0) <0  ){
+#ifdef __MY_DEBUGS
+                std::cout<<c<<' '<<"TX retu 0"<<std::endl;
+#endif
+                return 0;
+        }else{
+#ifdef __MY_DEBUGS
+            std::cout<<"TX else"<<c<<' '<<-1*(play1.getX()-S_WID/2.0)<<std::endl;
+#endif
+            return -1*(play1.getX()-S_WID/2.0);
+        }
+
+    }
+    int getScrYOffset(const unsigned int S_HEI){
+        if( play1.getY()+S_HEI*3/2 > tileMap.getMapHeight() ){
+            return tileMap.getMapHeight() - S_HEI*3/4;
+
+        }else if( (play1.getY()- S_HEI*3/4) <0  ){
+            return 0;
+        }else{
+            return play1.getY()-S_HEI*3/4;
+        }
+
+    }
 private:
+
+
+    int playerTrans_Y;
 
     Players& play1;
     Floors floor;
@@ -47,7 +94,10 @@ private:
     unsigned int gameWidgetWidth;
 
     GameStages currStage;
+    TileMap tileMap;
+
 
 };
+
 
 #endif // GAMESTATE_H

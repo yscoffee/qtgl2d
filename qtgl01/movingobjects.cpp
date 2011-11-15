@@ -1,77 +1,48 @@
 #include "movingobjects.h"
-
-
+#include "debugtools.h"
+#include <iostream>
 MovingObjects::MovingObjects():
-    x(0),y(0),z(0),
     vx(0),vy(0),vz(0),
-    ax(0),ay(0),az(0),m(1),fT(0),fx(0),fy(0),fz(0),
     state(MovingObjects::S_NORMAL)
 {
-
-
+    floorY=0;
 
 }
 
 inline
-int MovingObjects::getAccX(){return ax;}
+float MovingObjects::getVX(){return vx;}
 inline
-int MovingObjects::getAccY(){return ay;}
+float MovingObjects::getVY(){return vy;}
 inline
-int MovingObjects::getAccZ(){return az;}
+float MovingObjects::getVZ(){return vz;}
 inline
-void MovingObjects::setAccX(const int AX){ ax=AX;}
+void MovingObjects::setVX(const float VX){ vx=VX;}
 inline
-void MovingObjects::setAccY(const int AY){ ay=AY;}
+void MovingObjects::setVY(const float VY){ vy=VY;}
 inline
-void MovingObjects::setAccZ(const int AZ){ az=AZ;}
-
-
-inline
-int MovingObjects::getX(){return x;}
-inline
-int MovingObjects::getY(){return y;}
-inline
-int MovingObjects::getZ(){return z;}
-inline
-void MovingObjects::setX(const int X){ x=X; }
-inline
-void MovingObjects::setY(const int Y){ y=Y; }
-inline
-void MovingObjects::setZ(const int Z){ z=Z; }
-
-
-inline
-int MovingObjects::getVX(){return vx;}
-inline
-int MovingObjects::getVY(){return vy;}
-inline
-int MovingObjects::getVZ(){return vz;}
-inline
-void MovingObjects::setVX(const int VX){ vx=VX;}
-inline
-void MovingObjects::setVY(const int VY){ vy=VY;}
-inline
-void MovingObjects::setVZ(const int VZ){ vz=VZ;}
+void MovingObjects::setVZ(const float VZ){ vz=VZ;}
 
 //Call by Timer. Be used to update state of game object
 //Unit of time is micro second
-void MovingObjects::update(const long ELAPSED_MS ){
+// now it's call at evey 10ms
+void MovingObjects::update(const int ELAPSED_MS ){
 
-        x += vx;
-        y += vy;
-        z += vz;
+    if (state == getJumpingState()) {
+       setVY(getVY() - 0.002 * ELAPSED_MS);
+    }
 
-        vx += ax;
-        vy += ay;
-        vz += az;
+    // move player
+    x += vx * ELAPSED_MS;
+    y += vy * ELAPSED_MS;
+
+    // check if player landed on floor
+    if (state == getJumpingState() && getY() <= floorY) {
+      setVY(0);
+      setY(floorY);
+      state = getNormalState();
+    }
 
 
-  /*
-    ax += fx/m;
-    ay += fy/m;
-    az += fz/m;
-    fT=fT-ELAPSED_MS>0?fT-ELAPSED_MS:0;
-  */
 
 }
 
@@ -84,6 +55,16 @@ MovingObjects::States MovingObjects::getState()
 void MovingObjects::setState(MovingObjects::States S)
 {
     state = S;
+}
+
+
+void MovingObjects::jump()
+{
+    if( state != getJumpingState() ){
+
+        state=getJumpingState();
+        setVY(JUMP_SPEED);
+   }
 }
 
 

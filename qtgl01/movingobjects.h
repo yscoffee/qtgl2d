@@ -16,31 +16,12 @@ protected:
     enum States{ S_NORMAL, S_JUMPING };
     States state;
 
-    //central point
-    int x;
-    int y;
-    int z;
+    float vx;
+    float vy;
+    float vz;
 
-    //velocity
-    int vx;
-    int vy;
-    int vz;
-
-    //acceleration
-    int ax;
-    int ay;
-    int az;
-
-    //F = MA
-    //Time
-    unsigned int fT;
-
-    // F/M = A
-    double fx;
-    double fy;
-    double fz;
-
-    double m;
+    int floorY;
+    bool onGround;
 
 public:
     MovingObjects();
@@ -51,28 +32,31 @@ public:
     inline
     static States getJumpingState(){return S_JUMPING;}
 
-    virtual int getX();
-    virtual int getY();
-    virtual int getZ();
-    virtual void setX(const int);
-    virtual void setY(const int);
-    virtual void setZ(const int);
+    static const float MAX_VX=0.4;
+    static const float JUMP_SPEED =  0.95f;
 
-    virtual int getVX();
-    virtual int getVY();
-    virtual int getVZ();
-    virtual void setVX(const int);
-    virtual void setVY(const int);
-    virtual void setVZ(const int);
 
-    virtual int getAccX();
-    virtual int getAccY();
-    virtual int getAccZ();
-    virtual void setAccX(const int);
-    virtual void setAccY(const int);
-    virtual void setAccZ(const int);
+    virtual float getVX();
+    virtual float getVY();
+    virtual float getVZ();
+    virtual void setVX(const float);
+    virtual void setVY(const float);
+    virtual void setVZ(const float);
+    virtual void setfloorY(const int F){floorY=F;}
+    virtual void update(const int ELAPSED_MS );
 
-    virtual void update(const long ELAPSED_MS );
+    virtual void jump();
+
+    void collideHorizontal(){
+        setVX(0);
+    }
+
+    void collideVertical() {
+        if (getVY() > 0) {
+            onGround = true;
+        }
+        setVY(0);
+    }
 
 };
 

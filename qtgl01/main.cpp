@@ -9,10 +9,12 @@ int testMap();
 
 int main(int argc, char *argv[])
 {
-    testMap();
+    //testMap();
+
     cout<<"start"<<endl;
 
     QApplication a(argc, argv);
+
 
     GameControlWidget w;
     w.show();
