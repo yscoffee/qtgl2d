@@ -9,6 +9,7 @@
 //#include "debugtools.h"
 #include <QtEvents>
 #include <vector>
+#include <cmath>
 
 class GameStateMaintainer
 {
@@ -31,6 +32,7 @@ public:
     void keyboardReleaseEvent(const QKeyEvent *);
     void setGameWidgetHeight(const unsigned int );
     void setGameWidgetWidth(const unsigned int );
+    void resetPlayer(){ play1.resetState();}
     inline
     bool isPasted(){return currStage==GS_Pasted;}
 
@@ -47,13 +49,15 @@ public:
 
     void addFloor(Floors * );
 
-    int getScrXOffset(const unsigned int S_WID){
+    int getScrXOffset(const int S_WID){
+#ifdef __MY_DEBUGS
         static int c=0;c++;
+#endif
         if( play1.getX()+S_WID/2 > tileMap.getMapWidth() ){
 #ifdef __MY_DEBUGS
                 std::cout<<"TX"<<c<<' '<<-1*(tileMap.getMapWidth() - S_WID )<<std::endl;
 #endif
-            return -1*(tileMap.getMapWidth() - S_WID );
+            return -1*std::abs(static_cast<float>(tileMap.getMapWidth() - S_WID ));
 
         }else if( (play1.getX()- S_WID/2.0) <0  ){
 #ifdef __MY_DEBUGS
@@ -64,20 +68,15 @@ public:
 #ifdef __MY_DEBUGS
             std::cout<<"TX else"<<c<<' '<<-1*(play1.getX()-S_WID/2.0)<<std::endl;
 #endif
-            return -1*(play1.getX()-S_WID/2.0);
+            return -1*std::abs(static_cast<float>(play1.getX()-S_WID/2.0));
         }
 
     }
-    int getScrYOffset(const unsigned int S_HEI){
-        if( play1.getY()+S_HEI*3/2 > tileMap.getMapHeight() ){
-            return tileMap.getMapHeight() - S_HEI*3/4;
-
-        }else if( (play1.getY()- S_HEI*3/4) <0  ){
-            return 0;
-        }else{
-            return play1.getY()-S_HEI*3/4;
-        }
-
+    int getScrYOffset(const int S_HEI){
+        if( play1.getY()  - S_HEI/2 >0 )
+            return -1*(play1.getY() -  S_HEI/2);
+         else
+           return 0;
     }
 private:
 

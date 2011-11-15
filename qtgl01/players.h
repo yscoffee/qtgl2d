@@ -29,11 +29,14 @@ public:
     virtual void update(const long MS);
     virtual int getHeight(){return 2*HALF_HEI;}
     virtual int getWidth(){return 2*HALF_WID;}
-
+    inline
     int getHalfWidth(){return HALF_WID;}
+    inline
     int getHalfHeight(){return HALF_HEI;}
 
+    //int getFloorY(){return floorY;}
     void handleCollision(  Objects*);
+    void performFalling(const long MS);
 };
 
 #endif // PLAYERS_H

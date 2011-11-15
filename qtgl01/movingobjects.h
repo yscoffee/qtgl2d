@@ -13,25 +13,28 @@ class MovingObjects : public Objects
 {
 
 protected:
-    enum States{ S_NORMAL, S_JUMPING };
+    enum States{ S_BOTTOM_FLOOR, S_JUMPING ,S_HIGHFLOOR,S_FALL };
     States state;
 
     float vx;
     float vy;
     float vz;
 
-    int floorY;
+    //int floorY;
     bool onGround;
 
 public:
     MovingObjects();
     void setState(States);
-    States getState();
+    virtual States getState();
     inline
-    static States getNormalState(){return S_NORMAL;}
+    static States getBottomFloorState(){return S_BOTTOM_FLOOR;}
     inline
     static States getJumpingState(){return S_JUMPING;}
-
+    inline
+    static States getFallState(){return S_FALL;}
+    inline
+    static States getHighFloorState(){return S_HIGHFLOOR;}
     static const float MAX_VX=0.4;
     static const float JUMP_SPEED =  0.95f;
 
@@ -42,7 +45,7 @@ public:
     virtual void setVX(const float);
     virtual void setVY(const float);
     virtual void setVZ(const float);
-    virtual void setfloorY(const int F){floorY=F;}
+    //virtual void setfloorY(const int F){floorY=F;}
     virtual void update(const int ELAPSED_MS );
 
     virtual void jump();

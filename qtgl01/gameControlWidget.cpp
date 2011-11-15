@@ -56,12 +56,12 @@ void GameControlWidget::resizeGL(int width, int height){
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     GLfloat x = GLfloat(width) / height;
-    float h = 600;
+    float h = height;
     //glFrustum(-h, h, -h ,h, 2.0, 100.0);
-    glOrtho(-1*x*h/2, x*h/2, -1*h/2, h/2, -10.0,2000);
+    glOrtho(-1*x*h/2, x*h/2, -1*h/2, h/2, 10,2000);
     //gluPerspective(3.14*d/360.0,width/height,5,1000);
-
-
+    gameState.setGameWidgetHeight(height);
+    gameState.setGameWidgetWidth(width);
 }
 
 //Display function
@@ -76,7 +76,9 @@ void GameControlWidget::draw(){
     // Reset The View
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-//    drawAxs();
+
+
+    //Move central point of world frame to the left bottom of screen
     glTranslatef(-1*width()/2,-1*height()/2,-30);
 
     //trackball function
@@ -94,7 +96,7 @@ void GameControlWidget::draw(){
 
     gameState.rendering();
 
-    //***********************
+    //**********************
     glFlush();
 
 }
@@ -241,6 +243,7 @@ void GameControlWidget::mouseReleaseEvent(QMouseEvent *event){
         angle =0;
         glTranslatef(0,0,-30);
 
+        gameState.resetPlayer();
         updateGL();
     }
 }

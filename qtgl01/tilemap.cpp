@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <cmath>
 
 TileMap::TileMap( ):width(0),height(0)
 {
@@ -134,7 +135,7 @@ void TileMap::parseMap(const char* path ){
 void TileMap::addFloor(const int X, const int Y, const int Z)
 {
 
-    floorList.push_back(Floors(X,Y,Z,TILE_SIZE));
+    floorList.push_back(Floors(X,Y,Z,TILE_SIZE,TILE_SIZE));
 }
 
 void TileMap::addEnemy(const int, const int, const int)
@@ -164,15 +165,36 @@ void TileMap::printObjLists()
 
 Objects * TileMap::tileCollisionCheck(const int X, const int Y, const int W, const int H)
 {
+    int xDis=0;
+    int yDis=0;
+
     for(int ix=0; ix<floorList.size() ; ix++){
-        //check X
-        if(floorList[ix].getX()+TILE_SIZE/2 > X+W/2 && floorList[ix].getX()-TILE_SIZE/2 < X){
-            //check Y
-            if(floorList[ix].getY()+TILE_SIZE/2 > Y+H/2 && floorList[ix].getY()-TILE_SIZE/2 < Y){
-                //found a collision
-                return &floorList[ix];
-            }
+        //check X,Y
+        xDis = std::abs(static_cast<float>(X-floorList[ix].getX()) );
+        yDis = std::abs(static_cast<float>(Y-floorList[ix].getY()) );
+
+        if(xDis < W/2+TILE_SIZE/2 && yDis < H/2+TILE_SIZE/2 ){
+            return &floorList[ix];
         }
     }
+}
+
+bool TileMap::checkFalling(Players &p1)
+{
+
+    int xDis=0;
+    int yDis=0;
+
+    for(int ix=0; ix<floorList.size() ; ix++){
+        //check X,Y
+        xDis = std::abs(static_cast<float>(p1.getX()-floorList[ix].getX()) );
+        yDis = std::abs(static_cast<float>(p1.getY()-floorList[ix].getY()) );
+
+        if(xDis < p1.getHalfWidth()+TILE_SIZE/2 &&yDis == p1.getHalfHeight()+TILE_SIZE/2 ){
+            return false;
+        }
+    }
+
+    return true;
 }
 

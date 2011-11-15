@@ -8,7 +8,7 @@ class Floors: public Objects
 {
 public:
     Floors();
-    Floors(const int X,const int Y,const int Z,const unsigned int W=DEF_FLOOR_LEN,const unsigned int L=DEF_FLOOR_LEN);
+    Floors(const int X,const int Y,const int Z,const unsigned int W,const unsigned int L);
 
     //no need update
     virtual void update(const long ){}

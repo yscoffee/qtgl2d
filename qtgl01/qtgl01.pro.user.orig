@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by Qt Creator 2.3.0, 2011-11-16T03:03:47. -->
+<<<<<<< HEAD
+<!-- Written by Qt Creator 2.3.0, 2011-11-04T00:17:47. -->
+=======
+<!-- Written by Qt Creator 2.3.0, 2011-11-15T11:11:28. -->
+>>>>>>> DevelopTileMapPaser
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>

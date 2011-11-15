@@ -3,7 +3,7 @@
 
 #include<vector>
 #include "floors.h"
-
+#include "players.h"
 
 class TileMap
 {
@@ -45,7 +45,7 @@ public:
     TileMap();
 
     void parseMap(const char*);
-
+    bool checkFalling(Players&);
     static int tileToPixels(const unsigned int COORD_I );
 
     void renderingMap(const int X , const int Y , const int Z,const int SW, const int SH);

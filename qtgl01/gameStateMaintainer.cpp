@@ -19,8 +19,8 @@ GameStateMaintainer::GameStateMaintainer(const unsigned int WIDTH, const unsigne
 
     play1.setX(30);
     play1.setY(100);
-    play1.setState(play1.getJumpingState());
-    play1.setfloorY(tileMap.getTileSize()+play1.getHalfHeight()/2);
+    play1.setState(play1.getFallState());
+    //play1.setfloorY(tileMap.getTileSize()+play1.getHalfHeight() );
     addMovingObj(&play1);
 
 }
@@ -94,7 +94,19 @@ void GameStateMaintainer::updateObjs(const long MS)
 
     //collision check.
     Objects * collideTile = tileMap.tileCollisionCheck(play1.getX(),play1.getY(),play1.getHalfWidth()*2,play1.getHalfHeight()*2);
-    play1.handleCollision(collideTile);
+
+    if(collideTile!=NULL){
+        play1.handleCollision(collideTile);
+
+    }else if(play1.getState() == Players::getHighFloorState() ){
+        if( tileMap.checkFalling(play1) )
+            play1.performFalling(MS);
+    }
+
+    if(play1.getX()<0)
+        play1.setX(0);
+    else if(play1.getX()>tileMap.getMapWidth())
+        play1.setX(tileMap.getMapWidth()- play1.getHalfWidth());
 }
 
 void GameStateMaintainer::rendering()
@@ -121,4 +133,13 @@ void GameStateMaintainer::keyboardReleaseEvent(const QKeyEvent *event)
 
 }
 
+void GameStateMaintainer::setGameWidgetHeight(const unsigned int H)
+{
+    gameWidgetHeight=H;
+}
+
+void GameStateMaintainer::setGameWidgetWidth(const unsigned int W)
+{
+    gameWidgetHeight=W;
+}
 
