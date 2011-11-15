@@ -6,6 +6,7 @@ DrawUtilities::DrawUtilities()
 {
 }
 
+//use x,y,z to be the central point of square
 void DrawUtilities::draw3DSquare(const int X, const int Y, const int Z, const int L)
 {
     const int HL = L/2;

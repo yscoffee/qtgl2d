@@ -17,6 +17,9 @@ bool Floors::encounterFloor(MovingObjects &obj)
 
 void Floors::rendering()
 {
-    DrawUtilities::draw3DSquare(x,y,z,FLOOR_LEN);
+
+
+
+    DrawUtilities::draw3DSquare(x,y,z,width);
 
 }

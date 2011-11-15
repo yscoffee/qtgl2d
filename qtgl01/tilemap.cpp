@@ -98,10 +98,10 @@ void TileMap::setupTileMap(){
         for(int ix=0; ix<map[iy].size();ix++){
             switch(map[iy][ix]){
                 case T_Floor:
-                    addFloor( getConvertAndAlignedCoord(ix), getConvertAndAlignedCoord(height-iy-1) , Z_VAL );
+                    addFloor( getConvertAndAlignedCoord(ix+1), getConvertAndAlignedCoord(height-iy) , Z_VAL );
                     break;
                 case T_Enemy:
-                  //  addEnemy(getConvertAndAlignedCoord(ix),getConvertAndAlignedCoord(height-iy),Z_VAL);
+                    //addEnemy(getConvertAndAlignedCoord(ix),getConvertAndAlignedCoord(height-iy),Z_VAL);
                     break;
                 case T_Star:
                     //addStar(getConvertAndAlignedCoord(ix),getConvertAndAlignedCoord(height-iy),Z_VAL);
@@ -133,7 +133,8 @@ void TileMap::parseMap(const char* path ){
 
 void TileMap::addFloor(const int X, const int Y, const int Z)
 {
-     floorList.push_back(Floors(X,Y,Z));
+
+    floorList.push_back(Floors(X,Y,Z,TILE_SIZE));
 }
 
 void TileMap::addEnemy(const int, const int, const int)
@@ -144,7 +145,7 @@ void TileMap::addStar(const int, const int, const int)
 {
 }
 
-void TileMap::rendering()
+void TileMap::renderingMap(const int X , const int Y , const int Z, const int SW, const int SH)
 {
 
     for(int ix=0; ix<floorList.size() ; ix++){
@@ -155,9 +156,23 @@ void TileMap::rendering()
 void TileMap::printObjLists()
 {
     for(int ix=0; ix<floorList.size() ; ix++){
-        std::cout<<ix<<':'<<floorList[ix].getX()<<' '
+        std::cout<<ix<<"-th:  "<<floorList[ix].getX()<<' '
                 <<floorList[ix].getY()<<' '
                <<floorList[ix].getZ()<<' '<<std::endl;
+    }
+}
+
+Objects * TileMap::tileCollisionCheck(const int X, const int Y, const int W, const int H)
+{
+    for(int ix=0; ix<floorList.size() ; ix++){
+        //check X
+        if(floorList[ix].getX()+TILE_SIZE/2 > X+W/2 && floorList[ix].getX()-TILE_SIZE/2 < X){
+            //check Y
+            if(floorList[ix].getY()+TILE_SIZE/2 > Y+H/2 && floorList[ix].getY()-TILE_SIZE/2 < Y){
+                //found a collision
+                return &floorList[ix];
+            }
+        }
     }
 }
 

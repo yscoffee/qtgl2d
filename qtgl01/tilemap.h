@@ -9,7 +9,7 @@ class TileMap
 {
 private:
     enum TileTypes{T_Floor=1, T_Enemy, T_Star, T_Transparent };
-    static const int TILE_SIZE=4;
+    static const int TILE_SIZE=30;
     static const int Z_VAL=1;
 
     std::vector< std::vector<int> > map;
@@ -33,8 +33,13 @@ private:
     //and align the center point to the specified block.
     inline
     int getConvertAndAlignedCoord(const int C, const unsigned int L=TileMap::TILE_SIZE ){
-        return static_cast<int>(C*TILE_SIZE/2);
+        return static_cast<int>((C-1)*TILE_SIZE + TILE_SIZE/2);
     }
+    inline
+    unsigned int getMapScriptWidth(){return width;}
+
+    inline
+    unsigned int getMapScriptHeight(){return height;}
 
 public:
     TileMap();
@@ -43,7 +48,7 @@ public:
 
     static int tileToPixels(const unsigned int COORD_I );
 
-    void rendering();
+    void renderingMap(const int X , const int Y , const int Z,const int SW, const int SH);
 
     //---------------------------------------------------------
     //some getters functions to retrive basic info.
@@ -51,11 +56,12 @@ public:
     int getTileSize(){return TILE_SIZE;}
 
     inline
-    unsigned int getMapWidth(){return width;}
+    unsigned int getMapWidth(){return getMapScriptWidth()*TILE_SIZE;}
 
     inline
-    unsigned int getMapHeight(){return height;}
+    unsigned int getMapHeight(){return getMapScriptHeight()*TILE_SIZE;}
 
+    Objects* tileCollisionCheck(const int X,const int Y, const int W ,const int H);
     void printTileMap();
     void printObjLists();
 };

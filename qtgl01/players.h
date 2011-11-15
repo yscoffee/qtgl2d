@@ -20,13 +20,20 @@ private:
     GLint vertices[8][3];
 
 public:
-    Players();
 
-    virtual void rendering();
-    virtual void update(const long MS);
     static void renderPlayerInfos(const Players&);
 
+    Players();
+    void resetState();
+    virtual void rendering();
+    virtual void update(const long MS);
+    virtual int getHeight(){return 2*HALF_HEI;}
+    virtual int getWidth(){return 2*HALF_WID;}
 
+    int getHalfWidth(){return HALF_WID;}
+    int getHalfHeight(){return HALF_HEI;}
+
+    void handleCollision(  Objects*);
 };
 
 #endif // PLAYERS_H

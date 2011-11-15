@@ -2,11 +2,12 @@
 #include "movingobjects.h"
 #include "players.h"
 #include "drawutilities.h"
-#include "debugtools.h"
+//#include "debugtools.h"
 
 #include <vector>
 #include <iostream>
 #include <QtEvents>
+#include <QtOpenGL>
 
 GameStateMaintainer::GameStateMaintainer(const unsigned int WIDTH, const unsigned int HEIGHT)
     :play1( *(new Players()) ), gameWidgetHeight(HEIGHT),
@@ -16,9 +17,10 @@ GameStateMaintainer::GameStateMaintainer(const unsigned int WIDTH, const unsigne
     //Players* p1 = new Players();
     tileMap.parseMap("..\\map\\testmap.txt");
 
-    play1.setX(-10);
-    play1.setY(-10);
-
+    play1.setX(30);
+    play1.setY(100);
+    play1.setState(play1.getJumpingState());
+    play1.setfloorY(tileMap.getTileSize()+play1.getHalfHeight()/2);
     addMovingObj(&play1);
 
 }
@@ -48,26 +50,20 @@ void GameStateMaintainer::addMovingObj( MovingObjects * newObj ){
     movingObjsList.push_back(newObj);
 }
 
-void GameStateMaintainer::keyboardEvent(const QKeyEvent *event)
+void GameStateMaintainer::keyboardPressEvent(const QKeyEvent *event)
 {
     const int K = event->key();
 
-    if( K == Qt::Key_Up ){
-        play1.setY(play1.getY()+1);
-
+    if( K == Qt::Key_Up || K == Qt::Key_Space){
+        play1.jump();
     }else if( K == Qt::Key_Down ){
-        play1.setY(play1.getY()-1);
+       //play1.setVY(play1.getY()-1);
 
     }else if( K == Qt::Key_Left ){
-        play1.setX(play1.getX()-1);
+         play1.setVX( play1.getVX()- Players::MAX_VX );
 
     }else if( K == Qt::Key_Right ){
-        play1.setX(play1.getX()+1 );
-
-    }else if( K == Qt::Key_Space){
-
-        play1.setState( Players::getJumpingState() );
-        play1.setAccY(-1);
+        play1.setVX( play1.getVX()+ Players::MAX_VX );
 
     }else if( K == Qt::Key_P ){
         if( currStage == getGSGaming()|| currStage == getGSPasted())
@@ -80,27 +76,49 @@ void GameStateMaintainer::keyboardEvent(const QKeyEvent *event)
 #endif
     }
 
+
 }
 
 void GameStateMaintainer::updateObjs(const long MS)
 {
-    /*
-    if( floor.encounterFloor(play1) ){
-        //play1.setY();
-        play1.setVY(0);
-        play1.setAccY(0);
-        play1.setState( Players::getNormalState() );
-    }*/
-
+/*
+#ifdef __MY_DEBUGS
+    std::cout<<" px:"<<play1.getX()<<" py:"<<play1.getY()<<std::endl;
+#endif
+*/
     for(unsigned int ix=0; ix< movingObjsList.size() ;ix++){
         movingObjsList[ix]->update(MS);
     }
-    //update panel
+
+    //update panel.
+
+    //collision check.
+    Objects * collideTile = tileMap.tileCollisionCheck(play1.getX(),play1.getY(),play1.getHalfWidth()*2,play1.getHalfHeight()*2);
+    play1.handleCollision(collideTile);
 }
 
 void GameStateMaintainer::rendering()
 {
+    tileMap.renderingMap(play1.getX(),play1.getY(),play1.getZ(),gameWidgetWidth,gameWidgetHeight);
+
     renderLiveObjs();
-    tileMap.rendering();
 }
+
+void GameStateMaintainer::keyboardReleaseEvent(const QKeyEvent *event)
+{
+
+    const int K = event->key();
+
+
+    if( K == Qt::Key_Left ){
+
+        play1.setVX(0);
+
+    }else if( K == Qt::Key_Right ){
+        play1.setVX(0);
+
+    }
+
+}
+
 

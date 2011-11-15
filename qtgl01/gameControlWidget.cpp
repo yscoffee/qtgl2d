@@ -10,7 +10,6 @@ GameControlWidget::GameControlWidget(QWidget *parent) :
     QGLWidget(QGLFormat(QGL::DoubleBuffer),parent),
     ui(new Ui::GameControlWidget),
     redrawTimerID(-1),
-    updateTimerID(-1),
     trafX(0),trafY(0),trafZ(0),
     gameState(this->width(),this->height()),
     trackingMouse(false)
@@ -38,12 +37,8 @@ void GameControlWidget::initializeGL(){
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
     setAutoBufferSwap(true);
-    glMatrixMode(GL_MODELVIEW);
-
-    glTranslatef(-70,-70,-30);
-
     //start idle func after 600ms
-    //QTimer::singleShot(600, this, SLOT(startIdleFunc()));
+    QTimer::singleShot(600, this, SLOT(startIdleFunc()));
 
     //updateTimerID=startTimer(static_cast<int>(10));
 
@@ -51,7 +46,7 @@ void GameControlWidget::initializeGL(){
 
 void GameControlWidget::startIdleFunc(){
     //supoose 60fps , redrawing action can be done in the interval.
-    redrawTimerID=startTimer(static_cast<int>(10));
+    redrawTimerID=startTimer(static_cast<int>(IDLE_REDRAW_MS));
 
 }
 
@@ -61,9 +56,9 @@ void GameControlWidget::resizeGL(int width, int height){
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     GLfloat x = GLfloat(width) / height;
-    float d = 2;
-    //glFrustum(-d, d, -d ,d, 2.0, 100.0);
-    glOrtho(-120.0, 120.0, -100.0, 100.0, -100.0,1000);
+    float h = 600;
+    //glFrustum(-h, h, -h ,h, 2.0, 100.0);
+    glOrtho(-1*x*h/2, x*h/2, -1*h/2, h/2, -10.0,2000);
     //gluPerspective(3.14*d/360.0,width/height,5,1000);
 
 
@@ -80,32 +75,21 @@ void GameControlWidget::draw(){
 
     // Reset The View
     glMatrixMode(GL_MODELVIEW);
-    //glLoadIdentity();
-
-    //Moving Frame(World Coordinate)
-   // glTranslatef(-70,-70,-30);
-
-
+    glLoadIdentity();
+//    drawAxs();
+    glTranslatef(-1*width()/2,-1*height()/2,-30);
 
     //trackball function
-    if (trackingMouse) {
+   /* if (trackingMouse) {
         glRotatef(angle, axis[0], axis[1], axis[2]);
         glColor3f(0.5,0.3,1);
         drawAxs();
     }
-    //testing inf
-    glColor3f(1,1,1);
-    drawAxs();
+    */
 
-    //glTranslatef(trafX,trafY,trafZ);
+    glTranslatef(gameState.getScrXOffset(width()),gameState.getScrYOffset(height()),0);
 
-    glBegin(GL_POINTS);
-        glColor3f(1,1,1);
-        glVertex3d(1,1,1);
-        glVertex3d(2,2,1);
-        glVertex3d(2,0,1);
-        glVertex3d(3,1,1);
-    glEnd();
+
     //**********************
 
     gameState.rendering();
@@ -249,7 +233,7 @@ void GameControlWidget::mouseReleaseEvent(QMouseEvent *event){
 
     if(event->button() == Qt::LeftButton ){
         if(lastX!=event->x()||lastY!=event->y())
-        stopMotion(event->x(),this->height()-event->y());
+            stopMotion(event->x(),this->height()-event->y());
 
     }else if( event->button() == Qt::RightButton){
         glMatrixMode(GL_MODELVIEW);
@@ -260,30 +244,31 @@ void GameControlWidget::mouseReleaseEvent(QMouseEvent *event){
         updateGL();
     }
 }
+
 void GameControlWidget::initialGameState()
-{
+{ }
 
-}
 void GameControlWidget::timerEvent(QTimerEvent *event){
-
     if( false == gameState.isPasted() ){
         if(event->timerId() == redrawTimerID){
-
-
+            gameState.updateObjs(IDLE_REDRAW_MS);
+            updateGL();
         }
-        updateGL();
     }
-
 }
 void GameControlWidget::keyReleaseEvent(QKeyEvent *event){
-
     const int K = event->key();
-
-    gameState.keyboardEvent(event);
-
+    gameState.keyboardReleaseEvent(event);
     if( K == Qt::Key_Escape ){
         this->close();
     }
+
+}
+void GameControlWidget::keyPressEvent(QKeyEvent *event){
+
+    const int K = event->key();
+
+    gameState.keyboardPressEvent(event);
 
     glFlush();
     updateGL();

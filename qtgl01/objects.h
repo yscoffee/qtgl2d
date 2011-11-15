@@ -16,7 +16,11 @@ public:
     virtual void rendering()=0;
     //Call by Timer. Be used to update state of game object
     //Unit of time is millisecond second
-    virtual void update(const long ELAPSED_MS )=0;
+    virtual void update(const long int ELAPSED_MS )=0;
+
+    virtual int getWidth()=0;
+    virtual int getHeight()=0;
+
     inline
     int getX(){return x;}
     inline

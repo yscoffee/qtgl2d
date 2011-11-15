@@ -23,19 +23,20 @@ public:
     void resizeGL(int width, int height);
     //display
     void paintGL();
-    void keyReleaseEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseDoubleClickEvent(QMouseEvent *event);
-
+    void keyReleaseEvent(QKeyEvent *event);
     void timerEvent(QTimerEvent *);
     void drawAxs();
 private:
 
+    static const int IDLE_REDRAW_MS=10;
+
     Ui::GameControlWidget *ui;
     int redrawTimerID;
-    int updateTimerID;
 
     GLdouble trafX;
     GLdouble trafY;

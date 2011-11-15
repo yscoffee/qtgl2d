@@ -8,15 +8,17 @@ class Floors: public Objects
 {
 public:
     Floors();
-    Floors(const int X,const int Y,const int Z,const unsigned int W=FLOOR_LEN,const unsigned int L=FLOOR_LEN);
+    Floors(const int X,const int Y,const int Z,const unsigned int W=DEF_FLOOR_LEN,const unsigned int L=DEF_FLOOR_LEN);
 
     //no need update
     virtual void update(const long ){}
     virtual void rendering();
+    virtual int getWidth(){return width;}
+    virtual int getHeight(){return height;}
 
     bool encounterFloor(MovingObjects& );
 
-    static const unsigned int FLOOR_LEN=2;
+    static const unsigned int DEF_FLOOR_LEN=10;
 
 protected:
     unsigned int width;
