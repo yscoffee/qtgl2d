@@ -1,10 +1,11 @@
 #include "players.h"
 #include "movingobjects.h"
-
+#include <iostream>
 #include <QGLWidget>
 
 Players::Players():
-    hp(0),mp(0),sp(0),exp(0),level(0),HALF_WID(4),HALF_HEI(4)
+    hp(0),mp(0),sp(0),exp(0),level(0),HALF_WID(4),HALF_HEI(4),
+    preX(0),preY(0),preZ(0)
 {
 
     //floorY = HALF_HEI;
@@ -30,11 +31,12 @@ void Players::renderPlayerInfos(const Players&)
 
 }
 
-void Players::update(const long MS)
+void Players::update(const int MS)
 {
+    preX=x;
+    preY=y;
+    preZ=z;
     MovingObjects::update(MS);
-
-
 
 }
 
@@ -56,11 +58,6 @@ void Players::handleCollision( Objects *obj)
     if( obj == NULL )
         return;
 
-    int pRight_X=x+HALF_WID;
-    int pLeft_X=x-HALF_WID;
-
-    int pHigh_Y=y+HALF_HEI;
-    int pLow_Y=y-HALF_HEI;
 
     int objRight_X=obj->getX() + obj->getWidth()/2;
     int objLeft_X=obj->getX()- obj->getWidth()/2;
@@ -68,6 +65,129 @@ void Players::handleCollision( Objects *obj)
     int objHigh_Y=obj->getY() + obj->getHeight()/2;
     int objLow_Y=obj->getY() - obj->getHeight()/2;
 
+    int dx = preX-x;
+    int dy = preY-y;
+    //int dz = z=preZ;
+
+    int pRight_X=preX+HALF_WID;
+    int pLeft_X=preX-HALF_WID;
+
+    int pHigh_Y=preY+HALF_HEI;
+    int pLow_Y=preY-HALF_HEI;
+
+    if( 0==dy && ( state == getBottomFloorState()
+                  ||  state == getHighFloorState() )){
+        //align X
+        setVX(0);
+       /* if(dx>0){
+        //right collision
+            setX(objLeft_X);
+
+        }else if(dx<0){
+        //left collision
+            setX(objRight_X);
+        }else{
+            std::cerr<<"error dx=0"<<std::endl;
+        }*/
+        //overlap X test
+        if( pLeft_X <= objRight_X ){
+            //align X, left collided
+            setX(objLeft_X-HALF_WID);
+            //set VX =0
+            setVX(0);
+
+        }else if(pRight_X >= objLeft_X ){
+            //align X, right collided
+            setX(objRight_X+HALF_WID);
+            //set VX =0
+            setVX(0);
+
+        }
+
+    }else if( state == getJumpingState()
+                ||state == getFallState() ){
+
+        // Determine R|L or U|D collision
+        // Use overlapping area to check
+
+        //overlap Y test
+        if( pHigh_Y <= objLow_Y ){
+            //align Y, lowwer
+            setY(objLow_Y-HALF_HEI);
+            //set VX =0
+            setVY(0);
+
+
+
+        }else if(pLow_Y >= objHigh_Y ){
+           //align Y, upper
+            setY(objHigh_Y+HALF_HEI);
+            //set VX =0
+            setVY(0);
+            if(y < 2*obj->getHeight() )
+                setState(getBottomFloorState());
+            else
+                setState(getHighFloorState());
+        }
+
+        bool yAreaStillOverlap = (y-HALF_HEI < objHigh_Y)&&(y-HALF_HEI > objLow_Y)
+                                    || (y+HALF_HEI < objHigh_Y)&&(y+HALF_HEI > objLow_Y) ;
+        //overlap X test
+        if( yAreaStillOverlap && pLeft_X <= objRight_X ){
+            //align X, left collided
+            setX(objLeft_X-HALF_WID);
+            //set VX =0
+            setVX(0);
+
+        }else if(yAreaStillOverlap && pRight_X >= objLeft_X ){
+            //align X, right collided
+            setX(objRight_X+HALF_WID);
+            //set VX =0
+            setVX(0);
+
+        }
+
+
+/*
+        if( dy   ){
+        // up/down collision
+
+            if( dy >=0 ){
+            // up collided
+                // align Y
+                setY(objLow_Y-HALF_HEI);
+                setVY(-1*getVY());
+
+            }else{
+            // dy <0
+            // falling
+                //align Y
+                setY(objHigh_Y+HALF_HEI);
+                setVY(0);
+            }
+
+        }else{
+        // R|L collision
+            //align X
+            if(preX > obj->getX() ){
+                setX(objLeft_X-HALF_WID);
+            }else if(preX < obj->getX() ){
+                setX(objRight_X+HALF_WID);
+            }else{
+                std::cerr<<"logic error"<<std::endl;
+            }
+            //reset VY
+            setVY(0);
+        }
+*/
+
+    }else {
+
+
+    }
+
+
+    /*
     //first check X-Axis
     // left
     //   [--O--]
@@ -94,7 +214,7 @@ void Players::handleCollision( Objects *obj)
 
      if( (xLCol||xRCol) && (yFallCol||yJumpCol) ){
 
-         if(xLCol){
+        if(xLCol){
              setVX(0);
 
              //if player is falling, not allign x-axis
@@ -125,6 +245,7 @@ void Players::handleCollision( Objects *obj)
          }
 
      }
+     */
 
 }
 

@@ -90,6 +90,8 @@ void GameStateMaintainer::updateObjs(const long MS)
         movingObjsList[ix]->update(MS);
     }
 
+    //play1.update(MS);
+
     //update panel.
 
     //collision check.
@@ -99,7 +101,9 @@ void GameStateMaintainer::updateObjs(const long MS)
         play1.handleCollision(collideTile);
 
     }else if(play1.getState() == Players::getHighFloorState() ){
-        if( tileMap.checkFalling(play1) )
+    //no collision
+    //check falling condition
+        if(tileMap.checkFalling(play1))
             play1.performFalling(MS);
     }
 

@@ -46,7 +46,7 @@ public:
     virtual void setVY(const float);
     virtual void setVZ(const float);
     //virtual void setfloorY(const int F){floorY=F;}
-    virtual void update(const int ELAPSED_MS );
+    virtual void update(const int );
 
     virtual void jump();
 

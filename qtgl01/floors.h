@@ -11,7 +11,7 @@ public:
     Floors(const int X,const int Y,const int Z,const unsigned int W,const unsigned int L);
 
     //no need update
-    virtual void update(const long ){}
+    virtual void update(const int ){}
     virtual void rendering();
     virtual int getWidth(){return width;}
     virtual int getHeight(){return height;}

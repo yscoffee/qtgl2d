@@ -19,6 +19,11 @@ private:
     const int HALF_HEI;
     GLint vertices[8][3];
 
+    int preX;
+    int preY;
+    int preZ;
+
+
 public:
 
     static void renderPlayerInfos(const Players&);
@@ -26,7 +31,7 @@ public:
     Players();
     void resetState();
     virtual void rendering();
-    virtual void update(const long MS);
+    virtual void update(const int MS);
     virtual int getHeight(){return 2*HALF_HEI;}
     virtual int getWidth(){return 2*HALF_WID;}
     inline
