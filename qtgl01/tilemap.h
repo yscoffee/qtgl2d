@@ -4,7 +4,7 @@
 #include<vector>
 #include "floors.h"
 #include "players.h"
-
+#include "starts.h"
 class TileMap
 {
 private:
@@ -17,7 +17,7 @@ private:
     unsigned int height;
 
     std::vector<Floors> floorList;
-    std::vector<Objects> starList;
+    std::vector<Starts> starList;
     std::vector<Objects> enemyList;
 
     void addFloor(const int,const int,const int);
@@ -62,6 +62,7 @@ public:
     unsigned int getMapHeight(){return getMapScriptHeight()*TILE_SIZE;}
 
     Objects* tileCollisionCheck(const int X,const int Y, const int W ,const int H);
+    Objects* starsCollisionCheck(const int X, const int Y, const int W, const int H);
     void printTileMap();
     void printObjLists();
 };

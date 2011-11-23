@@ -3,11 +3,12 @@
 
 #include "objects.h"
 #include "movingobjects.h"
-
+#include <textures.h>
 class Floors: public Objects
 {
 public:
     Floors();
+    ~Floors();
     Floors(const int X,const int Y,const int Z,const unsigned int W,const unsigned int L);
 
     //no need update
@@ -23,6 +24,10 @@ public:
 protected:
     unsigned int width;
     unsigned int height;
+    virtual void bindTexture(){}
+private:
+    static Textures tex;
+
 
 };
 

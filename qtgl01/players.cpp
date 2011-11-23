@@ -4,8 +4,8 @@
 #include <QGLWidget>
 
 Players::Players():
-    hp(0),mp(0),sp(0),exp(0),level(0),HALF_WID(4),HALF_HEI(4),
-    preX(0),preY(0),preZ(0)
+    hp(0),mp(0),sp(0),exp(0),level(0),HALF_WID(10),HALF_HEI(10),
+    preX(0),preY(0),preZ(0),scores(0)
 {
 
     //floorY = HALF_HEI;
@@ -25,10 +25,11 @@ void Players::rendering(){
 
 }
 
-void Players::renderPlayerInfos(const Players&)
+void Players::renderPlayerInfos(const Players&,QGLWidget * qtw)
 {
 
-
+    qtw->setFont(QFont("Times",23));
+    qtw->renderText(750,550,0,QString("123123123123"));
 }
 
 void Players::update(const int MS)
@@ -90,13 +91,13 @@ void Players::handleCollision( Objects *obj)
             std::cerr<<"error dx=0"<<std::endl;
         }*/
         //overlap X test
-        if( pLeft_X <= objRight_X ){
+        if( x+HALF_WID <= objRight_X ){
             //align X, left collided
             setX(objLeft_X-HALF_WID);
             //set VX =0
             setVX(0);
 
-        }else if(pRight_X >= objLeft_X ){
+        }else if(x-HALF_WID >= objLeft_X ){
             //align X, right collided
             setX(objRight_X+HALF_WID);
             //set VX =0

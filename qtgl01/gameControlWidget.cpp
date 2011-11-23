@@ -11,7 +11,7 @@ GameControlWidget::GameControlWidget(QWidget *parent) :
     ui(new Ui::GameControlWidget),
     redrawTimerID(-1),
     trafX(0),trafY(0),trafZ(0),
-    gameState(this->width(),this->height()),
+    gameState(this->width(),this->height(),this),
     trackingMouse(false)
 {
 

@@ -10,6 +10,7 @@
 #include <QtEvents>
 #include <vector>
 #include <cmath>
+#include <QGLWidget>
 
 class GameStateMaintainer
 {
@@ -18,7 +19,7 @@ private:
     enum GameStages{ GS_Title , GS_Gaming, GS_Pasted, GS_ScoreBoard ,GS_GameEnd };
 
 public:
-    GameStateMaintainer(const unsigned int WIDTH, const unsigned int HEIGHT);
+    GameStateMaintainer(const unsigned int WIDTH, const unsigned int HEIGHT,QGLWidget*);
 
     void renderLiveObjs();
     void renderFloors();
@@ -83,7 +84,7 @@ public:
     }
 private:
 
-
+    QGLWidget * parent;
     int playerTrans_Y;
 
     Players& play1;

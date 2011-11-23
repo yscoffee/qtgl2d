@@ -22,7 +22,10 @@ SOURCES += main.cpp \
     testMap.cpp \
     tilemap.cpp \
     drawutilities.cpp \
-    gameStateMaintainer.cpp
+    gameStateMaintainer.cpp \
+    textures.cpp \
+    testTextures.cpp \
+    stars.cpp
 
 HEADERS  += \
     gameControlWidget.h \
@@ -36,13 +39,26 @@ HEADERS  += \
     debugtools.h \
     gameStateMaintainer.h \
     tilemap.h \
-    drawutilities.h
+    drawutilities.h \
+    textures.h \
+    stars.h
 
 FORMS    += \
     gameControlWidget.ui \
     mainwindow.ui
 
 OTHER_FILES +=
+
+
+
+
+
+
+
+
+
+
+
 
 
 

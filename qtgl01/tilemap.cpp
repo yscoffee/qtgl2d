@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include <cmath>
+#include "stars.h"
 
 TileMap::TileMap( ):width(0),height(0)
 {
@@ -105,7 +106,7 @@ void TileMap::setupTileMap(){
                     //addEnemy(getConvertAndAlignedCoord(ix),getConvertAndAlignedCoord(height-iy),Z_VAL);
                     break;
                 case T_Star:
-                    //addStar(getConvertAndAlignedCoord(ix),getConvertAndAlignedCoord(height-iy),Z_VAL);
+                    addStar(getConvertAndAlignedCoord(ix+1),getConvertAndAlignedCoord(height-iy),Z_VAL);
                     break;
                 case T_Transparent:
                     //do nothings.
@@ -144,6 +145,7 @@ void TileMap::addEnemy(const int, const int, const int)
 
 void TileMap::addStar(const int, const int, const int)
 {
+    starList.push_back();
 }
 
 void TileMap::renderingMap(const int X , const int Y , const int Z, const int SW, const int SH)
@@ -180,7 +182,23 @@ Objects * TileMap::tileCollisionCheck(const int X, const int Y, const int W, con
 
     return NULL;
 }
+Objects * TileMap::starsCollisionCheck(const int X, const int Y, const int W, const int H)
+{
+    int xDis=0;
+    int yDis=0;
 
+    for(int ix=0; ix<starList.size() ; ix++){
+        //check X,Y
+        xDis = std::abs(static_cast<float>(X-starList[ix].getX()) );
+        yDis = std::abs(static_cast<float>(Y-starList[ix].getY()) );
+
+        if(xDis < W/2+Stars::getWidth()/2 && yDis < H/2+Stars::getHeight()/2 ){
+            return &starList[ix];
+        }
+    }
+
+    return NULL;
+}
 bool TileMap::checkFalling(Players &p1)
 {
 

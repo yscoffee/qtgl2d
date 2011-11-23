@@ -35,8 +35,6 @@ void MovingObjects::update(const int ELAPSED_MS ){
       state = getNormalState();
     }else
  */
-
-
     if (state == getJumpingState() || state == getFallState()) {
        setVY(getVY() - 0.002 * ELAPSED_MS);
     }
@@ -62,7 +60,7 @@ void MovingObjects::setState(MovingObjects::States S)
 
 void MovingObjects::jump()
 {
-    if( state != getJumpingState() ){
+    if( state != getJumpingState() && state != getFallState() ){
 
         state=getJumpingState();
         setVY(JUMP_SPEED);

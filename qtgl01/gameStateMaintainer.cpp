@@ -9,9 +9,9 @@
 #include <QtEvents>
 #include <QtOpenGL>
 
-GameStateMaintainer::GameStateMaintainer(const unsigned int WIDTH, const unsigned int HEIGHT)
+GameStateMaintainer::GameStateMaintainer(const unsigned int WIDTH, const unsigned int HEIGHT,QGLWidget*QP)
     :play1( *(new Players()) ), gameWidgetHeight(HEIGHT),
-     gameWidgetWidth(WIDTH),
+      gameWidgetWidth(WIDTH),parent(QP),
      currStage( getGSTitle() )
 {
     //Players* p1 = new Players();
@@ -32,7 +32,7 @@ void GameStateMaintainer::renderLiveObjs(){
     }
 
     //information panel always exist
-    Players::renderPlayerInfos(play1);
+    Players::renderPlayerInfos(play1,parent);
 
 
 #ifdef __MYDEBUG_ON
@@ -105,6 +105,12 @@ void GameStateMaintainer::updateObjs(const long MS)
     //check falling condition
         if(tileMap.checkFalling(play1))
             play1.performFalling(MS);
+    }
+
+    Objects * collideStar = tileMap.starCollisionCheck(play1.getX(),play1.getY(),play1.getHalfWidth()*2,play1.getHalfHeight()*2);
+
+    if(collideStar!=NULL){
+
     }
 
     if(play1.getX()<0)
