@@ -25,11 +25,11 @@ void Players::rendering(){
 
 }
 
-void Players::renderPlayerInfos(const Players&,QGLWidget * qtw)
+void Players::renderPlayerInfos(const int SX, const int SY,QGLWidget * qtw,Players &p)
 {
 
-    qtw->setFont(QFont("Times",23));
-    qtw->renderText(750,550,0,QString("123123123123"));
+    qtw->setFont(QFont("Georgia",23));
+    qtw->renderText(-1*SX+50,-1*SY+500,0,QString("$:")+QString::number(p.scores));
 }
 
 void Players::update(const int MS)

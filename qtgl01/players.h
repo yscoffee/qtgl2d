@@ -23,11 +23,11 @@ private:
     int preY;
     int preZ;
 
-    int scores;
 
 public:
 
-    static void renderPlayerInfos(const Players& , QGLWidget *);
+    int scores;
+    static void renderPlayerInfos(const int SX, const int SY,QGLWidget *,Players&);
 
     Players();
     void resetState();

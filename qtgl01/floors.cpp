@@ -22,7 +22,16 @@ bool Floors::encounterFloor(MovingObjects &obj)
 
 void Floors::rendering()
 {
-    Floors::tex.bindTexture();
+    //Floors::tex.bindTexture();
+    //glColor3f(0.7f,0.7f,0.8f);
     DrawUtilities::draw3DSquare(x,y,z,width);
 
+  /*  glBegin(GL_QUADS);
+        glColor3f(0,0,0);
+        glVertex3d(x+width,y+width,z);
+        glVertex3d(x-width,y+width,z);
+        glVertex3d(x-width,y-width,z);
+        glVertex3d(x+width,y-width,z);
+    glEnd();
+*/
 }

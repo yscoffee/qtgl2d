@@ -15,7 +15,7 @@ void DrawUtilities::draw3DSquare(const int X, const int Y, const int Z, const in
         throw("error");
     }
     // Set The Color To Blue One Time Only
-    glColor3f(0.7f,0.2f,0.8f);
+
 
     //X,Y,Z is central point of a 3D box.
     // CCW -defualt mode

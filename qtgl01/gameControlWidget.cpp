@@ -71,6 +71,8 @@ void GameControlWidget::paintGL(){
 
 void GameControlWidget::draw(){
     // Clear The Screen And The Depth Buffer
+
+    glColor3f(1,1,1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Reset The View
@@ -88,7 +90,6 @@ void GameControlWidget::draw(){
         drawAxs();
     }
     */
-
     glTranslatef(gameState.getScrXOffset(width()),gameState.getScrYOffset(height()),0);
 
 

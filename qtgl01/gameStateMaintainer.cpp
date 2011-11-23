@@ -32,7 +32,7 @@ void GameStateMaintainer::renderLiveObjs(){
     }
 
     //information panel always exist
-    Players::renderPlayerInfos(play1,parent);
+    Players::renderPlayerInfos(getScrXOffset(parent->width()),getScrYOffset(parent->height()),parent , play1 );
 
 
 #ifdef __MYDEBUG_ON
@@ -107,9 +107,10 @@ void GameStateMaintainer::updateObjs(const long MS)
             play1.performFalling(MS);
     }
 
-    Objects * collideStar = tileMap.starCollisionCheck(play1.getX(),play1.getY(),play1.getHalfWidth()*2,play1.getHalfHeight()*2);
+    bool stCool = tileMap.starsCollisionCheck(play1.getX(),play1.getY(),play1.getHalfWidth()*2,play1.getHalfHeight()*2);
 
-    if(collideStar!=NULL){
+    if(stCool){
+        play1.scores++;
 
     }
 
@@ -126,7 +127,7 @@ void GameStateMaintainer::updateObjs(const long MS)
 void GameStateMaintainer::rendering()
 {
     tileMap.renderingMap(play1.getX(),play1.getY(),play1.getZ(),gameWidgetWidth,gameWidgetHeight);
-
+    tileMap.renderingStars(play1.getX(),play1.getY(),play1.getZ(),gameWidgetWidth,gameWidgetHeight,parent);
     renderLiveObjs();
 }
 

@@ -4,7 +4,7 @@
 #include<vector>
 #include "floors.h"
 #include "players.h"
-#include "starts.h"
+#include "stars.h"
 class TileMap
 {
 private:
@@ -17,7 +17,7 @@ private:
     unsigned int height;
 
     std::vector<Floors> floorList;
-    std::vector<Starts> starList;
+    std::vector<Stars> starList;
     std::vector<Objects> enemyList;
 
     void addFloor(const int,const int,const int);
@@ -49,7 +49,7 @@ public:
     static int tileToPixels(const unsigned int COORD_I );
 
     void renderingMap(const int X , const int Y , const int Z,const int SW, const int SH);
-
+    void renderingStars(const int X , const int Y , const int Z,const int SW, const int SH, QGLWidget * p);
     //---------------------------------------------------------
     //some getters functions to retrive basic info.
     inline
@@ -62,7 +62,7 @@ public:
     unsigned int getMapHeight(){return getMapScriptHeight()*TILE_SIZE;}
 
     Objects* tileCollisionCheck(const int X,const int Y, const int W ,const int H);
-    Objects* starsCollisionCheck(const int X, const int Y, const int W, const int H);
+    bool starsCollisionCheck(const int X, const int Y, const int W, const int H);
     void printTileMap();
     void printObjLists();
 };

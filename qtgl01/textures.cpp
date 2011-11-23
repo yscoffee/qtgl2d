@@ -23,9 +23,10 @@ void Textures::loadBMP(const char * path){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); //GL_LINEAR, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     int res=gluBuild2DMipmaps(GL_TEXTURE_2D,3,width,height,GL_RGB,GL_UNSIGNED_BYTE,image);
+
     if(res!=0){
-        std::cerr<<"Texture build failed\n"
-                <<gluErrorString(res)<<endl;
+        //std::cerr<<"Texture build failed\n"
+        //        <<gluErrorString(res)<<endl;
         //exit(1);
     }
     /*image = loadBitmapFile(path, &bmpinfo);

@@ -143,9 +143,9 @@ void TileMap::addEnemy(const int, const int, const int)
 {
 }
 
-void TileMap::addStar(const int, const int, const int)
+void TileMap::addStar(const int X, const int Y, const int Z)
 {
-    starList.push_back();
+    starList.push_back(Stars(X,Y,Z));
 }
 
 void TileMap::renderingMap(const int X , const int Y , const int Z, const int SW, const int SH)
@@ -182,7 +182,7 @@ Objects * TileMap::tileCollisionCheck(const int X, const int Y, const int W, con
 
     return NULL;
 }
-Objects * TileMap::starsCollisionCheck(const int X, const int Y, const int W, const int H)
+bool  TileMap::starsCollisionCheck(const int X, const int Y, const int W, const int H)
 {
     int xDis=0;
     int yDis=0;
@@ -192,12 +192,13 @@ Objects * TileMap::starsCollisionCheck(const int X, const int Y, const int W, co
         xDis = std::abs(static_cast<float>(X-starList[ix].getX()) );
         yDis = std::abs(static_cast<float>(Y-starList[ix].getY()) );
 
-        if(xDis < W/2+Stars::getWidth()/2 && yDis < H/2+Stars::getHeight()/2 ){
-            return &starList[ix];
+        if(xDis < W/2+starList[ix].getWidth()/2 && yDis < H/2+starList[ix].getHeight()/2 ){
+            starList.erase(starList.begin()+ix );
+            return true;
         }
     }
 
-    return NULL;
+    return false;
 }
 bool TileMap::checkFalling(Players &p1)
 {
@@ -216,5 +217,12 @@ bool TileMap::checkFalling(Players &p1)
     }
 
     return true;
+}
+
+void TileMap::renderingStars(const int X, const int Y, const int Z, const int SW, const int SH, QGLWidget *p)
+{
+    for(int ix=0; ix<starList.size() ; ix++){
+        starList[ix].rendering(p);
+    }
 }
 
