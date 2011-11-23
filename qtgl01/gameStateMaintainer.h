@@ -46,7 +46,10 @@ public:
     int getMapWidth(){return tileMap.getMapWidth();}
     inline
     int getMapHeight(){return tileMap.getMapHeight();}
-
+    inline
+    int getPlayerX(){return play1.getX();}
+    inline
+    int getPlayerY(){return play1.getY();}
     void addFloor(Floors * );
 
     int getScrXOffset(const int S_WID){

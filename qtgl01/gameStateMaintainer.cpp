@@ -107,6 +107,10 @@ void GameStateMaintainer::updateObjs(const long MS)
         play1.setX(0);
     else if(play1.getX()>tileMap.getMapWidth())
         play1.setX(tileMap.getMapWidth()- play1.getHalfWidth());
+
+    if(play1.getY()<0)
+        play1.setY(0);
+
 }
 
 void GameStateMaintainer::rendering()

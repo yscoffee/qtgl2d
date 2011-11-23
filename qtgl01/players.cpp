@@ -50,7 +50,7 @@ void Players::resetState()
     setState(this->getBottomFloorState());
 }
 
-void Players::handleCollision(  Objects *obj)
+void Players::handleCollision( Objects *obj)
 {
     //check it's a valid request
     if( obj == NULL )

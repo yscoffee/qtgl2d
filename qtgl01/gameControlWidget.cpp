@@ -242,7 +242,8 @@ void GameControlWidget::mouseReleaseEvent(QMouseEvent *event){
         glLoadIdentity();
         angle =0;
         glTranslatef(0,0,-30);
-
+        std::cout<<"ori: "<<gameState.getPlayerX()
+                <<" "<<gameState.getPlayerY()<<std::endl;
         gameState.resetPlayer();
         updateGL();
     }

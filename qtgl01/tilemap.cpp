@@ -177,6 +177,8 @@ Objects * TileMap::tileCollisionCheck(const int X, const int Y, const int W, con
             return &floorList[ix];
         }
     }
+
+    return NULL;
 }
 
 bool TileMap::checkFalling(Players &p1)
