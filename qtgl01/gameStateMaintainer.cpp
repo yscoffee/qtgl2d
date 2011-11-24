@@ -15,7 +15,7 @@ GameStateMaintainer::GameStateMaintainer(const unsigned int WIDTH, const unsigne
      currStage( getGSTitle() )
 {
     //Players* p1 = new Players();
-    tileMap.parseMap("..\\map\\testmap.txt");
+    tileMap.parseMap("D:\\gitresp\\gtgl2\\qtgl2d\\map\\testmap.txt");
 
     play1.setX(30);
     play1.setY(100);

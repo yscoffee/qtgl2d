@@ -1,4 +1,4 @@
-#include "Textures.h"
+#include "textures.h"
 #include <cassert>
 #include <QtOpenGL>
 #include <QGLWidget>
