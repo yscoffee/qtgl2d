@@ -9,7 +9,7 @@ extern int testMap();
 
 extern void testLoadTextures();
 
-Textures Floors::tex("D:\\gitresp\\gtgl2\\qtgl2d\\textures\\floor_def.bmp");
+Textures Floors::tex("..\\textures\\floor_def.bmp");
 
 int main(int argc, char *argv[])
 {
