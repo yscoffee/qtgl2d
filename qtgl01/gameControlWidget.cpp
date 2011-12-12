@@ -177,13 +177,14 @@ void GameControlWidget::draw3DSquare(const int X ,const int Y,const int Z, const
         X-HL,Y+HL,Z-HL,//v6
         X-HL,Y-HL,Z-HL,//v7
     };
+
     // color array
-    GLfloat colors[] = {1,1,1,  1,1,0,  1,0,0,  1,0,1,              // v0-v1-v2-v3
-                        1,1,1,  1,0,1,  0,0,1,  0,1,1,              // v0-v3-v4-v5
-                        1,1,1,  0,1,1,  0,1,0,  1,1,0,              // v0-v5-v6-v1
-                        1,1,0,  0,1,0,  0,0,0,  1,0,0,              // v1-v6-v7-v2
-                        0,0,0,  0,0,1,  1,0,1,  1,0,0,              // v7-v4-v3-v2
-                        0,0,1,  0,0,0,  0,1,0,  0,1,1};             // v4-v7-v6-v5
+    GLfloat colors[] = {1,1,1,  1,1,0,  1,0,0,  1,0,1,    // v0-v1-v2-v3
+                        1,1,1,  1,0,1,  0,0,1,  0,1,1,    // v0-v3-v4-v5
+                        1,1,1,  0,1,1,  0,1,0,  1,1,0,    // v0-v5-v6-v1
+                        1,1,0,  0,1,0,  0,0,0,  1,0,0,    // v1-v6-v7-v2
+                        0,0,0,  0,0,1,  1,0,1,  1,0,0,    // v7-v4-v3-v2
+                        0,0,1,  0,0,0,  0,1,0,  0,1,1};   // v4-v7-v6-v5
 
     // index array of vertex array for glDrawElements()
     // Notice the indices are listed straight from beginning to end as exactly

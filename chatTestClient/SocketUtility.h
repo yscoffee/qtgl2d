@@ -48,7 +48,9 @@ public:
 	static SOCKET creatTCPSocket(const string IP,const string Port){
 		return connectsock( IP.c_str(), Port.c_str(), "tcp");
 	}
-
+	static SOCKET creatUDPSocket(const string IP,const string Port){
+		return connectsock( IP.c_str(), Port.c_str(), "udp");
+	}
 };
 
 // Message Header Factory class 
@@ -230,7 +232,7 @@ SOCKET passivesock(const char *service, const char *transport, int qlen)
 	/* Map protocol name to protocol number */
 	(ppe = getprotobyname(transport)) ;
 	if ( ppe == 0)
-		errexit("can't get \"%s\" protocol entry\n", transport);
+		;//errexit("can't get \"%s\" protocol entry\n", transport);
 
 	/* Use protocol to choose a socket type */
 	if (strcmp(transport, "udp") == 0)
@@ -241,15 +243,13 @@ SOCKET passivesock(const char *service, const char *transport, int qlen)
 	/* Allocate a socket */
 	s = socket(PF_INET, type, ppe->p_proto);
 	if (s == INVALID_SOCKET)
-		errexit("can't create socket: %d\n", GetLastError());
+		;//errexit("can't create socket: %d\n", GetLastError());
 
 	/* Bind the socket */
 	if (bind(s, (struct sockaddr *)&sin, sizeof(sin)) == SOCKET_ERROR)
-		errexit("can't bind to %s port: %d\n", service,
-		GetLastError());
+		;//errexit("can't bind to %s port: %d\n", service,GetLastError();
 	if (type == SOCK_STREAM && listen(s, qlen) == SOCKET_ERROR)
-		errexit("can't listen on %s port: %d\n", service,
-		GetLastError());
+		;//errexit("can't listen on %s port: %d\n", service, GetLastError());
 	return s;
 }
 
@@ -269,17 +269,17 @@ SOCKET connectsock(const char *host, const char *service, const char *transport 
 	if ( pse = getservbyname(service, transport) )
 		sin.sin_port = pse->s_port;
 	else if ( (sin.sin_port = htons((u_short)atoi(service))) == 0 )
-		errexit("can't get \"%s\" service entry\n", service);
+		;//errexit("can't get \"%s\" service entry\n", service);
 
 	/* Map host name to IP address, allowing for dotted decimal */
 	if ( phe = gethostbyname(host) )
 		memcpy(&sin.sin_addr, (const void*)phe->h_addr, phe->h_length);
 	else if ( (sin.sin_addr.s_addr = inet_addr(host)) == INADDR_NONE)
-		errexit("can't get \"%s\" host entry\n", host);
+		;//errexit("can't get \"%s\" host entry\n", host);
 
 	/* Map protocol name to protocol number */
 	if ( (ppe = getprotobyname(transport)) == 0)
-		errexit("can't get \"%s\" protocol entry\n", transport);
+		;//errexit("can't get \"%s\" protocol entry\n", transport);
 	/* Use protocol to choose a socket type */
 	if (strcmp(transport, "udp") == 0)
 		type = SOCK_DGRAM;
@@ -289,12 +289,11 @@ SOCKET connectsock(const char *host, const char *service, const char *transport 
 	/* Allocate a socket */
 	s = socket(PF_INET, type, ppe->p_proto);
 	if (s == INVALID_SOCKET)
-		errexit("can't create socket: %d\n", GetLastError());
+		;//errexit("can't create socket: %d\n", GetLastError());
 
 	/* Connect the socket */
 	if (connect(s, (struct sockaddr *)&sin, sizeof(sin)) == SOCKET_ERROR)
-		errexit("can't connect to %s.%s: %d\n", host, service,
-		GetLastError());
+		;//errexit("can't connect to %s.%s: %d\n", host, service,		GetLastError());
 	return s;
 }
 
