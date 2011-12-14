@@ -6,6 +6,11 @@
 
 QT      += core gui
 QT      += opengl
+
+message($$_PRO_FILE_PWD_)
+LIBS  += $$quote(-L$$_PRO_FILE_PWD_/../lib)
+LIBS  +=  -lglew32 -lgtest
+win32:INCLUDEPATH += $$quote($$_PRO_FILE_PWD_/../include)
 TARGET = qtgl01
 TEMPLATE = app
 CONFIG  +=console
@@ -41,13 +46,17 @@ HEADERS  += \
     tilemap.h \
     drawutilities.h \
     textures.h \
-    stars.h
+    stars.h \
+    testtilemap.h
 
 FORMS    += \
     gameControlWidget.ui \
     mainwindow.ui
 
 OTHER_FILES +=
+
+
+
 
 
 

@@ -108,7 +108,7 @@ $(DESTDIR_TARGET): ui_gameControlWidget.h ui_mainwindow.h $(OBJECTS)
 	$(LINK) $(LFLAGS) -o $(DESTDIR_TARGET) object_script.qtgl01.Release  $(LIBS)
 
 qmake:  FORCE
-	@$(QMAKE) -o Makefile.Release qtgl01.pro
+	@$(QMAKE) -spec c:/QtSDK/Desktop/Qt/4.7.4/mingw/mkspecs/win32-g++ -o Makefile.Release qtgl01.pro
 
 dist:
 	$(ZIP) qtgl01.zip $(SOURCES) $(DIST) qtgl01.pro c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\qconfig.pri c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\modules\qt_webkit_version.pri c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\qt_functions.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\qt_config.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\exclusive_builds.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\default_pre.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\win32\default_pre.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\release.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\debug_and_release.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\default_post.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\win32\default_post.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\build_pass.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\win32\console.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\win32\rtti.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\win32\exceptions.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\win32\stl.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\shared.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\warn_on.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\qt.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\win32\opengl.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\win32\thread.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\moc.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\resources.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\uic.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\yacc.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\lex.prf c:\QtSDK\Desktop\Qt\4.7.4\mingw\mkspecs\features\include_source_dir.prf  HEADERS RESOURCES IMAGES SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
@@ -186,7 +186,7 @@ release/main.o: main.cpp mainwindow.h \
 		tilemap.h \
 		stars.h \
 		drawutilities.h \
-		gameupdateaction.h
+		gameupdateaction.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o main.cpp
 
 release/gameControlWidget.o: gameControlWidget.cpp gameControlWidget.h \
@@ -260,7 +260,6 @@ release/testMap.o: testMap.cpp tilemap.h \
 		stars.h \
 		drawutilities.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\testMap.o testMap.cpp
-
 release/tilemap.o: tilemap.cpp tilemap.h \
 		floors.h \
 		objects.h \
@@ -275,6 +274,17 @@ release/tilemap.o: tilemap.cpp tilemap.h \
 release/drawutilities.o: drawutilities.cpp drawutilities.h \
 		debugtools.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\drawutilities.o drawutilities.cpp
+
+release/gameStateMaintainer.o: gameStateMaintainer.cpp gameStateMaintainer.h \
+		players.h \
+		stars.h \
+		drawutilities.h \
+		debugtools.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release/tilemap.o tilemap.cpp
+
+release/drawutilities.o: drawutilities.cpp drawutilities.h \
+		debugtools.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release/drawutilities.o drawutilities.cpp
 
 release/gameStateMaintainer.o: gameStateMaintainer.cpp gameStateMaintainer.h \
 		players.h \
