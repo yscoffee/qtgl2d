@@ -2,18 +2,20 @@
 #include <iostream>
 #include "mainwindow.h"
 #include "gameControlWidget.h"
+#include "testtilemap.h"
+#include <gtest/gtest.h>
 
 using namespace std;
 
-extern int testMap();
-
-extern void testLoadTextures();
-
-Textures Floors::tex("..\\textures\\floor_def.bmp");
+//extern int testMap();
+//extern void testLoadTextures();
+//Textures Floors::tex("..\\textures\\floor_def.bmp");
 
 int main(int argc, char *argv[])
 {
     //testMap();
+    testing::InitGoogleTest(&argc, argv);
+    RUN_ALL_TESTS();
 
     cout<<"start"<<endl;
    // testLoadTextures();
