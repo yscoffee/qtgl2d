@@ -22,6 +22,7 @@ public:
     //reshape
     void resizeGL(int width, int height);
     //display
+    //call by updateGL()
     void paintGL();
     void keyPressEvent(QKeyEvent *event);
     void mousePressEvent(QMouseEvent *event);

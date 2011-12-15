@@ -33,7 +33,7 @@ void TileMap::loadMap(const char *path)
 
 
         width=(width<line.size())?line.size():width;
-        std::vector<int> newDef;
+        std::vector<int> newLine;
 
         //skip a comment line.
         if( line.size() && line[0] =='#' )
@@ -41,17 +41,19 @@ void TileMap::loadMap(const char *path)
         else{
         //normal condition
              height++;
+            //read in each line
+            //and trandform char to pre defined int value
             for(int ix=0 ; ix<line.size() ; ix++){
                 if( line[ix]!='\n'){
                     switch(line[ix]){
                         case 'E':
-                            newDef.push_back(T_Enemy);break;
+                            newLine.push_back(T_Enemy);break;
                         case '*':
-                            newDef.push_back(T_Star);break;
+                            newLine.push_back(T_Star);break;
                         case '=':
-                            newDef.push_back(T_Floor);break;
+                            newLine.push_back(T_Floor);break;
                         case ' ':
-                            newDef.push_back(T_Transparent);break;
+                            newLine.push_back(T_Transparent);break;
                         case '\t' :
                             std::cerr<<"*ERROR Detect \t."<<std::endl;
                         default:
@@ -60,12 +62,13 @@ void TileMap::loadMap(const char *path)
                     }
                 }
             }
-            map.push_back(newDef);
+            map.push_back(newLine);
         }
     }
 
 
     //normalize
+    //fill space on each line to keep same width of map
     for(int ix=0; ix<map.size();ix++){
         if( map[ix].size() <width ){
             while( width - map[ix].size() > 0){

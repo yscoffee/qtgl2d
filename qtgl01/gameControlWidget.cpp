@@ -94,7 +94,7 @@ void GameControlWidget::draw(){
 
 
     //**********************
-
+    //main route
     gameState.rendering();
 
     //**********************
@@ -273,7 +273,7 @@ void GameControlWidget::keyReleaseEvent(QKeyEvent *event){
 void GameControlWidget::keyPressEvent(QKeyEvent *event){
 
     const int K = event->key();
-
+    //update state
     gameState.keyboardPressEvent(event);
 
     glFlush();
@@ -283,7 +283,7 @@ void GameControlWidget::keyPressEvent(QKeyEvent *event){
 /*
  * ------------------------------------------------------
  * Track ball functions
- *
+ * DON'T LOOK IT
  *
 */
 void GameControlWidget::mouseMoveEvent(QMouseEvent *event){
