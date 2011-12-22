@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'gameControlWidget.h'
 **
-** Created: Thu Dec 15 16:43:59 2011
+** Created: Thu Dec 22 19:22:52 2011
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
