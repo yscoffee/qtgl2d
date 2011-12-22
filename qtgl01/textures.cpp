@@ -5,9 +5,14 @@
 #include <iostream>
 #include "./bmp/bitmap.h"
 
-Textures::Textures(const char* path){
+Textures::Textures():texture_ID(0){
+
+}
+
+void Textures::inital(const char* path){
     memset(&bmpinfo,0,sizeof(bmpinfo));
     loadBMP(path);
+    setupTexBuffer();
 }
 
 void Textures::loadBMP(const char * path){
@@ -17,21 +22,7 @@ void Textures::loadBMP(const char * path){
     width = bmpinfo.bmiHeader.biWidth;
     height = bmpinfo.bmiHeader.biHeight;
     assert(image);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST_MIPMAP_NEAREST);
-    int res=gluBuild2DMipmaps(GL_TEXTURE_2D,3,width,height,GL_RGB,GL_UNSIGNED_BYTE,image);
-
-    if(res!=0){
-        //std::cerr<<"Texture build failed\n"
-        //        <<gluErrorString(res)<<endl;
-        //exit(1);
-    }
 }
-
 
 GLubyte * Textures::loadBitmapFile(const char *fileName, BITMAPINFO *bitmapInfo)
 {
@@ -76,7 +67,8 @@ GLubyte * Textures::loadBitmapFile(const char *fileName, BITMAPINFO *bitmapInfo)
 void Textures::bindTexture()
 {
     glEnable(GL_TEXTURE_2D);
-    glColor3ub(255,255,255);
+    //glColor3ub(255,255,255);
+    //switch to current Texture
     glBindTexture(GL_TEXTURE_2D,texture_ID);
 }
 
@@ -95,4 +87,30 @@ void Textures::printInnter()
         std::cout<<image[p]+'0';
     }
     std::cout<<endl;
+}
+
+void Textures::setupTexBuffer()
+{
+    //get a unused ID.
+    glGenTextures(1,&texture_ID);
+    //use it
+    glBindTexture(GL_TEXTURE_2D,texture_ID);
+    //attributes
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST_MIPMAP_NEAREST);
+    //allocate
+    //glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,width,height,0,GL_RGB,GL_UNSIGNED_BYTE,image);
+
+    int res=gluBuild2DMipmaps(GL_TEXTURE_2D,3,width,height,GL_RGB,GL_UNSIGNED_BYTE,image);
+    if(res!=0){
+        std::cerr<<"Texture build failed\n"
+                 <<gluErrorString(res)<<endl;
+        //exit(1);
+    }
+
+
+
 }

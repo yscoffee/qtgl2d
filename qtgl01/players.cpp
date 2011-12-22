@@ -13,15 +13,14 @@ Players::Players():
 }
 
 void Players::rendering(){
-
+    glDisable(GL_TEXTURE_2D);
     glBegin(GL_QUADS);
-        glColor3d(0,1,0);
+        glColor3d(1,1,1);
         glVertex3d(x+HALF_WID,y+HALF_HEI,z);
         glVertex3d(x-HALF_WID,y+HALF_HEI,z);
         glVertex3d(x-HALF_WID,y-HALF_HEI,z);
         glVertex3d(x+HALF_WID,y-HALF_HEI,z);
     glEnd();
-
 
 }
 

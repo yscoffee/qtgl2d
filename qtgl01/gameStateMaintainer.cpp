@@ -3,7 +3,7 @@
 #include "players.h"
 #include "drawutilities.h"
 //#include "debugtools.h"
-
+#include "floors.h"
 #include <vector>
 #include <iostream>
 #include <QtEvents>
@@ -14,7 +14,6 @@ GameStateMaintainer::GameStateMaintainer(const unsigned int WIDTH, const unsigne
       gameWidgetWidth(WIDTH),parent(QP),
      currStage( getGSTitle() )
 {
-    //Players* p1 = new Players();
     tileMap.parseMap("..\\map\\testmap.txt");
 
     play1.setX(30);

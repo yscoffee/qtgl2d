@@ -5,6 +5,7 @@
 #include <QtOpenGL>
 #include <iostream>
 #include <QThread>
+#include "floors.h"
 
 GameControlWidget::GameControlWidget(QWidget *parent) :
     QGLWidget(QGLFormat(QGL::DoubleBuffer),parent),
@@ -33,13 +34,14 @@ void GameControlWidget::initializeGL(){
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
+    glEnable(GL_TEXTURE_2D);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
     setAutoBufferSwap(true);
+    glTexEnvi(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_REPLACE);
     //start idle func after 600ms
     QTimer::singleShot(600, this, SLOT(startIdleFunc()));
-
-    //updateTimerID=startTimer(static_cast<int>(10));
+    Floors::initTexture("..\\textures\\floor_def.bmp");
 
 }
 
@@ -97,12 +99,12 @@ void GameControlWidget::draw(){
 
 void GameControlWidget::drawAxs(){
     glBegin(GL_LINES);
-        glVertex3d(-1000,0,0);
-        glVertex3d(1000,0,0);
-        glVertex3d(0,-1000,0);
-        glVertex3d(0,1000,0);
-        glVertex3d(0,0,-1000);
-        glVertex3d(0,0,1000);
+    glVertex3d(-1000,0,0);
+    glVertex3d(1000,0,0);
+    glVertex3d(0,-1000,0);
+    glVertex3d(0,1000,0);
+    glVertex3d(0,0,-1000);
+    glVertex3d(0,0,1000);
     glEnd();
 }
 

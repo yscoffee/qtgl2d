@@ -12,13 +12,15 @@ private:
     BITMAPINFO bmpinfo;
     GLuint texture_ID;
     void loadBMP(const char *);
+    void setupTexBuffer();
 
 public:
 
-    explicit Textures(const char* path);
+    Textures();
     ~Textures();
     GLubyte *loadBitmapFile(const char *, BITMAPINFO *);
     void printInnter();
+    void inital(const char* path);
     void bindTexture();
 };
 

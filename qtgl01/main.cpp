@@ -9,7 +9,8 @@ using namespace std;
 
 //extern int testMap();
 //extern void testLoadTextures();
-Textures Floors::tex("..\\textures\\floor_def.bmp");
+
+Textures Floors::tex;
 
 int main(int argc, char *argv[])
 {
