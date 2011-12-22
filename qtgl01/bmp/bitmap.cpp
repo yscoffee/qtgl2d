@@ -125,7 +125,7 @@ GLubyte *LoadPixelBitmapFile(const char *fileName, BITMAPINFO *bitmapInfo)
 	fclose(fp);
 	// swap the red and blue components 
 	unsigned char temp; 
-    for (int k=0; k<lBitSize; k+=3)
+        for (int k=0; k<lBitSize; k+=3)
        { temp = bitmapImage[k];
          bitmapImage[k] = bitmapImage[k+2];
          bitmapImage[k+2] = temp; 

@@ -9,6 +9,8 @@
 #include <QtEvents>
 #include <QtOpenGL>
 
+
+
 GameStateMaintainer::GameStateMaintainer(const unsigned int WIDTH, const unsigned int HEIGHT,QGLWidget*QP)
     :play1( *(new Players()) ), gameWidgetHeight(HEIGHT),
       gameWidgetWidth(WIDTH),parent(QP),

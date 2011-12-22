@@ -1,6 +1,11 @@
 #include "floors.h"
 #include "drawutilities.h"
 #include <iostream>
+
+
+
+Textures Floors::tex;
+
 Floors::Floors()
 {
 }
@@ -22,11 +27,11 @@ bool Floors::encounterFloor(MovingObjects &obj)
 
 void Floors::rendering()
 {
-    Floors::tex.bindTexture();
-    glColor3f(0.7f,0.7f,0.8f);
+    DrawUtilities::drawSquareWithTexture(x,y,z,width,tex.getTID());
+   /* Floors::tex.bindTexture();
+   // glColor3f(0.7f,0.7f,0.8f);
    // DrawUtilities::draw3DSquare(x,y,z,width);
-    // Front Face
-  int w = width/2;
+
   glBegin(GL_QUADS);
         glTexCoord2f(1,1);
         glVertex3d(x+width/2,y+width/2,z);
@@ -37,11 +42,10 @@ void Floors::rendering()
         glTexCoord2f(1,0);
         glVertex3d(x+width/2,y-width/2,z);
    glEnd();
-
-
+   */
 }
 
-void Floors::initTexture(const char*path)
+void Floors::initTexture()
 {
-    tex.inital(path);
+    tex.initial( "..\\textures\\floor_def.png");
 }

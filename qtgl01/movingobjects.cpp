@@ -3,7 +3,7 @@
 #include <iostream>
 MovingObjects::MovingObjects():
     vx(0),vy(0),vz(0),
-    state(MovingObjects::S_BOTTOM_FLOOR)
+    state(MovingObjects::S_BOTTOM_FLOOR),isRightDirection(true)
 {
   //  floorY=0;
 
@@ -16,7 +16,7 @@ float MovingObjects::getVY(){return vy;}
 inline
 float MovingObjects::getVZ(){return vz;}
 inline
-void MovingObjects::setVX(const float VX){ vx=VX;}
+void MovingObjects::setVX(const float VX){ vx=VX; if(VX!=0)isRightDirection= VX>0;}
 inline
 void MovingObjects::setVY(const float VY){ vy=VY;}
 inline

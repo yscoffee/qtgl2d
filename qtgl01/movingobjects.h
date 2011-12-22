@@ -22,7 +22,7 @@ protected:
 
     //int floorY;
     bool onGround;
-
+    bool isRightDirection;
 public:
     MovingObjects();
     void setState(States);

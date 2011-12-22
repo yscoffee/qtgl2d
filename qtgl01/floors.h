@@ -20,7 +20,7 @@ public:
     bool encounterFloor(MovingObjects& );
 
    // static const unsigned int DEF_FLOOR_LEN=10;
-    static void initTexture(const char*);
+    static void initTexture();
 
 protected:
     unsigned int width;

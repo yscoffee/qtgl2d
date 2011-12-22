@@ -6,6 +6,8 @@
 #include <iostream>
 #include <QThread>
 #include "floors.h"
+#include "stars.h"
+#include "players.h"
 
 GameControlWidget::GameControlWidget(QWidget *parent) :
     QGLWidget(QGLFormat(QGL::DoubleBuffer),parent),
@@ -31,6 +33,9 @@ void GameControlWidget::initializeGL(){
     qglClearColor(Qt::black);
     glShadeModel(GL_FLAT);
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
@@ -39,9 +44,13 @@ void GameControlWidget::initializeGL(){
     glEnableClientState(GL_COLOR_ARRAY);
     setAutoBufferSwap(true);
     glTexEnvi(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_REPLACE);
+
+    //damn
+    Floors::initTexture();
+    Players::initTexture();
+    Stars::initTexture();
     //start idle func after 600ms
     QTimer::singleShot(600, this, SLOT(startIdleFunc()));
-    Floors::initTexture("..\\textures\\floor_def.bmp");
 
 }
 

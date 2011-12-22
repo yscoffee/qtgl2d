@@ -2,9 +2,13 @@
 #include "movingobjects.h"
 #include <iostream>
 #include <QGLWidget>
+#include "drawutilities.h"
+
+ Textures Players::rightModeTex;
+ Textures Players::leftModeTex;
 
 Players::Players():
-    hp(0),mp(0),sp(0),exp(0),level(0),HALF_WID(10),HALF_HEI(10),
+    hp(0),mp(0),sp(0),exp(0),level(0),HALF_WID(20),HALF_HEI(20),
     preX(0),preY(0),preZ(0),scores(0)
 {
 
@@ -13,7 +17,13 @@ Players::Players():
 }
 
 void Players::rendering(){
-    glDisable(GL_TEXTURE_2D);
+
+    if(isRightDirection)
+        DrawUtilities::drawSquareWithTexture(x,y,z,HALF_WID*2,rightModeTex.getTID());
+    else
+        DrawUtilities::drawSquareWithTexture(x,y,z,HALF_WID*2,leftModeTex.getTID());
+
+    /*glDisable(GL_TEXTURE_2D);
     glBegin(GL_QUADS);
         glColor3d(1,1,1);
         glVertex3d(x+HALF_WID,y+HALF_HEI,z);
@@ -21,21 +31,22 @@ void Players::rendering(){
         glVertex3d(x-HALF_WID,y-HALF_HEI,z);
         glVertex3d(x+HALF_WID,y-HALF_HEI,z);
     glEnd();
+    */
 
 }
 
 void Players::renderPlayerInfos(const int SX, const int SY,QGLWidget * qtw,Players &p)
 {
-
+    glColor3f(1,1,1);
     qtw->setFont(QFont("Georgia",23));
     qtw->renderText(-1*SX+50,-1*SY+500,0,QString("$:")+QString::number(p.scores));
 }
 
 void Players::update(const int MS)
 {
-    preX=x;
-    preY=y;
-    preZ=z;
+    if(preX!=x)preX=x;
+    if(preY!=y)preY=y;
+    if(preZ!=z)preZ=z;
     MovingObjects::update(MS);
 
 }
@@ -254,5 +265,11 @@ void Players::performFalling(const long MS)
     state=getFallState();
     setVY(getVY() - 0.002 * MS);
     y += vy * MS;
+}
+
+void Players::initTexture()
+{
+    Players::leftModeTex.initial("..\\textures\\player_left.png");
+    Players::rightModeTex.initial("..\\textures\\player_right.png");
 }
 

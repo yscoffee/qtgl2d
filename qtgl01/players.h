@@ -2,12 +2,15 @@
 #define PLAYERS_H
 
 #include "movingobjects.h"
-
+#include "textures.h"
 #include <QGLWidget>
 
 class Players: public MovingObjects
 {
 private:
+    //hold texture, should be initialed IN function glInitial()
+    static Textures rightModeTex;
+    static Textures leftModeTex;
 
     double hp;
     double mp;
@@ -23,12 +26,11 @@ private:
     int preY;
     int preZ;
 
-
 public:
 
     int scores;
     static void renderPlayerInfos(const int SX, const int SY,QGLWidget *,Players&);
-
+    static void initTexture();
     Players();
     void resetState();
     virtual void rendering();
