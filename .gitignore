@@ -4,6 +4,7 @@
 *.o
 *.orig
 /Joypick/*
+/qtgl01/debug/moc*
 /qtgl01/debug/*.o
 /qtgl01-build-desktop-Qt_4_7_4_for_Desktop_-_MinGW_4_4__Qt_SDK__Debug/debug/*
 /qtgl01-build-desktop-Qt_4_7_4_for_Desktop_-_MinGW_4_4__Qt_SDK__Debug/release/*
