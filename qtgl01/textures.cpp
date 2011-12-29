@@ -23,7 +23,7 @@ void Textures::loadImage(const char* path){
                 SOIL_LOAD_AUTO,
                 SOIL_CREATE_NEW_ID,
                 SOIL_FLAG_TEXTURE_REPEATS  | SOIL_FLAG_INVERT_Y |
-                SOIL_FLAG_POWER_OF_TWO |SOIL_FLAG_COMPRESS_TO_DXT
+                SOIL_FLAG_POWER_OF_TWO |SOIL_FLAG_COMPRESS_TO_DXT 
                 );
 
     /* check for an error during the load process */

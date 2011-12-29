@@ -8,8 +8,7 @@ QT      += core gui
 QT      += opengl
 
 message($$_PRO_FILE_PWD_)
-LIBS  += $$quote(-L$$_PRO_FILE_PWD_/../lib)
-LIBS  += -lSOIL -lglew32 -lgtest -lopengl32 -lglu32
+LIBS  += $$quote(-L$$_PRO_FILE_PWD_/../lib) -lSOIL -lglew32 -lgtest -lopengl32 -lglu32
 #win32:LIBS += $$quote($$_PRO_FILE_PWD_/../lib/SOIL.lib)
 win32:INCLUDEPATH += $$quote($$_PRO_FILE_PWD_/../include)
 
