@@ -5,6 +5,9 @@
 #include "testtilemap.h"
 #include <gtest/gtest.h>
 #include "Textures.h"
+#include "testplayer.h"
+#include "testfloor.h"
+#include "teststar.h"
 using namespace std;
 
 //extern int testMap();
@@ -13,13 +16,12 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     //testMap();
-    //testing::InitGoogleTest(&argc, argv);
-    //RUN_ALL_TESTS();
+    testing::InitGoogleTest(&argc, argv);
+    RUN_ALL_TESTS();
 
     cout<<"start"<<endl;
    // testLoadTextures();
     QApplication a(argc, argv);
-
 
     GameControlWidget w;
     w.show();
