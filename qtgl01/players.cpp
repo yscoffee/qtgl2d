@@ -11,9 +11,6 @@ Players::Players():
     hp(0),mp(0),sp(0),exp(0),level(0),HALF_WID(20),HALF_HEI(20),
     preX(0),preY(0),preZ(0),scores(0)
 {
-
-    //floorY = HALF_HEI;
-
 }
 
 void Players::rendering(){
@@ -22,16 +19,6 @@ void Players::rendering(){
         DrawUtilities::drawSquareWithTexture(x,y,z,HALF_WID*2,rightModeTex.getTID());
     else
         DrawUtilities::drawSquareWithTexture(x,y,z,HALF_WID*2,leftModeTex.getTID());
-
-    /*glDisable(GL_TEXTURE_2D);
-    glBegin(GL_QUADS);
-        glColor3d(1,1,1);
-        glVertex3d(x+HALF_WID,y+HALF_HEI,z);
-        glVertex3d(x-HALF_WID,y+HALF_HEI,z);
-        glVertex3d(x-HALF_WID,y-HALF_HEI,z);
-        glVertex3d(x+HALF_WID,y-HALF_HEI,z);
-    glEnd();
-    */
 
 }
 
@@ -264,7 +251,7 @@ void Players::performFalling(const long MS)
 {
     state=getFallState();
     setVY(getVY() - 0.002 * MS);
-    y += vy * MS;
+   // y += vy * MS;
 }
 
 void Players::initTexture()

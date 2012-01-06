@@ -9,7 +9,7 @@ class TileMap
 {
 private:
     enum TileTypes{T_Floor=1, T_Enemy, T_Star, T_Transparent };
-    static const int TILE_SIZE=30;
+    static const int TILE_SIZE=50;
     static const int Z_VAL=1;
 
     std::vector< std::vector<int> > map;
