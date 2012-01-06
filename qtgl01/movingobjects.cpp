@@ -36,12 +36,18 @@ void MovingObjects::update(const int ELAPSED_MS ){
     }else
  */
     if (state == getJumpingState() || state == getFallState()) {
-       setVY(getVY() - 0.002 * ELAPSED_MS);
+       vy = vy - 0.002*ELAPSED_MS;
     }
-    if( vy >= 3 )
-        vy=2.8;
-    else if( vy <= -3)
-        vy = -2.8;
+
+    if( vy >= MAX_VY )
+       vy = MAX_VY-0.02;
+    else if( vy <= -1*MAX_VY)
+       vy = 0.02-MAX_VY;
+
+    if( vx >= MAX_VX )
+       vx = MAX_VX-0.02;
+    else if( vx <= -1*MAX_VX)
+       vx = 0.02-MAX_VX;
 
     // move player
     x += vx * ELAPSED_MS;

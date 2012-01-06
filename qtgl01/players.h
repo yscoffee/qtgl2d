@@ -22,12 +22,12 @@ private:
     const int HALF_HEI;
     GLint vertices[8][3];
 
+
+
+public:
     int preX;
     int preY;
     int preZ;
-
-public:
-
     int scores;
     static void renderPlayerInfos(const int SX, const int SY,QGLWidget *,Players&);
     static void initTexture();
