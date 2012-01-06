@@ -193,10 +193,6 @@ bool TileMap::isCollided(const int X, const int Y,const int HWID,const int HHEI)
             }
         }
     }
-
-
-
-
     return false;
 }
 void TileMap::tileCollisionCheck(Players & player )
@@ -216,14 +212,22 @@ void TileMap::tileCollisionCheck(Players & player )
         if( isCollided(x,y2,player.getHalfWidth(),player.getHalfHeight()) ){
 
             //align to < x2, y' >
-            if(y2-y>=0)
-                y = map2World_Y(world2Map_Y(y2+player.getHalfHeight()))-TILE_SIZE/2-player.getHalfHeight()-1;
-            else
-                y = map2World_Y(world2Map_Y(y2-player.getHalfHeight()))+TILE_SIZE/2+player.getHalfHeight()+1;
+            if(y2-y>=0){
+                y = map2World_Y(static_cast<int>((y2+player.getHalfHeight())/TILE_SIZE) )-TILE_SIZE/2-player.getHalfHeight()-0.1;
 
-            player.setY(y);
+                if(player.getState()==player.getJumpingState())
+                    player.setState(Players::getFallState());
+                player.setY(y);
+                player.setVY(-player.getVY()*0.45);
+            }else{
+                y = map2World_Y(static_cast<int>((y2-player.getHalfHeight())/TILE_SIZE))+TILE_SIZE/2+player.getHalfHeight()+0.1;
 
-            player.setVY(0);
+                if(player.getState()!=Players::getFloorState())
+                     player.setState(Players::getFloorState());
+
+                player.setY(y);
+                player.setVY(0);
+            }
 
             //Re-test
             tileCollisionCheck(player);
@@ -234,13 +238,14 @@ void TileMap::tileCollisionCheck(Players & player )
                 //align to < x', y+dy>
 
                 if(x2-x>=0)
-                    x = map2World_X(world2Map_X(x2+player.getHalfWidth()))-TILE_SIZE/2-player.getHalfWidth()-1;
+                    x = map2World_X(static_cast<int>((x2+player.getHalfWidth())/TILE_SIZE))-TILE_SIZE/2-player.getHalfWidth()-0.1;
                 else
-                    x = map2World_X(world2Map_X(x2-player.getHalfWidth()))+TILE_SIZE/2+player.getHalfWidth()+1;
+                    x = map2World_X(static_cast<int>((x2-player.getHalfWidth())/TILE_SIZE))+TILE_SIZE/2+player.getHalfWidth()+0.1;
 
                 player.setX(x);
-
                 player.setVX(0);
+
+
                 //re-Test
                 tileCollisionCheck(player);
             }
@@ -268,24 +273,6 @@ bool  TileMap::starsCollisionCheck(const int X, const int Y, const int W, const 
     }
 
     return false;
-}
-bool TileMap::checkFalling(Players &p1)
-{
-
-    int xDis=0;
-    int yDis=0;
-
-    for(int ix=0; ix<floorList.size() ; ix++){
-        //check X,Y
-        xDis = std::abs(static_cast<float>(p1.getX()-floorList[ix].getX()) );
-        yDis = std::abs(static_cast<float>(p1.getY()-floorList[ix].getY()) );
-
-        if(xDis < p1.getHalfWidth()+TILE_SIZE/2 &&yDis == p1.getHalfHeight()+TILE_SIZE/2 ){
-            return false;
-        }
-    }
-
-    return true;
 }
 
 void TileMap::renderingStars(const int X, const int Y, const int Z, const int SW, const int SH, QGLWidget *p)

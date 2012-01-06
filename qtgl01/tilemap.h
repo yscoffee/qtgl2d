@@ -9,7 +9,7 @@ class TileMap
 {
 private:
     enum TileTypes{T_Floor=1, T_Enemy, T_Star, T_Transparent };
-    static const int TILE_SIZE=50;
+    static const int TILE_SIZE=40;
     static const int Z_VAL=1;
 
     std::vector< std::vector<int> > map;
@@ -72,7 +72,7 @@ public:
     TileMap();
 
     void parseMap(const char*);
-    bool checkFalling(Players&);
+
     static int tileToPixels(const unsigned int COORD_I );
 
     void renderingMap(const int X , const int Y , const int Z,const int SW, const int SH);

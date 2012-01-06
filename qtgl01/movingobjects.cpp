@@ -1,9 +1,10 @@
 #include "movingobjects.h"
 #include "debugtools.h"
+#include <cmath>
 #include <iostream>
 MovingObjects::MovingObjects():
     vx(0),vy(0),vz(0),
-    state(MovingObjects::S_BOTTOM_FLOOR),isRightDirection(true)
+    state(MovingObjects::S_FLOOR),isRightDirection(true)
 {
   //  floorY=0;
 
@@ -27,17 +28,12 @@ void MovingObjects::setVZ(const float VZ){ vz=VZ;}
 // now it's call at evey 10ms
 void MovingObjects::update(const int ELAPSED_MS ){
 
+    static int c=0;
+    c++;
+    if(vy==0)
+        c=1;
+    vy = vy-0.022;
 
-/*
-    if (state == getJumpingState() && getY() <= floorY) {
-      setVY(0);
-      setY(floorY);
-      state = getNormalState();
-    }else
- */
-    if (state == getJumpingState() || state == getFallState()) {
-       vy = vy - 0.002*ELAPSED_MS;
-    }
 
     if( vy >= MAX_VY )
        vy = MAX_VY-0.02;
@@ -70,11 +66,13 @@ void MovingObjects::setState(MovingObjects::States S)
 
 void MovingObjects::jump()
 {
-    if( state != getJumpingState() && state != getFallState() ){
+    setVY(JUMP_SPEED);
+
+   /*if( state != getJumpingState() && state != getFallState() ){
 
         state=getJumpingState();
         setVY(JUMP_SPEED);
-   }
+   }*/
 }
 
 

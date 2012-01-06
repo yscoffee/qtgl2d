@@ -13,7 +13,7 @@ class MovingObjects : public Objects
 {
 
 protected:
-    enum States{ S_BOTTOM_FLOOR, S_JUMPING ,S_HIGHFLOOR,S_FALL };
+    enum States{ S_FLOOR, S_JUMPING ,S_FALL };
     States state;
 
     float vx;
@@ -28,16 +28,15 @@ public:
     void setState(States);
     virtual States getState();
     inline
-    static States getBottomFloorState(){return S_BOTTOM_FLOOR;}
+    static States getFloorState(){return S_FLOOR;}
     inline
     static States getJumpingState(){return S_JUMPING;}
     inline
     static States getFallState(){return S_FALL;}
-    inline
-    static States getHighFloorState(){return S_HIGHFLOOR;}
-    static const float MAX_VX=0.9;
-    static const float MAX_VY=0.9;
-    static const float JUMP_SPEED =  0.95f;
+
+    static const float MAX_VX=0.7;
+    static const float MAX_VY=1.2;
+    static const float JUMP_SPEED =  1.2f;
 
 
     virtual float getVX();

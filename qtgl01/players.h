@@ -41,10 +41,10 @@ public:
     int getHalfWidth(){return HALF_WID;}
     inline
     int getHalfHeight(){return HALF_HEI;}
-
+    void jump();
     //int getFloorY(){return floorY;}
-    void handleCollision(  Objects*);
-    void performFalling(const long MS);
+    //void handleCollision(  Objects*);
+    //void performFalling(const long MS);
 };
 
 #endif // PLAYERS_H

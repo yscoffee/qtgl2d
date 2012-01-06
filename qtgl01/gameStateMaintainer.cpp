@@ -18,9 +18,9 @@ GameStateMaintainer::GameStateMaintainer(const unsigned int WIDTH, const unsigne
 {
     tileMap.parseMap("..\\map\\testmap.txt");
 
-    play1.setX(30);
+    play1.setX(70);
     play1.setY(100);
-    play1.setState(play1.getBottomFloorState());
+    play1.setState(play1.getFloorState());
     //play1.setState(play1.getFallState());
     //play1.setfloorY(tileMap.getTileSize()+play1.getHalfHeight() );
     addMovingObj(&play1);
@@ -83,41 +83,18 @@ void GameStateMaintainer::keyboardPressEvent(const QKeyEvent *event)
 
 void GameStateMaintainer::updateObjs(const long MS)
 {
-/*
-#ifdef __MY_DEBUGS
-    std::cout<<" px:"<<play1.getX()<<" py:"<<play1.getY()<<std::endl;
-#endif
-*/
+
     for(unsigned int ix=0; ix< movingObjsList.size() ;ix++){
         movingObjsList[ix]->update(MS);
     }
 
-    //play1.update(MS);
-
-    //update panel.
-
-    //collision check.
-
     tileMap.tileCollisionCheck(play1);
-    /*
-    bool collideTile=NULL;
-    if(collideTile!=NULL){
-        //play1.handleCollision(collideTile);
 
-    }else if(play1.getState() == Players::getHighFloorState() ){
-    //no collision
-    //check falling condition
-        if(tileMap.checkFalling(play1))
-            play1.performFalling(MS);
-    }
-    */
     bool stCool = tileMap.starsCollisionCheck(play1.getX(),play1.getY(),play1.getHalfWidth()*2,play1.getHalfHeight()*2);
 
     if(stCool){
         play1.scores++;
-
     }
-
 
     //out of range align
     if(play1.getX()<0)

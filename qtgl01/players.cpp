@@ -40,16 +40,16 @@ void Players::update(const int MS)
 
 void Players::resetState()
 {
-    setX(50);
-    setY(50);
+    setX(70);
+    setY(70);
     setZ(0);
     setVX(0);
     setVY(0);
     setVZ(0);
 
-    setState(this->getBottomFloorState());
+    setState(this->getFloorState());
 }
-
+/*
 void Players::handleCollision( Objects *obj)
 {
     //check it's a valid request
@@ -86,7 +86,7 @@ void Players::handleCollision( Objects *obj)
             setX(objRight_X);
         }else{
             std::cerr<<"error dx=0"<<std::endl;
-        }*/
+        }* /
         //overlap X test
         if( x+HALF_WID <= objRight_X ){
             //align X, left collided
@@ -177,7 +177,7 @@ void Players::handleCollision( Objects *obj)
             //reset VY
             setVY(0);
         }
-*/
+* /
 
     }else {
 
@@ -243,9 +243,13 @@ void Players::handleCollision( Objects *obj)
          }
 
      }
-     */
+     * /
 
 }
+
+
+
+
 
 void Players::performFalling(const long MS)
 {
@@ -253,10 +257,18 @@ void Players::performFalling(const long MS)
     setVY(getVY() - 0.002 * MS);
    // y += vy * MS;
 }
-
+*/
 void Players::initTexture()
 {
     Players::leftModeTex.initial("..\\textures\\player_left.png");
     Players::rightModeTex.initial("..\\textures\\player_right.png");
+}
+
+void Players::jump()
+{
+    if(state==getFloorState()){
+        state=getJumpingState();
+        MovingObjects::jump();
+    }
 }
 
