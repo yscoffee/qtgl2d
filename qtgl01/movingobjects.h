@@ -35,7 +35,7 @@ public:
     static States getFallState(){return S_FALL;}
     inline
     static States getHighFloorState(){return S_HIGHFLOOR;}
-    static const float MAX_VX=0.4;
+    static const float MAX_VX=0.2;
     static const float JUMP_SPEED =  0.95f;
 
 

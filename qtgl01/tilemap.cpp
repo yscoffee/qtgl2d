@@ -8,7 +8,7 @@
 #include <cmath>
 #include "stars.h"
 
-TileMap::TileMap( ):width(0),height(0)
+TileMap::TileMap( ):mapWidth(0),mapHeight(0)
 {
 
 
@@ -25,14 +25,14 @@ void TileMap::loadMap(const char *path)
     }
     std::string line;
 
-    height=0;
-    width=0;
+    mapHeight=0;
+    mapWidth=0;
     //load map script
     //reading map from heighest line to lowest line
     while(getline(fin,line)){
 
 
-        width=(width<line.size())?line.size():width;
+        mapWidth=(mapWidth<line.size())?line.size():mapWidth;
         std::vector<int> newLine;
 
         //skip a comment line.
@@ -40,7 +40,7 @@ void TileMap::loadMap(const char *path)
             continue;
         else{
         //normal condition
-             height++;
+             mapHeight++;
             //read in each line
             //and trandform char to pre defined int value
             for(int ix=0 ; ix<line.size() ; ix++){
@@ -70,8 +70,8 @@ void TileMap::loadMap(const char *path)
     //normalize
     //fill space on each line to keep same width of map
     for(int ix=0; ix<map.size();ix++){
-        if( map[ix].size() <width ){
-            while( width - map[ix].size() > 0){
+        if( map[ix].size() <mapWidth ){
+            while( mapWidth - map[ix].size() > 0){
                 map[ix].push_back(T_Transparent);
             }
         }
@@ -81,7 +81,7 @@ void TileMap::loadMap(const char *path)
 
 void TileMap::printTileMap()
 {
-    std::cout<<width<<':'<<height<<std::endl;
+    std::cout<<mapWidth<<':'<<mapHeight<<std::endl;
 
     for(int ix=0; ix<map.size();ix++){
         for(int iy=0; iy<map[ix].size();iy++){
@@ -103,13 +103,13 @@ void TileMap::setupTileMap(){
         for(int ix=0; ix<map[iy].size();ix++){
             switch(map[iy][ix]){
                 case T_Floor:
-                    addFloor( getConvertAndAlignedCoord(ix+1), getConvertAndAlignedCoord(height-iy) , Z_VAL );
+                    addFloor( mapCoord2WorldCoord(ix+1), mapCoord2WorldCoord(mapHeight-iy) , Z_VAL );
                     break;
                 case T_Enemy:
                     //addEnemy(getConvertAndAlignedCoord(ix),getConvertAndAlignedCoord(height-iy),Z_VAL);
                     break;
                 case T_Star:
-                    addStar(getConvertAndAlignedCoord(ix+1),getConvertAndAlignedCoord(height-iy),Z_VAL);
+                    addStar(mapCoord2WorldCoord(ix+1),mapCoord2WorldCoord(mapHeight-iy),Z_VAL);
                     break;
                 case T_Transparent:
                     //do nothings.
@@ -163,27 +163,74 @@ void TileMap::printObjLists()
 {
     for(int ix=0; ix<floorList.size() ; ix++){
         std::cout<<ix<<"-th:  "<<floorList[ix].getX()<<' '
-                <<floorList[ix].getY()<<' '
-               <<floorList[ix].getZ()<<' '<<std::endl;
+               <<floorList[ix].getY()<<' '
+               //<<floorList[ix].getZ()<<' '
+               <<" - x:"<<worldCoord2MapCoord(floorList[ix].getX())
+               <<" ,y:"<<worldCoord2MapCoord(floorList[ix].getY())
+               <<std::endl;
     }
 }
 
-Objects * TileMap::tileCollisionCheck(const int X, const int Y, const int W, const int H)
+//test there is collision or not.
+bool TileMap::foundCollision(Players& player)
 {
-    int xDis=0;
-    int yDis=0;
+    int x = worldCoord2MapCoord(player.preX);
+    int y = worldCoord2MapCoord(player.preY);
+    int nextX = worldCoord2MapCoord(player.x);
+    int nextY = worldCoord2MapCoord(player.y);
 
-    for(int ix=0; ix<floorList.size() ; ix++){
-        //check X,Y
-        xDis = std::abs(static_cast<float>(X-floorList[ix].getX()) );
-        yDis = std::abs(static_cast<float>(Y-floorList[ix].getY()) );
+    int dx = nextX-x ;
+    int dy = nextY-y ;
 
-        if(xDis < W/2+TILE_SIZE/2 && yDis < H/2+TILE_SIZE/2 ){
-            return &floorList[ix];
+    int steps=-1;
+
+    if( abs(dx)>abs(dy) )
+        steps=abs(dx);
+    else
+        steps=abs(dy);
+
+    //not move
+    if(steps == 0 )
+        return false;
+
+    double deltaX = dx/steps;
+    double deltaY = dy/steps;
+
+    bool found=false;
+    double px=x;
+    double py=y;
+
+    for( int i=0 ; i<steps+1 ;i++){
+        px += deltaX ;
+        py += deltaY ;
+
+        //test collide
+        // map[Y][X]
+        if(T_Transparent != map[mapHeight-static_cast<int>(py)-1][static_cast<int>(px)] )
+        {
+            found=true;
+            //align X
+            if(dx>0)//right moving
+                player.x = mapCoord2WorldCoord(static_cast<int>(px))-TILE_SIZE-player.getHalfWidth();
+            else if(dx<0)//left
+                player.x = mapCoord2WorldCoord(static_cast<int>(py))+TILE_SIZE+player.getHalfWidth();
+            else
+                ; //pass
+
+            //align Y
+            if(dy>0)// jump
+                player.y = mapCoord2WorldCoord(static_cast<int>(px))-TILE_SIZE-player.getHalfHeight();
+            else if(dy<0) // falling
+                player.y = mapCoord2WorldCoord(static_cast<int>(py))+TILE_SIZE+player.getHalfHeight();
+            else
+                ;
+
+            break;
         }
     }
 
-    return NULL;
+
+    return found;
 }
 bool  TileMap::starsCollisionCheck(const int X, const int Y, const int W, const int H)
 {

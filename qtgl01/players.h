@@ -5,9 +5,13 @@
 #include "textures.h"
 #include <QGLWidget>
 
+
 class Players: public MovingObjects
 {
 private:
+
+    friend class TileMap;
+
     //hold texture, should be initialed IN function glInitial()
     static Textures rightModeTex;
     static Textures leftModeTex;

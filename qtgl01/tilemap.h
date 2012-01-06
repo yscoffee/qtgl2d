@@ -13,8 +13,8 @@ private:
     static const int Z_VAL=1;
 
     std::vector< std::vector<int> > map;
-    unsigned int width;
-    unsigned int height;
+    unsigned int mapWidth;
+    unsigned int mapHeight;
 
     std::vector<Floors> floorList;
     std::vector<Stars> starList;
@@ -32,14 +32,21 @@ private:
     //convert logical tile coordinate to real coordinate.
     //and align the center point to the specified block.
     inline
-    int getConvertAndAlignedCoord(const int C, const unsigned int L=TileMap::TILE_SIZE ){
-        return static_cast<int>((C-1)*TILE_SIZE + TILE_SIZE/2);
+    int mapCoord2WorldCoord(const int C ){
+        return static_cast<int>((C-1)*TILE_SIZE + TILE_SIZE/2 );
     }
+    //Convert world coordinate into logic map coordinate
     inline
-    unsigned int getMapScriptWidth(){return width;}
+    int worldCoord2MapCoord(const int C ){
+        //return static_cast<int>( (C - TILE_SIZE/2)/TILE_SIZE+1);
+        return static_cast<int>(floor(C*1.0/TILE_SIZE)-1);
+    }
 
     inline
-    unsigned int getMapScriptHeight(){return height;}
+    unsigned int getMapScriptWidth(){return mapWidth;}
+
+    inline
+    unsigned int getMapScriptHeight(){return mapHeight;}
 
 public:
     TileMap();
@@ -61,7 +68,7 @@ public:
     inline
     unsigned int getMapHeight(){return getMapScriptHeight()*TILE_SIZE;}
 
-    Objects* tileCollisionCheck(const int X,const int Y, const int W ,const int H);
+    bool foundCollision(Players& player);
     bool starsCollisionCheck(const int X, const int Y, const int W, const int H);
     void printTileMap();
     void printObjLists();

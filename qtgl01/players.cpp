@@ -8,7 +8,7 @@
  Textures Players::leftModeTex;
 
 Players::Players():
-    hp(0),mp(0),sp(0),exp(0),level(0),HALF_WID(20),HALF_HEI(20),
+    hp(0),mp(0),sp(0),exp(0),level(0),HALF_WID(10),HALF_HEI(10),
     preX(0),preY(0),preZ(0),scores(0)
 {
 
@@ -264,7 +264,7 @@ void Players::performFalling(const long MS)
 {
     state=getFallState();
     setVY(getVY() - 0.002 * MS);
-    y += vy * MS;
+    //y += vy * MS;
 }
 
 void Players::initTexture()

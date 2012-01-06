@@ -20,7 +20,7 @@ GameStateMaintainer::GameStateMaintainer(const unsigned int WIDTH, const unsigne
 
     play1.setX(30);
     play1.setY(100);
-    play1.setState(play1.getFallState());
+    //play1.setState(play1.getFallState());
     //play1.setfloorY(tileMap.getTileSize()+play1.getHalfHeight() );
     addMovingObj(&play1);
 
@@ -87,19 +87,17 @@ void GameStateMaintainer::updateObjs(const long MS)
     std::cout<<" px:"<<play1.getX()<<" py:"<<play1.getY()<<std::endl;
 #endif
 */
+
+    //calculate next location
     for(unsigned int ix=0; ix< movingObjsList.size() ;ix++){
         movingObjsList[ix]->update(MS);
     }
 
-    //play1.update(MS);
+    //check player's location
+    //Objects * collideTile = tileMap.foundCollision(play1);
 
-    //update panel.
-
-    //collision check.
-    Objects * collideTile = tileMap.tileCollisionCheck(play1.getX(),play1.getY(),play1.getHalfWidth()*2,play1.getHalfHeight()*2);
-
-    if(collideTile!=NULL){
-        play1.handleCollision(collideTile);
+    if(tileMap.foundCollision(play1)){
+       // play1.handleCollision(collideTile);
 
     }else if(play1.getState() == Players::getHighFloorState() ){
     //no collision
@@ -108,12 +106,12 @@ void GameStateMaintainer::updateObjs(const long MS)
             play1.performFalling(MS);
     }
 
-    bool stCool = tileMap.starsCollisionCheck(play1.getX(),play1.getY(),play1.getHalfWidth()*2,play1.getHalfHeight()*2);
+    /*bool stCool = tileMap.starsCollisionCheck(play1.getX(),play1.getY(),play1.getHalfWidth()*2,play1.getHalfHeight()*2);
 
     if(stCool){
         play1.scores++;
 
-    }
+    }*/
 
     if(play1.getX()<0)
         play1.setX(0);
