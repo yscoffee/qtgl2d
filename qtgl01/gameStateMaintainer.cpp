@@ -87,11 +87,11 @@ void GameStateMaintainer::updateObjs(const long MS)
     for(unsigned int ix=0; ix< movingObjsList.size() ;ix++){
         movingObjsList[ix]->update(MS);
     }
-
+    //test hard collision
     tileMap.tileCollisionCheck(play1);
 
+    //test soft collision(star)
     bool stCool = tileMap.starsCollisionCheck(play1.getX(),play1.getY(),play1.getHalfWidth()*2,play1.getHalfHeight()*2);
-
     if(stCool){
         play1.scores++;
     }
