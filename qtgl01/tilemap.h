@@ -25,6 +25,7 @@ private:
     void addFloor(const int,const int,const int,const int);
     void addEnemy(const int,const int,const int,const int);
     void addStar(const int,const int,const int,const int);
+    void removeStar(const int,const int);
     void addEndPoint(const int,const int,const int,const int);
 
     //perform pasering action from tile map to pixel map.
@@ -72,8 +73,8 @@ private:
         return IX+getMapScriptHeight()*IY;
     }
 
-    bool isCollided(const int,const int,const int,const int);
-    bool hasAObjInMap(const int x,const int y);
+    bool isCollided(const int,const int,const int,const int,Players&);
+    bool hasAObjInMap(const int x,const int y,Players&);
 
 public:
 
@@ -89,7 +90,7 @@ public:
     void renderingMap(const int X , const int Y , const int Z,const int SW, const int SH);
     void renderingStars(const int X , const int Y , const int Z,const int SW, const int SH, QGLWidget * p);
 
-    void hardTileCollisionCheck(Players &);
+    void tileCollisionHandle(Players &);
     void softTileCollisionCheck(Players &);
 
     //-----------------------------------------------------------------------

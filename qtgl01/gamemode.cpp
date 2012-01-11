@@ -25,14 +25,8 @@ void GameMode::updateAction(const long &MS)
     for(unsigned int ix=0; ix< movingObjsList.size() ;ix++){
         movingObjsList[ix]->update(MS);
     }
-    //test hard collision
-    tileMap.hardTileCollisionCheck(play1);
-
-    //test soft collision(star)
-    bool stCool = tileMap.starsCollisionCheck(play1.getX(),play1.getY(),play1.getHalfWidth()*2,play1.getHalfHeight()*2);
-    if(stCool){
-        play1.scores++;
-    }
+    //handle collision
+    tileMap.tileCollisionHandle(play1);
 
     //out of range align
     if(play1.getX()<0)

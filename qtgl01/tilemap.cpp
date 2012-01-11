@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include <cmath>
+#include "players.h"
 #include "stars.h"
 #include <algorithm>
 #include<map>
@@ -185,20 +186,24 @@ void TileMap::printObjLists()
                  <<iter->second.getZ()<<' '<<std::endl;
     }
 }
-bool TileMap::hasAObjInMap(const int X,const int Y){
+bool TileMap::hasAObjInMap(const int X,const int Y,Players & ply){
 
     int ix = static_cast<int>(floor(X/TILE_SIZE));
     int iy = static_cast<int>(floor(Y/TILE_SIZE));
 
     if( map[iy][ix] == T_Floor )
+        //hard collision
         return true;
-    else if( map[iy][ix] == T_Star )
+    else if( map[iy][ix] == T_Star ){
+        //detect soft collision
+        removeStar(ix,iy);
+        ply.scores++;
 
         return false;
-    else
+    }else
         return false;
 }
-bool TileMap::isCollided(const int X, const int Y,const int HWID,const int HHEI){
+bool TileMap::isCollided(const int X, const int Y,const int HWID,const int HHEI,Players& ply){
 
     //Use to generate 4 bounding points
     int cof[2] = {1,-1};
@@ -206,14 +211,14 @@ bool TileMap::isCollided(const int X, const int Y,const int HWID,const int HHEI)
     //test 4 bounding points
     for(int ix=0; ix < 2 ; ix++){
         for(int iy=0; iy < 2 ; iy++){
-            if( hasAObjInMap( X+cof[ix]*HWID , Y+cof[iy]*HHEI ) ){
+            if( hasAObjInMap( X+cof[ix]*HWID , Y+cof[iy]*HHEI , ply ) ){
                return true;
             }
         }
     }
     return false;
 }
-void TileMap::hardTileCollisionCheck(Players & player )
+void TileMap::tileCollisionHandle(Players & player )
 {
     int x=player.preX;
     int y=player.preY;
@@ -224,10 +229,10 @@ void TileMap::hardTileCollisionCheck(Players & player )
         return;
 
     //test x2,y2 is ok or not
-    if( isCollided(x2,y2,player.getHalfWidth(),player.getHalfHeight()) ){
+    if( isCollided(x2,y2,player.getHalfWidth(),player.getHalfHeight(),player) ){
 
         //found collision, test x,y+dy first.
-        if( isCollided(x,y2,player.getHalfWidth(),player.getHalfHeight()) ){
+        if( isCollided(x,y2,player.getHalfWidth(),player.getHalfHeight(),player) ){
 
             //align to < x2, y' >
             if(y2-y>=0){
@@ -248,11 +253,11 @@ void TileMap::hardTileCollisionCheck(Players & player )
             }
 
             //Re-test
-            hardTileCollisionCheck(player);
+            tileCollisionHandle(player);
 
         }else{
         //test X-axis, < x+dx,y >
-            if( isCollided(x2,y,player.getHalfWidth(),player.getHalfHeight())){
+            if( isCollided(x2,y,player.getHalfWidth(),player.getHalfHeight(),player)){
                 //align to < x', y+dy>
 
                 if(x2-x>=0)
@@ -265,10 +270,9 @@ void TileMap::hardTileCollisionCheck(Players & player )
 
 
                 //re-Test
-                hardTileCollisionCheck(player);
+                tileCollisionHandle(player);
             }
         }
-
 
     }else
         return;
@@ -321,6 +325,12 @@ void TileMap::softTileCollisionCheck(Players &player)
 
 
 
+}
+
+void TileMap::removeStar(const int IX, const int IY)
+{
+   starList.erase( starList.find(getTileKey(IX,IY)) );
+   map[IY][IX] = T_Transparent;
 }
 
 
