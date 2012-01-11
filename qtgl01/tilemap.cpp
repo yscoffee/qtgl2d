@@ -313,19 +313,6 @@ void TileMap::addEndPoint(const int, const int, const int,const int KEY)
 
 }
 
-//Detect soft collisions and perform corresponding action.
-//* We assume the maximun displacement(MAX_VX*UPDATE_MS=7) smaller than the tile size
-// to avoid over-speed problem.
-void TileMap::softTileCollisionCheck(Players &player)
-{
-
-    //travel all soft list
-
-    //found - call collision resolution
-
-
-
-}
 
 void TileMap::removeStar(const int IX, const int IY)
 {

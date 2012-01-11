@@ -91,7 +91,6 @@ public:
     void renderingStars(const int X , const int Y , const int Z,const int SW, const int SH, QGLWidget * p);
 
     void tileCollisionHandle(Players &);
-    void softTileCollisionCheck(Players &);
 
     //-----------------------------------------------------------------------
     //some getters to retrive basic info.
