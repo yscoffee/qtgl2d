@@ -172,7 +172,8 @@ void GameControlWidget::switchMode(const GameControlWidget::GameStages S)
             gameMode.ini();
             currHandler=&gameMode;
             break;
-        case GS_GameEnd:
+        case GS_End:
+            this->close();
             break;
         case GS_ScoreBoard:
             scoreboardMode.ini();

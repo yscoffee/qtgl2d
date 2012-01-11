@@ -59,6 +59,7 @@ void TitleMode::keyPress(const int &K){
                 static_cast<GameControlWidget&>(parent).switchMode( GameControlWidget::GS_ScoreBoard );
                 break;
             case 2 :
+                static_cast<GameControlWidget&>(parent).switchMode( GameControlWidget::GS_End );
                 break;
             default: break;
         }

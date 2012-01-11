@@ -20,7 +20,7 @@ class GameControlWidget : public QGLWidget
 public:
     explicit GameControlWidget(QWidget *parent = 0);
     ~GameControlWidget();
-    enum GameStages{ GS_TitleMode , GS_GameMode, GS_Pasted, GS_ScoreBoard ,GS_GameEnd };
+    enum GameStages{ GS_TitleMode , GS_GameMode, GS_Pasted, GS_ScoreBoard ,GS_End };
 
     void initializeGL();
     //reshape
