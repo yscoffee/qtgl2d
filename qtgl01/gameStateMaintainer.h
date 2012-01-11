@@ -11,20 +11,49 @@
 #include <vector>
 #include <cmath>
 #include <QGLWidget>
+#include <map>
+#include <string>
+
 
 class GameStateMaintainer
 {
 
 private:
     enum GameStages{ GS_Title , GS_Gaming, GS_Pasted, GS_ScoreBoard ,GS_GameEnd };
+    //interface
+     class Runnable{
+     public:
+         virtual void run()=0;
+         virtual const char* getName()=0;
+     };
+
+     class Gaming:public Runnable{
+         virtual void run(){}
+         virtual const char* getName(){
+             return "Game Start";
+         }
+     };
+
+     class Title:public Runnable{
+         virtual void run(){}
+         virtual const char* getName(){
+             return "Game Start";
+         }
+     };
+
+     class Exit:public Runnable{
+         virtual void run(){}
+         virtual const char* getName(){
+             return "Game Start";
+         }
+     };
 
 public:
     GameStateMaintainer(const unsigned int WIDTH, const unsigned int HEIGHT,QGLWidget*);
 
     void renderLiveObjs();
     void renderFloors();
-
-    void rendering();
+    void draw();
 
     void updateObjs(const long MS);
 
@@ -82,7 +111,29 @@ public:
          else
            return 0;
     }
+
 private:
+
+    void darwGaming();
+    void drawTitle();
+    void drawGameEnd();
+    void drawScoreBoard();
+
+    void titleUpdate(const long &MS);
+    void gamingUpdate(const long &MS);
+    void gameEndUpdate(const long &MS);
+    void scoreBoardUpdate(const long &MS);
+
+    void titleKeyPress(const int& );
+    void gamingKeyPress(const int& );
+    void gameEndKeyPress(const int& );
+    void scoreBoardKeyPress(const int& );
+
+    void titleKeyRelease(const int &);
+    void gamingKeyRelease(const int &);
+    void gameEndKeyRelease(const int &);
+    void scoreBoardRelease(const int &);
+
 
     QGLWidget * parent;
     int playerTrans_Y;
@@ -99,7 +150,8 @@ private:
     GameStages currStage;
     TileMap tileMap;
 
-
+    std::map<int,GameStages> menuInTitle;
+    unsigned int titleCoice;
 };
 
 

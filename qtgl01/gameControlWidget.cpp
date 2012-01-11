@@ -57,7 +57,6 @@ void GameControlWidget::initializeGL(){
 void GameControlWidget::startIdleFunc(){
     //supoose 60fps , redrawing action can be done in the interval.
     redrawTimerID=startTimer(static_cast<int>(IDLE_REDRAW_MS));
-
 }
 
 void GameControlWidget::resizeGL(int width, int height){
@@ -89,7 +88,6 @@ void GameControlWidget::draw(){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-
     //Move central point of world frame to the left bottom of screen
     glTranslatef(-1*width()/2,-1*height()/2,-30);
 
@@ -99,7 +97,7 @@ void GameControlWidget::draw(){
 
     //**********************
     //main route
-    gameState.rendering();
+    gameState.draw();
 
     //**********************
     glFlush();

@@ -178,7 +178,7 @@ bool TileMap::hasAObjInMap(const int X,const int Y){
     if( map[iy][ix] == T_Floor )
         return true;
     else if( map[iy][ix] == T_Star )
-
+        ;
     else
         return false;
 }
