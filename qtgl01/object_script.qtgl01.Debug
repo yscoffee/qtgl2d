@@ -2,7 +2,6 @@ INPUT(
 ./debug/main.o
 ./debug/gameControlWidget.o
 ./debug/mainwindow.o
-./debug/gameUpdateAction.o
 ./debug/players.o
 ./debug/movingobjects.o
 ./debug/objects.o
@@ -12,10 +11,10 @@ INPUT(
 ./debug/testMap.o
 ./debug/tilemap.o
 ./debug/drawutilities.o
-./debug/gameStateMaintainer.o
 ./debug/textures.o
 ./debug/testTextures.o
 ./debug/stars.o
+./debug/gamemode.o
 ./debug/moc_gameControlWidget.o
 ./debug/moc_mainwindow.o
 );

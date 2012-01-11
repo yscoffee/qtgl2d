@@ -68,10 +68,13 @@ private:
 
     bool isCollided(const int,const int,const int,const int);
     bool hasAObjInMap(const int x,const int y);
+
 public:
+
     TileMap();
 
     void parseMap(const char*);
+    void clear();
 
     static int tileToPixels(const unsigned int COORD_I );
 

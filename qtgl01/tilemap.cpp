@@ -17,6 +17,8 @@ TileMap::TileMap( ):width(0),height(0)
 //@throw: const string, represent invalid map script;
 void TileMap::loadMap(const char *path)
 {
+
+
     std::cout<<"Loading map script:"<<path<<std::endl;
     std::fstream fin(path);
     if(fin.fail()){
@@ -79,7 +81,7 @@ void TileMap::loadMap(const char *path)
 
     //reverse for y[0] mapping y<0>
     std::reverse( map.begin(),map.end());
-
+    fin.close();
 }
 
 void TileMap::printTileMap()
@@ -282,5 +284,14 @@ void TileMap::renderingStars(const int X, const int Y, const int Z, const int SW
     for(int ix=0; ix<starList.size() ; ix++){
         starList[ix].rendering(p);
     }
+}
+
+void TileMap::clear()
+{
+    width=0;
+    height=0;
+    floorList.clear();
+    starList.clear();
+    enemyList.clear();
 }
 

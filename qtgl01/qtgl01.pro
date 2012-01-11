@@ -22,7 +22,6 @@ CONFIG  +=console
 SOURCES += main.cpp \
     gameControlWidget.cpp \
     mainwindow.cpp \
-    gameUpdateAction.cpp \
     players.cpp \
     movingobjects.cpp \
     objects.cpp \
@@ -32,22 +31,20 @@ SOURCES += main.cpp \
     testMap.cpp \
     tilemap.cpp \
     drawutilities.cpp \
-    gameStateMaintainer.cpp \
     textures.cpp \
     testTextures.cpp \
-    stars.cpp
+    stars.cpp \
+    gamemode.cpp
 
 HEADERS  += \
     gameControlWidget.h \
     mainwindow.h \
-    gameUpdateAction.h \
     players.h \
     movingobjects.h \
     objects.h \
     staticobjects.h \
     floors.h \
     debugtools.h \
-    gameStateMaintainer.h \
     tilemap.h \
     drawutilities.h \
     textures.h \
@@ -55,13 +52,36 @@ HEADERS  += \
     testtilemap.h \
     testplayer.h \
     testfloor.h \
-    teststar.h
+    teststar.h \
+    runnable.h \
+    gamemode.h
 
 FORMS    += \
     gameControlWidget.ui \
     mainwindow.ui
 
 OTHER_FILES +=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

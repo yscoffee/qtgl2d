@@ -2,7 +2,6 @@ INPUT(
 ./release/main.o
 ./release/gameControlWidget.o
 ./release/mainwindow.o
-./release/gameUpdateAction.o
 ./release/players.o
 ./release/movingobjects.o
 ./release/objects.o
@@ -12,10 +11,10 @@ INPUT(
 ./release/testMap.o
 ./release/tilemap.o
 ./release/drawutilities.o
-./release/gameStateMaintainer.o
 ./release/textures.o
 ./release/testTextures.o
 ./release/stars.o
+./release/gamemode.o
 ./release/moc_gameControlWidget.o
 ./release/moc_mainwindow.o
 );
