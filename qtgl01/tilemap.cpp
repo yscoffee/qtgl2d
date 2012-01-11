@@ -191,14 +191,18 @@ bool TileMap::hasAObjInMap(const int X,const int Y,Players & ply){
     int ix = static_cast<int>(floor(X/TILE_SIZE));
     int iy = static_cast<int>(floor(Y/TILE_SIZE));
 
-    if( map[iy][ix] == T_Floor )
+    if( map[iy][ix] == T_Floor ){
         //hard collision
         return true;
-    else if( map[iy][ix] == T_Star ){
+    }else if( map[iy][ix] == T_Star ){
         //detect soft collision
         removeStar(ix,iy);
         ply.scores++;
 
+        return false;
+    }else if( map[iy][ix] == T_EndOfClass ){
+        //game end signal
+        throw(0);
         return false;
     }else
         return false;

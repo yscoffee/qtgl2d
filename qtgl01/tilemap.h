@@ -62,7 +62,6 @@ private:
 
     }
 
-
     inline
     unsigned int getMapScriptWidth(){return width;}
     inline

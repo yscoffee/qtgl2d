@@ -13,7 +13,7 @@ GameControlWidget::GameControlWidget(QWidget *parent) :
     QGLWidget(QGLFormat(QGL::DoubleBuffer),parent),
     ui(new Ui::GameControlWidget),
     redrawTimerID(-1),currHandler(NULL),
-    tiltMode(*this),gameMode(*this)
+    tiltMode(*this),gameMode(*this),scoreboardMode(*this)
 {
     switchMode(GS_TitleMode);
 
@@ -175,6 +175,8 @@ void GameControlWidget::switchMode(const GameControlWidget::GameStages S)
         case GS_GameEnd:
             break;
         case GS_ScoreBoard:
+            scoreboardMode.ini();
+            currHandler=&scoreboardMode;
             break;
         default:
             std::cerr<<"error"<<std::endl;

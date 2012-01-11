@@ -5,6 +5,8 @@
 #include "runnable.h"
 #include "gamemode.h"
 #include "titlemode.h"
+#include "scoreboardmode.h"
+
 namespace Ui {
     class GameControlWidget;
 }
@@ -48,7 +50,7 @@ private:
     Runnable * currHandler;
     TitleMode tiltMode;
     GameMode gameMode;
-
+    ScoreBoardMode scoreboardMode;
     void initialGameState();
 
 

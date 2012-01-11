@@ -16,6 +16,7 @@ INPUT(
 ./release/stars.o
 ./release/gamemode.o
 ./release/titlemode.o
+./release/scoreboardmode.o
 ./release/moc_gameControlWidget.o
 ./release/moc_mainwindow.o
 );

@@ -70,6 +70,8 @@ private :
     inline
     void resetPlayer(){ play1.resetState();}
 
+    void gameEnd();
+
 public:
     GameMode(QGLWidget& P);
     virtual void ini();
@@ -79,6 +81,8 @@ public:
 
     virtual void keyPress(const int &);
     virtual void keyRelease(const int &);
+
+
 
 };
 

@@ -1,5 +1,7 @@
 #include "gamemode.h"
 #include "gameControlWidget.h"
+#include<iostream>
+
 GameMode::GameMode(QGLWidget& P):parent(P),
     play1( *(new Players()) )
 {
@@ -9,6 +11,8 @@ GameMode::GameMode(QGLWidget& P):parent(P),
 
 void GameMode::ini()
 {
+    movingObjsList.clear();
+    play1.resetState();
     tileMap.clear();
     tileMap.parseMap("..\\map\\testmap.txt");
 
@@ -26,8 +30,14 @@ void GameMode::updateAction(const long &MS)
         movingObjsList[ix]->update(MS);
     }
     //handle collision
-    tileMap.tileCollisionHandle(play1);
-
+    try{
+        tileMap.tileCollisionHandle(play1);
+    }catch(int sig){
+        //game end
+        gameEnd();
+    }catch(...){
+        std::cerr<<"unexpeted exp."<<std::endl;
+    }
     //out of range align
     if(play1.getX()<0)
         play1.setX(0);
@@ -104,5 +114,13 @@ void GameMode::renderLiveObjs()
                 <<std::endl;
     }
 #endif
+}
+
+void GameMode::gameEnd()
+{
+    movingObjsList.clear();
+    play1.resetState();
+    tileMap.clear();
+    static_cast<GameControlWidget&>(parent).switchMode(GameControlWidget::GS_ScoreBoard);
 }
 

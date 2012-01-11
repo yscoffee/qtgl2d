@@ -16,6 +16,7 @@ INPUT(
 ./debug/stars.o
 ./debug/gamemode.o
 ./debug/titlemode.o
+./debug/scoreboardmode.o
 ./debug/moc_gameControlWidget.o
 ./debug/moc_mainwindow.o
 );
