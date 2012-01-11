@@ -5,6 +5,7 @@
 #include "testtilemap.h"
 #include <gtest/gtest.h>
 #include "Textures.h"
+#include <cmath>
 using namespace std;
 
 //extern int testMap();
@@ -12,6 +13,8 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+
+
     //testMap();
     //testing::InitGoogleTest(&argc, argv);
     //RUN_ALL_TESTS();

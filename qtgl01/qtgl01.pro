@@ -52,13 +52,21 @@ HEADERS  += \
     drawutilities.h \
     textures.h \
     stars.h \
-    testtilemap.h
+    testtilemap.h \
+    testplayer.h \
+    testfloor.h \
+    teststar.h
 
 FORMS    += \
     gameControlWidget.ui \
     mainwindow.ui
 
 OTHER_FILES +=
+
+
+
+
+
 
 
 

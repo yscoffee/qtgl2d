@@ -26,12 +26,12 @@ private:
     const int HALF_HEI;
     GLint vertices[8][3];
 
+
+
+public:
     int preX;
     int preY;
     int preZ;
-
-public:
-
     int scores;
     static void renderPlayerInfos(const int SX, const int SY,QGLWidget *,Players&);
     static void initTexture();
@@ -45,10 +45,10 @@ public:
     int getHalfWidth(){return HALF_WID;}
     inline
     int getHalfHeight(){return HALF_HEI;}
-
+    void jump();
     //int getFloorY(){return floorY;}
-    void handleCollision(  Objects*);
-    void performFalling(const long MS);
+    //void handleCollision(  Objects*);
+    //void performFalling(const long MS);
 };
 
 #endif // PLAYERS_H

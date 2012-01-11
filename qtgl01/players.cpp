@@ -8,12 +8,9 @@
  Textures Players::leftModeTex;
 
 Players::Players():
-    hp(0),mp(0),sp(0),exp(0),level(0),HALF_WID(10),HALF_HEI(10),
+    hp(0),mp(0),sp(0),exp(0),level(0),HALF_WID(20),HALF_HEI(20),
     preX(0),preY(0),preZ(0),scores(0)
 {
-
-    //floorY = HALF_HEI;
-
 }
 
 void Players::rendering(){
@@ -22,16 +19,6 @@ void Players::rendering(){
         DrawUtilities::drawSquareWithTexture(x,y,z,HALF_WID*2,rightModeTex.getTID());
     else
         DrawUtilities::drawSquareWithTexture(x,y,z,HALF_WID*2,leftModeTex.getTID());
-
-    /*glDisable(GL_TEXTURE_2D);
-    glBegin(GL_QUADS);
-        glColor3d(1,1,1);
-        glVertex3d(x+HALF_WID,y+HALF_HEI,z);
-        glVertex3d(x-HALF_WID,y+HALF_HEI,z);
-        glVertex3d(x-HALF_WID,y-HALF_HEI,z);
-        glVertex3d(x+HALF_WID,y-HALF_HEI,z);
-    glEnd();
-    */
 
 }
 
@@ -53,16 +40,16 @@ void Players::update(const int MS)
 
 void Players::resetState()
 {
-    setX(50);
-    setY(50);
+    setX(70);
+    setY(70);
     setZ(0);
     setVX(0);
     setVY(0);
     setVZ(0);
 
-    setState(this->getBottomFloorState());
+    setState(this->getFloorState());
 }
-
+/*
 void Players::handleCollision( Objects *obj)
 {
     //check it's a valid request
@@ -99,7 +86,7 @@ void Players::handleCollision( Objects *obj)
             setX(objRight_X);
         }else{
             std::cerr<<"error dx=0"<<std::endl;
-        }*/
+        }* /
         //overlap X test
         if( x+HALF_WID <= objRight_X ){
             //align X, left collided
@@ -190,7 +177,7 @@ void Players::handleCollision( Objects *obj)
             //reset VY
             setVY(0);
         }
-*/
+* /
 
     }else {
 
@@ -256,20 +243,32 @@ void Players::handleCollision( Objects *obj)
          }
 
      }
-     */
+     * /
 
 }
+
+
+
+
 
 void Players::performFalling(const long MS)
 {
     state=getFallState();
     setVY(getVY() - 0.002 * MS);
-    //y += vy * MS;
+   // y += vy * MS;
 }
-
+*/
 void Players::initTexture()
 {
     Players::leftModeTex.initial("..\\textures\\player_left.png");
     Players::rightModeTex.initial("..\\textures\\player_right.png");
+}
+
+void Players::jump()
+{
+    if(state==getFloorState()){
+        state=getJumpingState();
+        MovingObjects::jump();
+    }
 }
 

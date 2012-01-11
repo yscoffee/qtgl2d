@@ -90,17 +90,17 @@ void DrawUtilities::drawSquareWithTexture(const int X, const int Y, const int Z,
     //  |/      |/
     //  v2------v3
     GLfloat vertices[]={
-        X+HL,Y+HL,Z+HL,//v0
+        X+HL,Y+HL,Z+1,//v0
 
-        X-HL,Y+HL,Z+HL,//v1
-        X-HL,Y-HL,Z+HL,//v2
+        X-HL,Y+HL,Z+1,//v1
+        X-HL,Y-HL,Z+1,//v2
 
-        X+HL,Y-HL,Z+HL,//v3
-        X+HL,Y-HL,Z-HL,//v4
+        X+HL,Y-HL,Z+1,//v3
+        X+HL,Y-HL,Z-1,//v4
 
-        X+HL,Y+HL,Z-HL,//v5
-        X-HL,Y+HL,Z-HL,//v6
-        X-HL,Y-HL,Z-HL,//v7
+        X+HL,Y+HL,Z-1,//v5
+        X-HL,Y+HL,Z-1,//v6
+        X-HL,Y-HL,Z-1,//v7
     };
 
     GLfloat texCoords[] =

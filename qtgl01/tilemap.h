@@ -9,12 +9,12 @@ class TileMap
 {
 private:
     enum TileTypes{T_Floor=1, T_Enemy, T_Star, T_Transparent };
-    static const int TILE_SIZE=30;
+    static const int TILE_SIZE=40;
     static const int Z_VAL=1;
 
     std::vector< std::vector<int> > map;
-    unsigned int mapWidth;
-    unsigned int mapHeight;
+    int width;
+    int height;
 
     std::vector<Floors> floorList;
     std::vector<Stars> starList;
@@ -32,27 +32,47 @@ private:
     //convert logical tile coordinate to real coordinate.
     //and align the center point to the specified block.
     inline
-    int mapCoord2WorldCoord(const int C ){
-        return static_cast<int>((C-1)*TILE_SIZE + TILE_SIZE/2 );
-    }
-    //Convert world coordinate into logic map coordinate
-    inline
-    int worldCoord2MapCoord(const int C ){
-        //return static_cast<int>( (C - TILE_SIZE/2)/TILE_SIZE+1);
-        return static_cast<int>(floor(C*1.0/TILE_SIZE)-1);
+    int getConvertAndAlignedCoord(const int C, const int L=TileMap::TILE_SIZE ){
+        return static_cast<int>((C-1)*TILE_SIZE + TILE_SIZE/2);
     }
 
     inline
-    unsigned int getMapScriptWidth(){return mapWidth;}
+    int map2World_X(const int X, const int L=TileMap::TILE_SIZE  ){
+        return static_cast<int>( X*L + L/2);
+    }
+    inline
+    int map2World_Y(const int Y, const int L=TileMap::TILE_SIZE  ){
+     //   return static_cast<int>((height-Y-1)*L + L/2);
+        return static_cast<int>( Y*L + L/2);
+    }
 
     inline
-    unsigned int getMapScriptHeight(){return mapHeight;}
+    unsigned int world2Map_X(const int X, const int L=TileMap::TILE_SIZE  ){
+        return static_cast<unsigned int>(floor(static_cast<float>((X-L/2)/L)));
+    }
 
+    inline
+    unsigned int world2Map_Y(const int Y, const int L=TileMap::TILE_SIZE  ){
+        //return height-1-(static_cast<unsigned int>(floor((Y-L/2)/L*1.0)));
+        return static_cast<unsigned int>(floor(static_cast<float>((Y-L/2)/L)));
+
+    }
+
+
+
+    inline
+    unsigned int getMapScriptWidth(){return width;}
+
+    inline
+    unsigned int getMapScriptHeight(){return height;}
+
+    bool isCollided(const int,const int,const int,const int);
+    bool hasAObjInMap(const int x,const int y);
 public:
     TileMap();
 
     void parseMap(const char*);
-    bool checkFalling(Players&);
+
     static int tileToPixels(const unsigned int COORD_I );
 
     void renderingMap(const int X , const int Y , const int Z,const int SW, const int SH);
@@ -68,7 +88,7 @@ public:
     inline
     unsigned int getMapHeight(){return getMapScriptHeight()*TILE_SIZE;}
 
-    bool foundCollision(Players& player);
+    void tileCollisionCheck(Players &);
     bool starsCollisionCheck(const int X, const int Y, const int W, const int H);
     void printTileMap();
     void printObjLists();
