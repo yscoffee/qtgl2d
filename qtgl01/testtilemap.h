@@ -55,8 +55,8 @@ TEST_F(TestTileMap,Chekfalling)
 }
 TEST_F(TestTileMap,test_map_H_W)
 {
-    EXPECT_GT(m.getMapWidth(),0);
-    EXPECT_GT(m.getMapHeight(),0);
+    EXPECT_GT(m.getMapWorldCoordWidth(),0);
+    EXPECT_GT(m.getMapWorldCoordHeight(),0);
 }
 
 }//namespace

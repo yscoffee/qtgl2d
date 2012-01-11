@@ -13,7 +13,7 @@ Players::Players():
 {
 }
 
-void Players::rendering(){
+void Players::rendering()const{
 
     if(isRightDirection)
         DrawUtilities::drawSquareWithTexture(x,y,z,HALF_WID*2,rightModeTex.getTID());

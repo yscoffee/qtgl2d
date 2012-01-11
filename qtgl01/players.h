@@ -37,7 +37,7 @@ public:
     static void initTexture();
     Players();
     void resetState();
-    virtual void rendering();
+    virtual void rendering()const;
     virtual void update(const int MS);
     virtual int getHeight(){return 2*HALF_HEI;}
     virtual int getWidth(){return 2*HALF_WID;}

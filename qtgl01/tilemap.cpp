@@ -8,6 +8,7 @@
 #include <cmath>
 #include "stars.h"
 #include <algorithm>
+#include<map>
 TileMap::TileMap( ):width(0),height(0)
 {
 
@@ -56,11 +57,13 @@ void TileMap::loadMap(const char *path)
                             newLine.push_back(T_Floor);break;
                         case ' ':
                             newLine.push_back(T_Transparent);break;
+                        case 'Q':
+                            newLine.push_back(T_EndOfClass);break;
                         case '\t' :
                             std::cerr<<"*ERROR Detect \t."<<std::endl;
                         default:
-                            std::cerr<<"*Detect undefined block."<<std::endl;
-                            throw('err');
+                            std::cerr<<"*Detect undefined block :"<<line[ix]<<std::endl;
+                            //throw('err');
                     }
                 }
             }
@@ -108,20 +111,23 @@ void TileMap::setupTileMap(){
         for(int ix=0; ix<map[iy].size();ix++){
             switch(map[iy][ix]){
                 case T_Floor:
-                    addFloor( map2World_X(ix), map2World_Y(iy) , Z_VAL );
+                    addFloor( map2World_X(ix), map2World_Y(iy) , Z_VAL ,getTileKey(ix,iy));
                     break;
                 case T_Enemy:
                     //addEnemy(map2World_X(ix),map2World_Y(height-iy),Z_VAL);
                     break;
                 case T_Star:
-                    addStar(map2World_X(ix),map2World_Y(iy),Z_VAL);
+                    addStar(map2World_X(ix),map2World_Y(iy),Z_VAL,getTileKey(ix,iy));
                     break;
                 case T_Transparent:
                     //do nothings.
                     break;
+                case T_EndOfClass:
+                    addEndPoint(map2World_X(ix),map2World_Y(iy),Z_VAL,getTileKey(ix,iy));
+                    break;
                 default:
-                    std::cerr<<"*Detect undefined block."<<std::endl;
-                    throw('err');
+                    std::cerr<<"*Detect undefined T_{} tags."<<std::endl;
+                    throw('e');
             }
         }
     }
@@ -141,35 +147,42 @@ void TileMap::parseMap(const char* path ){
 }
 
 
-void TileMap::addFloor(const int X, const int Y, const int Z)
+void TileMap::addFloor(const int X, const int Y, const int Z,const int KEY)
 {
 
-    floorList.push_back(Floors(X,Y,Z,TILE_SIZE,TILE_SIZE));
+    //floorList.push_back(Floors(X,Y,Z,TILE_SIZE,TILE_SIZE));
+    floorList.insert(std::pair<int,Floors>(KEY,Floors(X,Y,Z,TILE_SIZE,TILE_SIZE)));
+
 }
 
-void TileMap::addEnemy(const int, const int, const int)
+void TileMap::addEnemy(const int, const int, const int,const int)
 {
 }
 
-void TileMap::addStar(const int X, const int Y, const int Z)
+void TileMap::addStar(const int X, const int Y, const int Z,const int KEY)
 {
-    starList.push_back(Stars(X,Y,Z));
+    //starList.push_back(Stars(X,Y,Z));
+    starList.insert(std::pair<int,Stars>(KEY,Stars(X,Y,Z)));
 }
 
 void TileMap::renderingMap(const int X , const int Y , const int Z, const int SW, const int SH)
 {
-
-    for(int ix=0; ix<floorList.size() ; ix++){
-        floorList[ix].rendering();
+    for( std::map<int,Floors>::const_iterator iter=floorList.begin(); iter!=floorList.end() ; iter++){
+        (iter->second).rendering();
     }
 }
-
+void TileMap::renderingStars(const int X, const int Y, const int Z, const int SW, const int SH, QGLWidget *p)
+{
+    for(std::map<int,Stars>::const_iterator iter=starList.begin(); iter!=starList.end() ; iter++){
+        (iter->second).rendering();
+    }
+}
 void TileMap::printObjLists()
 {
-    for(int ix=0; ix<floorList.size() ; ix++){
-        std::cout<<ix<<"-th:  "<<floorList[ix].getX()<<' '
-                <<floorList[ix].getY()<<' '
-               <<floorList[ix].getZ()<<' '<<std::endl;
+    for(std::map<int,Floors>::iterator iter=floorList.begin(); iter!=floorList.end() ; iter++){
+        std::cout<<iter->first<<"-th:  "<<iter->second.getX()<<' '
+                 <<iter->second.getY()<<' '
+                 <<iter->second.getZ()<<' '<<std::endl;
     }
 }
 bool TileMap::hasAObjInMap(const int X,const int Y){
@@ -180,7 +193,8 @@ bool TileMap::hasAObjInMap(const int X,const int Y){
     if( map[iy][ix] == T_Floor )
         return true;
     else if( map[iy][ix] == T_Star )
-        ;
+
+        return false;
     else
         return false;
 }
@@ -199,7 +213,7 @@ bool TileMap::isCollided(const int X, const int Y,const int HWID,const int HHEI)
     }
     return false;
 }
-void TileMap::tileCollisionCheck(Players & player )
+void TileMap::hardTileCollisionCheck(Players & player )
 {
     int x=player.preX;
     int y=player.preY;
@@ -234,7 +248,7 @@ void TileMap::tileCollisionCheck(Players & player )
             }
 
             //Re-test
-            tileCollisionCheck(player);
+            hardTileCollisionCheck(player);
 
         }else{
         //test X-axis, < x+dx,y >
@@ -251,7 +265,7 @@ void TileMap::tileCollisionCheck(Players & player )
 
 
                 //re-Test
-                tileCollisionCheck(player);
+                hardTileCollisionCheck(player);
             }
         }
 
@@ -264,7 +278,7 @@ bool  TileMap::starsCollisionCheck(const int X, const int Y, const int W, const 
 {
     int xDis=0;
     int yDis=0;
-
+/*
     for(int ix=0; ix<starList.size() ; ix++){
         //check X,Y
         xDis = std::abs(static_cast<float>(X-starList[ix].getX()) );
@@ -275,16 +289,11 @@ bool  TileMap::starsCollisionCheck(const int X, const int Y, const int W, const 
             return true;
         }
     }
-
+*/
     return false;
 }
 
-void TileMap::renderingStars(const int X, const int Y, const int Z, const int SW, const int SH, QGLWidget *p)
-{
-    for(int ix=0; ix<starList.size() ; ix++){
-        starList[ix].rendering(p);
-    }
-}
+
 
 void TileMap::clear()
 {
@@ -292,6 +301,27 @@ void TileMap::clear()
     height=0;
     floorList.clear();
     starList.clear();
-    enemyList.clear();
+    //enemyList.clear();
 }
+
+void TileMap::addEndPoint(const int, const int, const int,const int KEY)
+{
+
+}
+
+//Detect soft collisions and perform corresponding action.
+//* We assume the maximun displacement(MAX_VX*UPDATE_MS=7) smaller than the tile size
+// to avoid over-speed problem.
+void TileMap::softTileCollisionCheck(Players &player)
+{
+
+    //travel all soft list
+
+    //found - call collision resolution
+
+
+
+}
+
+
 

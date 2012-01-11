@@ -28,11 +28,11 @@ private :
 #ifdef __MY_DEBUGS
         static int c=0;c++;
 #endif
-        if( play1.getX()+S_WID/2 > tileMap.getMapWidth() ){
+        if( play1.getX()+S_WID/2 > tileMap.getMapWorldCoordWidth() ){
 #ifdef __MY_DEBUGS
             std::cout<<"TX"<<c<<' '<<-1*(tileMap.getMapWidth() - S_WID )<<std::endl;
 #endif
-            return -1*std::abs(static_cast<float>(tileMap.getMapWidth() - S_WID ));
+            return -1*std::abs(static_cast<float>(tileMap.getMapWorldCoordWidth() - S_WID ));
 
         }else if( (play1.getX()- S_WID/2.0) <0  ){
 #ifdef __MY_DEBUGS
@@ -56,9 +56,9 @@ private :
 
 
     inline
-    int getMapWidth(){return tileMap.getMapWidth();}
+    int getMapWidth(){return tileMap.getMapWorldCoordWidth();}
     inline
-    int getMapHeight(){return tileMap.getMapHeight();}
+    int getMapHeight(){return tileMap.getMapWorldCoordHeight();}
     inline
     int getPlayerX(){return play1.getX();}
     inline

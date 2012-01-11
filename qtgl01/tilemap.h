@@ -1,14 +1,16 @@
 #ifndef TILEMAP
 #define TILEMAP
 
-#include<vector>
+#include<map>
 #include "floors.h"
 #include "players.h"
 #include "stars.h"
+
+
 class TileMap
 {
 private:
-    enum TileTypes{T_Floor=1, T_Enemy, T_Star, T_Transparent };
+    enum TileTypes{T_Floor=1, T_Enemy, T_Star, T_Transparent,T_EndOfClass };
     static const int TILE_SIZE=40;
     static const int Z_VAL=1;
 
@@ -16,13 +18,14 @@ private:
     int width;
     int height;
 
-    std::vector<Floors> floorList;
-    std::vector<Stars> starList;
-    std::vector<Objects> enemyList;
+    std::map<int,Floors>  floorList;
+    std::map<int,Stars>   starList;
+    //std::map<int,Objects> enemyList;
 
-    void addFloor(const int,const int,const int);
-    void addEnemy(const int,const int,const int);
-    void addStar(const int,const int,const int);
+    void addFloor(const int,const int,const int,const int);
+    void addEnemy(const int,const int,const int,const int);
+    void addStar(const int,const int,const int,const int);
+    void addEndPoint(const int,const int,const int,const int);
 
     //perform pasering action from tile map to pixel map.
     void setupTileMap();
@@ -59,12 +62,15 @@ private:
     }
 
 
-
     inline
     unsigned int getMapScriptWidth(){return width;}
-
     inline
     unsigned int getMapScriptHeight(){return height;}
+
+    inline
+    int getTileKey(const int IX,const int IY){
+        return IX+getMapScriptHeight()*IY;
+    }
 
     bool isCollided(const int,const int,const int,const int);
     bool hasAObjInMap(const int x,const int y);
@@ -77,24 +83,28 @@ public:
     void clear();
 
     static int tileToPixels(const unsigned int COORD_I );
-
+    bool starsCollisionCheck(const int X, const int Y, const int W, const int H);
+    void printTileMap();
+    void printObjLists();
     void renderingMap(const int X , const int Y , const int Z,const int SW, const int SH);
     void renderingStars(const int X , const int Y , const int Z,const int SW, const int SH, QGLWidget * p);
-    //---------------------------------------------------------
-    //some getters functions to retrive basic info.
+
+    void hardTileCollisionCheck(Players &);
+    void softTileCollisionCheck(Players &);
+
+    //-----------------------------------------------------------------------
+    //some getters to retrive basic info.
     inline
     int getTileSize(){return TILE_SIZE;}
 
     inline
-    unsigned int getMapWidth(){return getMapScriptWidth()*TILE_SIZE;}
+    unsigned int getMapWorldCoordWidth(){return getMapScriptWidth()*TILE_SIZE;}
 
     inline
-    unsigned int getMapHeight(){return getMapScriptHeight()*TILE_SIZE;}
+    unsigned int getMapWorldCoordHeight(){return getMapScriptHeight()*TILE_SIZE;}
+    //-----------------------------------------------------------------------
 
-    void tileCollisionCheck(Players &);
-    bool starsCollisionCheck(const int X, const int Y, const int W, const int H);
-    void printTileMap();
-    void printObjLists();
+
 };
 
 #endif // MAPLOADER_H

@@ -13,7 +13,7 @@ public:
 
     //no need update
     virtual void update(const int ){}
-    virtual void rendering();
+    virtual void rendering()const;
     virtual int getWidth(){return width;}
     virtual int getHeight(){return height;}
 

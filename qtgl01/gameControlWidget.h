@@ -4,7 +4,7 @@
 #include <QGLWidget>
 #include "runnable.h"
 #include "gamemode.h"
-
+#include "titlemode.h"
 namespace Ui {
     class GameControlWidget;
 }
@@ -13,27 +13,6 @@ namespace Ui {
 class GameControlWidget : public QGLWidget
 {
     Q_OBJECT
-
-private :
-    class TitleMode : public Runnable
-    {
-    private :
-        int titleChoice;
-        QGLWidget& parent;
-        QFont headFont;
-        QFont listFont;
-    public:
-        TitleMode(QGLWidget& GCW);
-        virtual void ini();
-
-        virtual void updateAction(const long&);
-        virtual void drawAction(void);
-
-        virtual void keyPress(const int &);
-        virtual void keyRelease(const int &);
-
-    };
-
 
 
 public:
@@ -64,7 +43,7 @@ private:
 
     Ui::GameControlWidget *ui;
 
-    //GameStateMaintainer gameState;
+
 
     Runnable * currHandler;
     TitleMode tiltMode;

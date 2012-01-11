@@ -15,6 +15,7 @@ INPUT(
 ./release/testTextures.o
 ./release/stars.o
 ./release/gamemode.o
+./release/titlemode.o
 ./release/moc_gameControlWidget.o
 ./release/moc_mainwindow.o
 );

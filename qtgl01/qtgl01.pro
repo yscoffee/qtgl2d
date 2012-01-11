@@ -34,7 +34,8 @@ SOURCES += main.cpp \
     textures.cpp \
     testTextures.cpp \
     stars.cpp \
-    gamemode.cpp
+    gamemode.cpp \
+    titlemode.cpp
 
 HEADERS  += \
     gameControlWidget.h \
@@ -54,13 +55,22 @@ HEADERS  += \
     testfloor.h \
     teststar.h \
     runnable.h \
-    gamemode.h
+    gamemode.h \
+    endPoint.h \
+    softobjects.h \
+    titlemode.h
 
 FORMS    += \
     gameControlWidget.ui \
     mainwindow.ui
 
 OTHER_FILES +=
+
+
+
+
+
+
 
 
 

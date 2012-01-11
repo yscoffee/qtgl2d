@@ -13,7 +13,7 @@ protected:
 public:
     Objects(const int X=0,const int Y=0,const int Z=0);
 
-    virtual void rendering()=0;
+    virtual void rendering()const=0;
     //Call by Timer. Be used to update state of game object
     //Unit of time is millisecond second
     virtual void update(const int )=0;
