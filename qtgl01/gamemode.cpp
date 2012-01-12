@@ -16,7 +16,7 @@ void GameMode::ini()
     movingObjsList.clear();
     play1.resetState();
     tileMap.clear();
-    tileMap.parseMap("..\\map\\mapall.txt");
+    tileMap.parseMap("..\\map\\testmap1.txt");
 
     play1.setX(tileMap.getStartX());
     play1.setY(tileMap.getStartY());

@@ -11,10 +11,10 @@ void TitleMode::drawAction(void){
        // window coordinates
        // with the origin in the upper left-hand corner of the window
 
-       parent.renderText(parent.width()/3,parent.height()/4,QString("JJJJJump!"),headFont);
+       parent.renderText(parent.width()/3-30,230,QString("+ A GAME +"),headFont);
        //render menu
 
-       static int dx = parent.width()*2/5;
+       static int dx = parent.width()*2/5-30;
        static int dy = parent.height()/2;
        static QString gs = QString(">  Game Start");
        static QString sb = QString(">  Score Board");
