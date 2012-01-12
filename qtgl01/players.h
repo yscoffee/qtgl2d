@@ -15,6 +15,8 @@ private:
     //hold texture, should be initialed IN function glInitial()
     static Textures rightModeTex;
     static Textures leftModeTex;
+    static Textures fallRModeTex;
+    static Textures fallLModeTex;
 
     double hp;
     double mp;
@@ -22,29 +24,31 @@ private:
     double exp;
     int level;
 
-    const int HALF_WID;
-    const int HALF_HEI;
+    int halfWidth;
+    int halfHeight;
     GLint vertices[8][3];
-
-
 
 public:
     int preX;
     int preY;
     int preZ;
     int scores;
+
     static void renderPlayerInfos(const int SX, const int SY,QGLWidget *,Players&);
     static void initTexture();
+
     Players();
+
     void resetState();
+    void setHalfWid(const int HW){halfWidth=HW;}
     virtual void rendering()const;
     virtual void update(const int MS);
-    virtual int getHeight(){return 2*HALF_HEI;}
-    virtual int getWidth(){return 2*HALF_WID;}
+    virtual int getHeight(){return 2*halfHeight;}
+    virtual int getWidth(){return 2*halfWidth;}
     inline
-    int getHalfWidth(){return HALF_WID;}
+    int getHalfWidth(){return halfWidth;}
     inline
-    int getHalfHeight(){return HALF_HEI;}
+    int getHalfHeight(){return halfHeight;}
     void jump();
     //int getFloorY(){return floorY;}
     //void handleCollision(  Objects*);

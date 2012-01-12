@@ -7,13 +7,18 @@
 #include <iostream>
 #include <cmath>
 #include "players.h"
+#include "endPoints.h"
 #include "stars.h"
 #include <algorithm>
 #include<map>
 TileMap::TileMap( ):width(0),height(0)
 {
-
-
+    start_X=70;
+    start_Y=70;
+}
+TileMap::~TileMap()
+{
+    clear();
 }
 
 //@throw: const string, represent invalid map script;
@@ -60,6 +65,8 @@ void TileMap::loadMap(const char *path)
                             newLine.push_back(T_Transparent);break;
                         case 'Q':
                             newLine.push_back(T_EndOfClass);break;
+                        case 'S':
+                            newLine.push_back(T_BEGIN_LOC);break;
                         case '\t' :
                             std::cerr<<"*ERROR Detect \t."<<std::endl;
                         default:
@@ -126,6 +133,10 @@ void TileMap::setupTileMap(){
                 case T_EndOfClass:
                     addEndPoint(map2World_X(ix),map2World_Y(iy),Z_VAL,getTileKey(ix,iy));
                     break;
+                case T_BEGIN_LOC:
+                    start_X=map2World_X(ix);
+                    start_Y=map2World_Y(iy);
+                    break;
                 default:
                     std::cerr<<"*Detect undefined T_{} tags."<<std::endl;
                     throw('e');
@@ -171,12 +182,15 @@ void TileMap::renderingMap(const int X , const int Y , const int Z, const int SW
     for( std::map<int,Floors>::const_iterator iter=floorList.begin(); iter!=floorList.end() ; iter++){
         (iter->second).rendering();
     }
-}
-void TileMap::renderingStars(const int X, const int Y, const int Z, const int SW, const int SH, QGLWidget *p)
-{
+
     for(std::map<int,Stars>::const_iterator iter=starList.begin(); iter!=starList.end() ; iter++){
         (iter->second).rendering();
     }
+
+    for(std::map<int,StaticObjects*>::const_iterator iter = staticObjList.begin() ; iter!=staticObjList.end();iter++ ){
+        (iter->second)->rendering();
+    }
+
 }
 void TileMap::printObjLists()
 {
@@ -271,8 +285,6 @@ void TileMap::tileCollisionHandle(Players & player )
 
                 player.setX(x);
                 player.setVX(0);
-
-
                 //re-Test
                 tileCollisionHandle(player);
             }
@@ -282,39 +294,28 @@ void TileMap::tileCollisionHandle(Players & player )
         return;
 
 }
-bool  TileMap::starsCollisionCheck(const int X, const int Y, const int W, const int H)
-{
-    int xDis=0;
-    int yDis=0;
-/*
-    for(int ix=0; ix<starList.size() ; ix++){
-        //check X,Y
-        xDis = std::abs(static_cast<float>(X-starList[ix].getX()) );
-        yDis = std::abs(static_cast<float>(Y-starList[ix].getY()) );
-
-        if(xDis < W/2+starList[ix].getWidth()/2 && yDis < H/2+starList[ix].getHeight()/2 ){
-            starList.erase(starList.begin()+ix );
-            return true;
-        }
-    }
-*/
-    return false;
-}
-
-
 
 void TileMap::clear()
 {
     width=0;
     height=0;
-    floorList.clear();
-    starList.clear();
+    start_X=70;
+    start_Y=70;
+
+    for(std::map<int,StaticObjects*>::iterator iter = staticObjList.begin() ; iter!=staticObjList.end();iter++ ){
+        delete iter->second;
+    }
+    staticObjList.erase(staticObjList.begin(),staticObjList.end());
+    floorList.erase(floorList.begin(),floorList.end());
+    starList.erase(starList.begin(),starList.end());
+
+    map.erase(map.begin(),map.end());
     //enemyList.clear();
 }
 
-void TileMap::addEndPoint(const int, const int, const int,const int KEY)
+void TileMap::addEndPoint(const int X , const int Y , const int Z,const int KEY)
 {
-
+    staticObjList.insert(std::pair<int,StaticObjects*>(KEY,new EndPoints(X,Y,Z)));
 }
 
 

@@ -17,6 +17,8 @@ INPUT(
 ./release/gamemode.o
 ./release/titlemode.o
 ./release/scoreboardmode.o
+./release/endpoints.o
+./release/backgorund.o
 ./release/moc_gameControlWidget.o
 ./release/moc_mainwindow.o
 );

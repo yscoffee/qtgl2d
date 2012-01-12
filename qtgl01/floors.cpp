@@ -27,7 +27,7 @@ bool Floors::encounterFloor(MovingObjects &obj)
 
 void Floors::rendering()const
 {
-    DrawUtilities::drawSquareWithTexture(x,y,z,width,tex.getTID());
+    DrawUtilities::drawSquareWithTexture(x,y,-1,width,tex.getTID());
 
 }
 

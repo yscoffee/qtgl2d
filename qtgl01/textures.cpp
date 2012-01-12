@@ -20,7 +20,7 @@ void Textures::loadImage(const char* path){
     texture_ID = SOIL_load_OGL_texture
             (
                 path,
-                SOIL_LOAD_AUTO,
+                SOIL_LOAD_RGBA,
                 SOIL_CREATE_NEW_ID,
                 SOIL_FLAG_TEXTURE_REPEATS  | SOIL_FLAG_INVERT_Y |
                 SOIL_FLAG_POWER_OF_TWO |SOIL_FLAG_MIPMAPS
@@ -44,7 +44,7 @@ void Textures::loadBMP(const char * path){
     texture_ID = SOIL_load_OGL_texture
             (
                 path,
-                SOIL_LOAD_AUTO,
+                SOIL_LOAD_RGBA,
                 SOIL_CREATE_NEW_ID,
                 SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
                 );

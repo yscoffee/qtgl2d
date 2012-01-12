@@ -71,7 +71,7 @@ void TitleMode::keyRelease(const int &K){
 }
 
 TitleMode::TitleMode(QGLWidget& GCW):
-    titleChoice(0),parent(GCW),headFont(QFont("Georgia",50)),listFont(QFont("Georgia",20))
+    titleChoice(0),parent(GCW),headFont(QFont("MS Gothic",50)),listFont(QFont("MS Gothic",20))
 {
 
 

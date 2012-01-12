@@ -36,7 +36,9 @@ SOURCES += main.cpp \
     stars.cpp \
     gamemode.cpp \
     titlemode.cpp \
-    scoreboardmode.cpp
+    scoreboardmode.cpp \
+    endpoints.cpp \
+    backgorund.cpp
 
 HEADERS  += \
     gameControlWidget.h \
@@ -57,16 +59,22 @@ HEADERS  += \
     teststar.h \
     runnable.h \
     gamemode.h \
-    endPoint.h \
     softobjects.h \
     titlemode.h \
-    scoreboardmode.h
+    scoreboardmode.h \
+    endPoints.h \
+    backgorund.h
 
 FORMS    += \
     gameControlWidget.ui \
     mainwindow.ui
 
 OTHER_FILES +=
+
+
+
+
+
 
 
 

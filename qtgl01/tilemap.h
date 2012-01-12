@@ -5,12 +5,12 @@
 #include "floors.h"
 #include "players.h"
 #include "stars.h"
-
+#include "staticobjects.h"
 
 class TileMap
 {
 private:
-    enum TileTypes{T_Floor=1, T_Enemy, T_Star, T_Transparent,T_EndOfClass };
+    enum TileTypes{T_Floor=1, T_Enemy, T_Star, T_Transparent,T_EndOfClass , T_BEGIN_LOC };
     static const int TILE_SIZE=40;
     static const int Z_VAL=1;
 
@@ -18,8 +18,15 @@ private:
     int width;
     int height;
 
+    int start_X;
+    int start_Y;
+
+    //seperating lists to keep small map.
     std::map<int,Floors>  floorList;
     std::map<int,Stars>   starList;
+    //other things
+    std::map<int,StaticObjects*>   staticObjList;
+
     //std::map<int,Objects> enemyList;
 
     void addFloor(const int,const int,const int,const int);
@@ -69,7 +76,7 @@ private:
 
     inline
     int getTileKey(const int IX,const int IY){
-        return IX+getMapScriptHeight()*IY;
+        return IX+std::max(width,height)*IY;
     }
 
     bool isCollided(const int,const int,const int,const int,Players&);
@@ -78,16 +85,14 @@ private:
 public:
 
     TileMap();
-
+    ~TileMap();
     void parseMap(const char*);
     void clear();
 
     static int tileToPixels(const unsigned int COORD_I );
-    bool starsCollisionCheck(const int X, const int Y, const int W, const int H);
     void printTileMap();
     void printObjLists();
     void renderingMap(const int X , const int Y , const int Z,const int SW, const int SH);
-    void renderingStars(const int X , const int Y , const int Z,const int SW, const int SH, QGLWidget * p);
 
     void tileCollisionHandle(Players &);
 
@@ -101,6 +106,11 @@ public:
 
     inline
     unsigned int getMapWorldCoordHeight(){return getMapScriptHeight()*TILE_SIZE;}
+
+    inline
+    int getStartX(){ return (start_X);}
+    inline
+    int getStartY(){ return (start_Y);}
     //-----------------------------------------------------------------------
 
 

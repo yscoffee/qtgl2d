@@ -8,6 +8,8 @@
 #include "floors.h"
 #include "stars.h"
 #include "players.h"
+#include "endPoints.h"
+#include "backgorund.h"
 
 GameControlWidget::GameControlWidget(QWidget *parent) :
     QGLWidget(QGLFormat(QGL::DoubleBuffer),parent),
@@ -49,6 +51,8 @@ void GameControlWidget::initializeGL(){
     Floors::initTexture();
     Players::initTexture();
     Stars::initTexture();
+    EndPoints::initTexture();
+    Backgorund::initTexture();
     //start idle func after 600ms
     QTimer::singleShot(600, this, SLOT(startIdleFunc()));
 
@@ -86,11 +90,8 @@ void GameControlWidget::paintGL(){
     //Move central point of world frame to the left bottom of screen
     glTranslatef(-1*width()/2,-1*height()/2,-30);
 
-
-
     //**********************
     //main route
-
     currHandler->drawAction();
 
     //**********************
@@ -185,6 +186,13 @@ void GameControlWidget::switchMode(const GameControlWidget::GameStages S)
     }
 
     this->blockSignals(false);
+
+}
+
+void GameControlWidget::closeEvent(QCloseEvent *event)
+{
+    scoreboardMode.endclear();
+    event->accept();
 
 }
 

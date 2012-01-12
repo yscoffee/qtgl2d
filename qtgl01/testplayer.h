@@ -24,12 +24,7 @@ TEST_F(testplayer, Test_VXVY)
     p.resetState();
     EXPECT_EQ(p.getVY(),0);
     EXPECT_EQ(p.getVX(),0);
-    p.performFalling(10);
-    EXPECT_LT(p.getVY(),0);
-    p.collideHorizontal();
-    EXPECT_EQ(p.getVX(),0);
-    p.collideVertical();
-    EXPECT_EQ(p.getVY(),0);
+
 }
 TEST_F(testplayer, Test_scores)
 {
@@ -38,8 +33,8 @@ TEST_F(testplayer, Test_scores)
 TEST_F(testplayer, Test_XY)
 {
     p.resetState();
-    EXPECT_EQ(p.getX(),50);
-    EXPECT_EQ(p.getY(),50);
+    EXPECT_EQ(p.getX(),70);
+    EXPECT_EQ(p.getY(),70);
 }
 TEST_F(testplayer,Test_H_W)
 {

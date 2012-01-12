@@ -9,10 +9,8 @@ protected:
 
 public:
 
-    StaticObjects();
-    void rendering();
-    //Call by Timer. Be used to update state of game object
-    //Unit of time is millisecond second
+    StaticObjects(const int X=0, const int Y=0,const int Z=0):Objects(X,Y,Z){}
+    virtual void rendering()const;
     virtual void update(const int );
 
     virtual int getWidth();

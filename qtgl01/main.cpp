@@ -3,7 +3,11 @@
 #include "mainwindow.h"
 #include "gameControlWidget.h"
 #include "testtilemap.h"
+#include "testfloor.h"
+#include "teststar.h"
+#include "testplayer.h"
 #include <gtest/gtest.h>
+
 #include "Textures.h"
 #include <cmath>
 using namespace std;

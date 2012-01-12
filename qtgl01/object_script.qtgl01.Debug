@@ -17,6 +17,8 @@ INPUT(
 ./debug/gamemode.o
 ./debug/titlemode.o
 ./debug/scoreboardmode.o
+./debug/endpoints.o
+./debug/backgorund.o
 ./debug/moc_gameControlWidget.o
 ./debug/moc_mainwindow.o
 );

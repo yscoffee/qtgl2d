@@ -66,8 +66,7 @@ void MovingObjects::setState(MovingObjects::States S)
 
 void MovingObjects::jump()
 {
-    setVY(JUMP_SPEED);
-
+   setVY(JUMP_SPEED);
    /*if( state != getJumpingState() && state != getFallState() ){
 
         state=getJumpingState();

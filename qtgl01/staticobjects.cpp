@@ -1,14 +1,11 @@
 #include "staticobjects.h"
 
-StaticObjects::StaticObjects()
-{
-}
 
 void StaticObjects::update(const int)
 {
 }
 
-void StaticObjects::rendering()
+void StaticObjects::rendering()const
 {
 }
 

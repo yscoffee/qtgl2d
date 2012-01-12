@@ -36,7 +36,7 @@ public:
     void timerEvent(QTimerEvent *);
     void drawAxs();
     void switchMode(const GameStages);
-
+    void closeEvent ( QCloseEvent * event );
 private:
 
 
