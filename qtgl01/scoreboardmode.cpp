@@ -84,6 +84,7 @@ void ScoreBoardMode::drawAction()
                 sprintf(rank,"Rank %2d : %3d\n",ix+1,scorelist[ix] );
                 parent.renderText(parent.width()/2-110,250+40*ix,QString(rank),smallfont);
             }else{
+                glColor3f(1,1,1);
                 sprintf(rank,"Rank %2d : N.A.\n",ix+1);
                 parent.renderText(parent.width()/2-110,250+40*ix,QString(rank),smallfont);
             }
