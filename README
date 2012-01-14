@@ -1,0 +1,14 @@
+﻿系統操作說明:
+
+切換到\code\binary資料夾，點選qtgl01.exe即可開始玩遊戲。
+如果要重新編譯，必須下載安裝Qt Creator，切換到.\qtgl01，執行qtgl01.pro檔，重新編譯執行即可。
+
+========================================
+Game control:
+Enter : confirm selection
+Space : jump
+Arrows : moving
+=======================================
+Access version control:
+cd .\qtgl2d\
+git status
